@@ -60,5 +60,19 @@
     }
   ],
   "theme_color": "#000000",
-  "background_color": "#d44141"
+  "background_color": "#d86262",
+  "id": "kiccc-dashboard",
+  "description": "داشبورد مدیریتی و تحلیلی جهت مشاهده و بررسی اطلاعات و گزارش‌های عملکرد",
+  "lang": "fa",
+  "dir": "auto",
+  "orientation": "any",
+  "scope": "/",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone"
+  ],
+  "categories": [
+    "business",
+    "productivity"
+  ]
 }
