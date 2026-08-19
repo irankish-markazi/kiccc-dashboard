@@ -1,55 +1,61 @@
-// ============================================================
-// Service Worker برای کش کردن داده‌ها
-// ============================================================
+const CACHE_NAME = 'terminal-cache-v2';
 
-// register-sw.js
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
-        .then(function(reg) {
-            console.log('✅ Service Worker ثبت شد');
-        })
-        .catch(function(err) {
-            console.log('❌ خطا در ثبت Service Worker:', err);
-        });
-}
+const BASE_PATH = '/kiccc-dashboard/';
 
-// sw.js (فایل جداگانه)
-const CACHE_NAME = 'terminal-cache-v1';
 const STATIC_ASSETS = [
-    '/',
-    '/index.html',
-    '/style.css',
-    '/app.js'
+    BASE_PATH,
+    BASE_PATH + 'index.html',
+    BASE_PATH + 'manifest.json',
+    BASE_PATH + 'icon-512.png'
 ];
 
-// نصب Service Worker
 self.addEventListener('install', function(event) {
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(function(cache) {
                 return cache.addAll(STATIC_ASSETS);
             })
+            .then(function() {
+                return self.skipWaiting();
+            })
     );
 });
 
-// پاسخ به درخواست‌ها
+self.addEventListener('activate', function(event) {
+    event.waitUntil(
+        caches.keys().then(function(cacheNames) {
+            return Promise.all(
+                cacheNames
+                    .filter(function(cacheName) {
+                        return cacheName !== CACHE_NAME;
+                    })
+                    .map(function(cacheName) {
+                        return caches.delete(cacheName);
+                    })
+            );
+        }).then(function() {
+            return self.clients.claim();
+        })
+    );
+});
+
 self.addEventListener('fetch', function(event) {
     event.respondWith(
-        caches.match(event.request)
+        fetch(event.request)
             .then(function(response) {
-                if (response) {
-                    return response;
+                if (response && response.status === 200) {
+                    const clone = response.clone();
+
+                    caches.open(CACHE_NAME)
+                        .then(function(cache) {
+                            cache.put(event.request, clone);
+                        });
                 }
-                return fetch(event.request)
-                    .then(function(response) {
-                        // ذخیره در کش
-                        var clone = response.clone();
-                        caches.open(CACHE_NAME)
-                            .then(function(cache) {
-                                cache.put(event.request, clone);
-                            });
-                        return response;
-                    });
+
+                return response;
+            })
+            .catch(function() {
+                return caches.match(event.request);
             })
     );
 });
