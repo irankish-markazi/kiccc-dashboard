@@ -11348,6 +11348,10 @@ function saveIndependentSheetsToStorage() {
         return false;
     }
 }
+
+// ============================================================
+// LOGIN - تابع ورود به سیستم (فقط از کش)
+// ============================================================
 async function login() {
     var user = document.getElementById('userSelect').value;
     var pass = document.getElementById('passwordInput').value;
@@ -11405,46 +11409,19 @@ async function login() {
     updateNetworkStatus();
     updatePendingBadge();
     updateLastUpdateDisplay();
-  toggleImportantMessageSection(); 
+    toggleImportantMessageSection(); 
 
     // ============================================================
     // ⭐⭐⭐ بارگذاری داده‌های محلی (حتی آفلاین)
     // ============================================================
     loadActionsFromStorage();
     loadPendingActions();
-
+    loadIndependentSheetsFromStorage();
 
     console.log('📂 اقدامات محلی بارگذاری شد:', Object.keys(actions).length, 'پایانه');
     
-   // ============================================================
-// بارگذاری شیت‌های مستقل از localStorage (قبل از نمایش داده‌ها)
-// ============================================================
-function loadIndependentSheetsFromStorage() {
-    try {
-        var saved = localStorage.getItem('independentSheets');
-        if (saved) {
-            var data = JSON.parse(saved);
-            bazaryabiData = data.bazaryabiData || [];
-            nasbJadidData = data.nasbJadidData || [];
-            inactive03Data = data.inactive03Data || [];
-            bazSheet = data.bazSheet || [];
-            console.log('📦 شیت‌های مستقل از localStorage بارگذاری شدند');
-            return true;
-        }
-        console.log('📭 شیت‌های مستقل در localStorage یافت نشد');
-        return false;
-    } catch (e) {
-        console.warn('⚠️ خطا در بارگذاری شیت‌های مستقل:', e);
-        return false;
-    }
-}
-
-// اجرا
-loadIndependentSheetsFromStorage();
-    
-   
     // ============================================================
-    // بارگذاری allData از localStorage
+    // بارگذاری allData از کش (فقط از کش، بدون درخواست به ابر)
     // ============================================================
     var hasLocalData = false;
     
@@ -11459,7 +11436,7 @@ loadIndependentSheetsFromStorage();
             }
         }
         
-        // 2. از localStorage
+        // 2. از localStorage (فقط اگر IndexedDB خالی بود)
         if (!hasLocalData) {
             var savedAllData = localStorage.getItem('allDataCache');
             if (savedAllData) {
@@ -13219,82 +13196,63 @@ async function fetchAllFromSupabaseOptimized(tableName, selectQuery) {
         return [];
     }
 }
-// ✅ تابع برای بارگذاری سریع داده‌ها از کش
 // ============================================================
-// ✅ بارگذاری فقط از کش (بدون هیچ درخواستی به ابر)
+// loadDataFromCache - فقط از کش بخوان
 // ============================================================
-function loadDataFromCache() {
+async function loadDataFromCache() {
+    console.log('📂 بارگذاری از کش...');
     try {
-        var hasData = false;
-        
-        // بارگذاری terminals
-        var terminals = loadCompressedData('cache_terminals');
-        if (terminals && terminals.length > 0) {
-            processTerminalsData(terminals);
-            hasData = true;
-            console.log('📦 terminals از کش بارگذاری شد:', terminals.length);
-        }
-        
-        // بارگذاری actions
-        var actionsData = loadCompressedData('cache_actions');
-        if (actionsData && actionsData.length > 0) {
-            processActionsData(actionsData);
-            hasData = true;
-            console.log('📦 actions از کش بارگذاری شد:', actionsData.length);
-        }
-        
-        // بارگذاری marketing
-        var marketing = loadCompressedData('cache_marketing');
-        if (marketing && marketing.length > 0) {
-            processMarketingData(marketing);
-            hasData = true;
-            console.log('📦 marketing از کش بارگذاری شد:', marketing.length);
-        }
-        
-        // بارگذاری nasb_jadid
-        var nasb = loadCompressedData('cache_nasb_jadid');
-        if (nasb && nasb.length > 0) {
-            processNasbData(nasb);
-            hasData = true;
-            console.log('📦 nasb_jadid از کش بارگذاری شد:', nasb.length);
-        }
-        
-        // بارگذاری baz
-        var baz = loadCompressedData('cache_baz');
-        if (baz && baz.length > 0) {
-            processBazData(baz);
-            hasData = true;
-            console.log('📦 baz از کش بارگذاری شد:', baz.length);
-        }
-        
-        // بارگذاری inactive_tax
-        var tax = loadCompressedData('cache_inactive_tax');
-        if (tax && tax.length > 0) {
-            processInactiveTaxData(tax);
-            hasData = true;
-            console.log('📦 inactive_tax از کش بارگذاری شد:', tax.length);
-        }
-        
-        // اگر داده‌ای در کش نبود، پیام بده
-        if (!hasData) {
-            console.log('📭 کش خالی است - لطفاً بروزرسانی کنید');
-            var statusEl = document.getElementById('syncStatus');
-            if (statusEl) {
-                statusEl.className = 'sync-status no-data';
-                statusEl.innerHTML = '<i class="fas fa-database"></i> <span>بدون داده - روی بروزرسانی کلیک کنید</span>';
-            }
+        // 1. بارگذاری terminals از IndexedDB
+        var data = await loadFromIndexedDB('terminals');
+        if (data && data.length > 0) {
+            allData = data;
+            console.log('✅ از کش (terminals):', allData.length, 'رکورد');
         } else {
-            // بروزرسانی وضعیت
-            var statusEl = document.getElementById('syncStatus');
-            if (statusEl) {
-                statusEl.className = 'sync-status synced';
-                statusEl.innerHTML = '<i class="fas fa-database"></i> <span>📦 از کش (' + (allData ? allData.length : 0) + ' رکورد)</span>';
-            }
+            console.log('📭 کش terminals خالی است');
+            // ⭐⭐⭐ اینجا هیچ درخواستی به ابر نده، فقط false برگردان
+            return false;
         }
         
-        return hasData;
-    } catch (e) {
-        console.warn('⚠️ خطا در بارگذاری کش:', e);
+        // 2. بارگذاری marketing
+        var marketingData = await loadFromIndexedDB('marketing');
+        if (marketingData && marketingData.length > 0) {
+            bazaryabiData = marketingData;
+            console.log('✅ بازاریابی از کش:', bazaryabiData.length, 'رکورد');
+        }
+        
+        // 3. بارگذاری nasb_jadid
+        var nasbData = await loadFromIndexedDB('nasb_jadid');
+        if (nasbData && nasbData.length > 0) {
+            nasbJadidData = nasbData;
+            console.log('✅ نصب جدید از کش:', nasbJadidData.length, 'رکورد');
+        }
+        
+        // 4. بارگذاری baz
+        var bazData = await loadFromIndexedDB('baz');
+        if (bazData && bazData.length > 0) {
+            bazSheet = bazData;
+            console.log('✅ کد باز از کش:', bazSheet.length, 'رکورد');
+        }
+        
+        // 5. بارگذاری inactive_tax
+        var taxData = await loadFromIndexedDB('inactive_tax');
+        if (taxData && taxData.length > 0) {
+            inactive03Data = taxData;
+            console.log('✅ غیرفعال مالیاتی از کش:', inactive03Data.length, 'رکورد');
+        }
+        
+        // 6. بارگذاری actions
+        var actionsData = await loadFromIndexedDB('actions');
+        if (actionsData && actionsData.length > 0) {
+            actions = actionsData;
+            console.log('✅ actions از کش:', Object.keys(actions).length, 'پایانه');
+        }
+        
+        console.log('✅ همه داده‌ها از کش بارگذاری شدند');
+        return true;
+        
+    } catch(e) {
+        console.error('❌ خطا در بارگذاری کش:', e);
         return false;
     }
 }
@@ -13725,48 +13683,90 @@ function stopMessageChecker() {
         messageCheckInterval = null;
     }
 }
+
 // ============================================================
-// ۲۳. راه‌اندازی اولیه
+// DOMContentLoaded - راه‌اندازی اولیه (فقط از کش)
 // ============================================================
 document.addEventListener('DOMContentLoaded', function() {
+    
+    // ============================================================
+    // رویدادهای ورود
+    // ============================================================
     document.getElementById('loginBtn').addEventListener('click', login);
     document.getElementById('passwordInput').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') login();
     });
     
+    // ============================================================
+    // اتصال به Supabase و بارگذاری اولیه
+    // ============================================================
     initSupabase();
-    loadUsersFromSupabase();
+    
+    // ============================================================
+    // ⭐⭐⭐ بارگذاری لیست کاربران (ابتدا از کش، سپس از ابر در صورت نیاز)
+    // ============================================================
+    // 1. اول از localStorage بخوان
+    var hasUsers = loadUsersFromLocalStorage();
+    
+    if (hasUsers && supporters.length > 0) {
+        // اگر کاربران در کش بودند، نمایش بده
+        populateUserSelect();
+        console.log('📦 لیست کاربران از کش نمایش داده شد:', supporters.length, 'کاربر');
+    } else {
+        // اگر کش خالی بود، از ابر بگیر (فقط اگر آنلاین باشد)
+        if (isOnline()) {
+            loadUsersFromSupabase();
+        } else {
+            // اگر آفلاین است و کش خالی، لیست پیش‌فرض را نمایش بده
+            supporters = ['فرزین توجه', 'مهسا خیرخواه', 'سعید نعمتی پریدری'];
+            populateUserSelect();
+            console.log('⚠️ آفلاین - استفاده از لیست پیش‌فرض کاربران');
+        }
+    }
+    
+    // ============================================================
+    // بارگذاری اقدامات از کش
+    // ============================================================
     loadActionsFromStorage();
+    console.log('📂 اقدامات از کش بارگذاری شد:', Object.keys(actions).length, 'پایانه');
+    
+    // ============================================================
+    // بروزرسانی وضعیت‌ها
+    // ============================================================
     updateOperationUI();
     updateNetworkStatus();
     updatePendingBadge();
     initWorker();
     
-    // ✅ بارگذاری کش در پس‌زمینه
+    // ============================================================
+    // ⭐⭐⭐ بارگذاری کش در پس‌زمینه (فقط از کش، بدون درخواست به ابر)
+    // ============================================================
     setTimeout(function() {
         loadDataFromCache();
     }, 500);
     
-    // ✅ ثبت Service Worker
+    // ============================================================
+    // ثبت Service Worker
+    // ============================================================
     registerServiceWorkerSafe();
-    loadUsersFromLocalStorage();
     
-    // ✅ دریافت داده‌های جدید با تاخیر (بعد از نمایش صفحه)
-    if (isOnline()) {
-        setTimeout(function() {
-            // فقط در صورت نیاز داده‌ها را دریافت کن
-            var lastUpdate = localStorage.getItem('lastUpdateTime');
-            if (!lastUpdate || (Date.now() - new Date(lastUpdate).getTime()) > 300000) {
-                syncFromCloud();
-            }
-        }, 2000);
-// در هر دو پروژه P6 و 1050، بعد از ورود کاربر
-if (currentUser && (currentUser === 'مدیر سیستم' || VALID_EXPERTS.indexOf(currentUser) !== -1)) {
-    startMessageChecker();
-}
+    // ============================================================
+    // ⭐⭐⭐ بررسی پیام‌ها (فقط برای مدیر و کارشناسان)
+    // ============================================================
+    if (currentUser && (currentUser === 'مدیر سیستم' || VALID_EXPERTS.indexOf(currentUser) !== -1)) {
+        startMessageChecker();
     }
     
-    console.log('📱 اپلیکیشن نسخه ۷.۱ - پروژه پشتیبان راه‌اندازی شد!');
+    // ============================================================
+    // ❌❌❌ دریافت خودکار از ابر - کاملاً حذف شد ❌❌❌
+    // ============================================================
+    // if (isOnline()) {
+    //     setTimeout(function() {
+    //         syncFromCloud();
+    //     }, 2000);
+    // }
+    
+    console.log('📱 اپلیکیشن نسخه ۷.۱ - پروژه پشتیبان راه‌اندازی شد! (فقط از کش)');
 });
 // ============================================================
 // END OF FILE
