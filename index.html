@@ -4926,9 +4926,6 @@ function processTerminalsData(data) {
     console.log('📊 ارزشمند:', stats.arvand);
 }
 
-// ============================================================
-// پردازش بازاریابی (جدول مستقل marketing) - با شرط جدید
-// ============================================================
 function processMarketingData(data) {
     console.log('📊 پردازش بازاریابی...');
     console.log('📊 تعداد رکوردها:', data ? data.length : 0);
@@ -4939,19 +4936,46 @@ function processMarketingData(data) {
         return;
     }
     
+    // ============================================================
+    // ⭐⭐⭐ دیباگ: ببین marketing_by از Supabase میاد یا نه
+    // ============================================================
+    if (data.length > 0) {
+        console.log('📥 نمونه از Supabase (بازاریابی):', data[0]);
+        console.log('📥 marketing_by در Supabase (بازاریابی):', data[0].marketing_by || '❌ خالی');
+    }
+    
     bazaryabiData = data.map(function(item) {
-        var status = item.status || 'ناکارآمد';
-        if (status === 'ندارد' || status === '' || status === 'فاقد اقدام') {
-            status = 'ناکارآمد';
+        // ============================================================
+        // ⭐⭐⭐ دریافت marketingBy از item.marketing_by (از Supabase)
+        // ============================================================
+        var marketingBy = item.marketing_by || '';
+        
+        // اگر از Supabase نیامد، از raw_data بگیر
+        if (!marketingBy) {
+            var raw = item.raw_data || {};
+            marketingBy = raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
         }
+        
+        // اگر باز هم خالی بود، از __EMPTY بگیر
+        if (!marketingBy) {
+            var raw = item.raw_data || {};
+            marketingBy = raw['__EMPTY'] || '';
+        }
+        
+        // اگر مقدار عدد 0 بود، خالی کن
+        if (marketingBy === 0 || marketingBy === '0') {
+            marketingBy = '';
+        }
+        
+        console.log('📊 پردازش بازاریابی - terminal:', item.terminal, '| marketingBy:', marketingBy || '❌ خالی');
         
         return {
             terminal: item.terminal || '',
             terminalWithZero: item.terminal_with_zero || '',
-            status: status,
+            status: item.status || 'ناکارآمد',
             count: item.count || 0,
             amount: item.amount || 0,
-            day: item.trans_day || 30,
+            day: item.day || 30,
             shop: item.shop || '',
             holder: item.holder || '',
             supporter: item.supporter || '',
@@ -4960,14 +4984,16 @@ function processMarketingData(data) {
             grade: item.grade || '',
             deviceType: item.device_type || '',
             nationalCode: item.national_code || '',
-            marketingBy: item.marketing_by || '',
+            marketingBy: marketingBy,
             raw: item.raw_data || {}
         };
     });
     
     console.log('✅ بازاریابی پردازش شد:', bazaryabiData.length, 'رکورد');
+    if (bazaryabiData.length > 0) {
+        console.log('📊 نمونه اول با marketingBy (بازاریابی):', bazaryabiData[0].marketingBy || '❌ خالی');
+    }
 }
-
 
 function processNasbData(data) {
     console.log('📊 پردازش نصب جدید...');
@@ -4999,7 +5025,7 @@ function processNasbData(data) {
             marketingBy = raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
         }
         
-        // اگر باز هم خالی بود، از __EMPTY بگیر (بعضی از شیت‌ها)
+        // اگر باز هم خالی بود، از __EMPTY بگیر
         if (!marketingBy) {
             var raw = item.raw_data || {};
             marketingBy = raw['__EMPTY'] || '';
@@ -5009,6 +5035,8 @@ function processNasbData(data) {
         if (marketingBy === 0 || marketingBy === '0') {
             marketingBy = '';
         }
+        
+        console.log('📊 پردازش - terminal:', item.terminal, '| marketingBy:', marketingBy || '❌ خالی');
         
         return {
             terminal: item.terminal || '',
@@ -5104,11 +5132,49 @@ function processBazData(data) {
     });
 }
 
-// ============================================================
-// PROCESS INACTIVE TAX DATA (مشابه پروژه اول)
-// ============================================================
 function processInactiveTaxData(data) {
+    console.log('📊 پردازش غیرفعال مالیاتی...');
+    console.log('📊 تعداد رکوردها:', data ? data.length : 0);
+    
+    if (!data || data.length === 0) {
+        inactive03Data = [];
+        console.log('⚠️ داده‌ای برای غیرفعال مالیاتی وجود ندارد');
+        return;
+    }
+    
+    // ============================================================
+    // ⭐⭐⭐ دیباگ: ببین marketing_by از Supabase میاد یا نه
+    // ============================================================
+    if (data.length > 0) {
+        console.log('📥 نمونه از Supabase (03):', data[0]);
+        console.log('📥 marketing_by در Supabase (03):', data[0].marketing_by || '❌ خالی');
+    }
+    
     inactive03Data = data.map(function(item) {
+        // ============================================================
+        // ⭐⭐⭐ دریافت marketingBy از item.marketing_by (از Supabase)
+        // ============================================================
+        var marketingBy = item.marketing_by || '';
+        
+        // اگر از Supabase نیامد، از raw_data بگیر
+        if (!marketingBy) {
+            var raw = item.raw_data || {};
+            marketingBy = raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
+        }
+        
+        // اگر باز هم خالی بود، از __EMPTY بگیر
+        if (!marketingBy) {
+            var raw = item.raw_data || {};
+            marketingBy = raw['__EMPTY'] || '';
+        }
+        
+        // اگر مقدار عدد 0 بود، خالی کن
+        if (marketingBy === 0 || marketingBy === '0') {
+            marketingBy = '';
+        }
+        
+        console.log('📊 پردازش 03 - terminal:', item.terminal, '| marketingBy:', marketingBy || '❌ خالی');
+        
         return {
             terminal: item.terminal || '',
             terminalWithZero: item.terminal_with_zero || '',
@@ -5118,12 +5184,17 @@ function processInactiveTaxData(data) {
             supporter: item.supporter || '',
             region: item.region || '',
             expert: item.expert || '',
-            marketingBy: item.marketing_by || '',
+            mobile: item.mobile || '',
+            marketingBy: marketingBy,
             raw: item.raw_data || {}
         };
     });
+    
+    console.log('✅ غیرفعال مالیاتی پردازش شد:', inactive03Data.length, 'رکورد');
+    if (inactive03Data.length > 0) {
+        console.log('📊 نمونه اول با marketingBy (03):', inactive03Data[0].marketingBy || '❌ خالی');
+    }
 }
-
 // ============================================================
 // COMPUTE DROP STATUS (مشابه پروژه اول)
 // ============================================================
@@ -6352,9 +6423,6 @@ function createCard(item) {
     `;
 }
 
-// ============================================================
-// رندر کارت‌های بازاریابی (با بازاریابی توسط)
-// ============================================================
 function renderMarketingCards(data) {
     var list = document.getElementById('terminalList');
     if (!list) return;
@@ -6378,10 +6446,9 @@ function renderMarketingCards(data) {
         if (!mobile) mobile = '—';
         
         // ============================================================
-        // دریافت "بازاریابی توسط"
+        // ⭐⭐⭐ دریافت marketingBy
         // ============================================================
-            var marketingBy = item.marketingBy || raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
-
+        var marketingBy = item.marketingBy || raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
         
         var infoHtml = `
             <div class="terminal-body" style="grid-template-columns:1fr 1fr;gap:2px 12px;display:grid;font-size:13px;color:#636e72;margin-bottom:3px;">
@@ -6397,7 +6464,7 @@ function renderMarketingCards(data) {
                 ${item.grade ? '<div class="info-item grade-item"><i class="fas fa-star" style="color:#fdcb6e;"></i> <span class="grade-value">گرید: ' + item.grade + '</span></div>' : ''}
                 ${marketingBy ? `<div class="info-item" style="border-top:1px solid #f0f0f0;padding-top:2px;margin-top:2px;grid-column:1/-1;">
                     <i class="fas fa-bullhorn" style="color:#fdcb6e;font-size:11px;"></i>
-                    <span style="font-size:11px;color:#636e72;">بازاریابی:</span>
+                    <span style="font-size:11px;color:#636e72;">بازاریابی توسط:</span>
                     <span style="font-size:11px;color:#2d3436;font-weight:500;">${marketingBy}</span>
                 </div>` : ''}
             </div>
@@ -6421,7 +6488,6 @@ function renderMarketingCards(data) {
     list.style.position = 'static';
     document.getElementById('terminalCount').textContent = data.length + ' پایانه (بازاریابی)';
 }
-
 
 // ============================================================
 // رندر کارت‌های نصب جدید (با بازاریابی توسط)
@@ -6524,10 +6590,9 @@ function renderInactive03Cards(data) {
         if (!mobile) mobile = '—';
         
         // ============================================================
-        // دریافت "بازاریابی توسط"
+        // ⭐⭐⭐ دریافت marketingBy
         // ============================================================
-            var marketingBy = item.marketingBy || raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
-
+        var marketingBy = item.marketingBy || raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
         
         var infoHtml = `
             <div class="terminal-body" style="grid-template-columns:1fr 1fr;gap:2px 12px;display:grid;font-size:13px;color:#636e72;margin-bottom:3px;">
@@ -6540,7 +6605,7 @@ function renderInactive03Cards(data) {
                 <div class="info-item"><i class="fas fa-map-marker-alt"></i> <span class="value">${item.region || '—'}</span></div>
                 ${marketingBy ? `<div class="info-item" style="border-top:1px solid #f0f0f0;padding-top:2px;margin-top:2px;grid-column:1/-1;">
                     <i class="fas fa-bullhorn" style="color:#fdcb6e;font-size:11px;"></i>
-                    <span style="font-size:11px;color:#636e72;">بازاریابی:</span>
+                    <span style="font-size:11px;color:#636e72;">بازاریابی توسط:</span>
                     <span style="font-size:11px;color:#2d3436;font-weight:500;">${marketingBy}</span>
                 </div>` : ''}
             </div>
@@ -6564,8 +6629,6 @@ function renderInactive03Cards(data) {
     list.style.position = 'static';
     document.getElementById('terminalCount').textContent = data.length + ' پایانه (غیرفعال مالیاتی)';
 }
-
-
 // ============================================================
 // رندر کارت‌های کد باز (با بازاریابی توسط)
 // ============================================================
