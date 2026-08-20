@@ -164,7 +164,7 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
 .app-header .user-badge {
     background: rgba(255,255,255,0.2);
     color: white;
-    padding: 4px 14px;
+    padding: 2px 10px;
     border-radius: 20px;
     font-size: 11px;
     font-weight: 500;
@@ -511,9 +511,12 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
 /* ============================================================ */
 .terminal-list-container {
     position: relative;
-    height: calc(100vh - 520px);
+    flex: 1;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    min-height: 300px;
+    height: auto;
+    max-height: calc(100vh - 380px);
 }
 .terminal-list-container::-webkit-scrollbar { width: 4px; }
 .terminal-list-container::-webkit-scrollbar-track { background: transparent; }
@@ -1205,6 +1208,86 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
     .bottom-nav .nav-item { padding: 2px 8px; }
     .actions-tabs { flex-direction: column; }
 }
+/* اضافه کن به استایل‌های پروژه */
+
+/* ============================================================ */
+/* صفحه اقدامات - کاهش فاصله هدر */
+/* ============================================================ */
+#page-actions {
+    padding-top: 0 !important;
+    margin-top: -4px !important;
+}
+
+/* تب‌های اقدامات */
+.actions-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 6px !important;
+    background: white;
+    border-radius: 10px;
+    padding: 4px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+}
+
+.actions-tabs .tab-btn {
+    flex: 1;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent !important;
+    color: #636e72 !important;
+}
+
+/* جستجوی اقدامات */
+.actions-search {
+    background: white;
+    border-radius: 10px;
+    padding: 2px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px !important;
+    border: 2px solid #e8e8f0;
+    min-height: 34px;
+}
+
+.actions-search input {
+    padding: 4px 0 !important;
+    font-size: 12px !important;
+}
+
+/* ============================================================ */
+/* صفحه عملکرد - کاهش فاصله هدر */
+/* ============================================================ */
+#page-performance {
+    padding-top: 0 !important;
+    margin-top: -4px !important;
+}
+
+#page-performance > div {
+    padding: 10px 12px !important;
+    border-radius: 10px !important;
+}
+
+#page-performance h3 {
+    font-size: 14px !important;
+    margin-bottom: 6px !important;
+}
+
+.performance-grid {
+    gap: 4px !important;
+    margin-top: 4px !important;
+}
+
+.perf-item {
+    padding: 6px 10px !important;
+    border-radius: 8px !important;
+}
 
 @media (max-width: 400px) {
     .terminal-card .terminal-body {
@@ -1242,6 +1325,7 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
         padding: 1px 4px;
     }
 }
+
 
 @media (max-width: 768px) {
     #lastUpdateDisplay {
@@ -1304,55 +1388,119 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
         <div class="hint" style="margin-top:6px;">نسخه 1.0|دفتر استان مرکزی</div>
     </div>
 </div>
+
 <!-- ============================================================ -->
 <!-- DASHBOARD -->
 <!-- ============================================================ -->
 <div id="dashboard">
-
 <!-- ============================================================ -->
-<!-- HEADER - پروژه 1050 -->
+<!-- HEADER - ارتفاع کمتر، فونت‌ها و دکمه‌ها بدون تغییر -->
 <!-- ============================================================ -->
-<div class="app-header" id="appHeader">
+<div class="app-header" id="appHeader" style="
+    background: linear-gradient(135deg, #f5b7b1, #e74c3c) !important;
+    padding: 2px 10px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    min-height: 28px;
+    box-shadow: 0 2px 12px rgba(231, 76, 60, 0.15) !important;
+    gap: 2px;
+    width: 100%;
+    box-sizing: border-box;
+">
     
-    <!-- ردیف اول: لوگو، عنوان، اطلاعات کاربر و بلندگو -->
-    <div style="display:flex;align-items:center;gap:15px;flex:1;flex-wrap:wrap;">
-        
-        <!-- لوگو و عنوان -->
-        <div class="title" style="display:flex;align-items:center;gap:10px;">
-            <img src="icon-512.png" alt="لوگو شرکت" style="height:40px;width:auto;border-radius:8px;object-fit:contain;" 
-                 onerror="this.onerror=null;this.src='file:///C:/Users/a.shamsi/Desktop/LOGO.jpg';">
-            <span style="display:inline;color:white;font-size:18px;font-weight:800;">مدیریت پایانه‌ها</span>
-        </div>
-        
-        <!-- ============================================================ -->
-        <!-- اطلاعات کاربر + بلندگو -->
-        <!-- ============================================================ -->
-        <div class="user-info" id="headerUserInfo" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-            
-            <!-- نام کاربر -->
-            <span class="user-badge" id="currentUser" style="background:rgba(255,255,255,0.2);color:white;padding:4px 14px;border-radius:20px;font-size:12px;font-weight:500;">کاربر</span>
-            <!-- دکمه خروج -->
-            <button class="logout-btn" onclick="logout()" style="background:rgba(255,255,255,0.15);color:white;border:1px solid rgba(255,255,255,0.2);padding:4px 14px;border-radius:20px;cursor:pointer;font-family:inherit;font-size:11px;transition:0.3s;">
-                خروج
-            </button>
-            <!-- ============================================================ -->
-            <!-- ⭐⭐⭐ آیکون بلندگو برای پیام‌های مهم ⭐⭐⭐ -->
-            <!-- ============================================================ -->
-            <div id="messageBellContainer" style="position:relative;display:none;cursor:pointer;padding:4px 6px;border-radius:50%;transition:0.3s;" 
-                 onclick="toggleMessagesVisibility()" 
-                 onmouseenter="this.style.background='rgba(255,255,255,0.15)'" 
-                 onmouseleave="this.style.background='transparent'">
-                
-                <i class="fas fa-bullhorn" style="font-size:20px;color:white;transition:0.3s;"></i>
-                
-                <!-- تعداد پیام‌ها -->
-                <span id="msgBellBadge" style="position:absolute;top:-6px;right:-6px;background:#ff6b6b;color:white;border-radius:50%;padding:0px 6px;font-size:9px;font-weight:700;min-width:18px;text-align:center;display:none;border:2px solid #e17055;line-height:16px;">0</span>
-            </div>
-
-        </div>
+    <!-- بخش چپ: لوگو + عنوان -->
+    <div style="
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        justify-content: flex-start;
+        overflow: hidden;
+        min-width: 0;
+    ">
+        <img src="icon-512.png" alt="لوگو شرکت" 
+             style="height:40px; width:38px; border-radius:8px; object-fit:contain; flex-shrink:0;" 
+             onerror="this.onerror=null;this.src='file:///C:/Users/a.shamsi/Desktop/LOGO.jpg';">
+        <span style="
+            color:white;
+            font-size:16px;
+            font-weight:700;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        ">مدیریت پایانه‌ها</span>
     </div>
     
-    <!-- ============================================================ -->
+    <!-- بخش وسط: خالی -->
+    <div style="display:flex; justify-content:center; align-items:center;"></div>
+    
+    <!-- بخش راست: نام کاربر + بلندگو + خروج -->
+    <div style="
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        justify-content: flex-end;
+        flex-wrap: nowrap;
+        flex-shrink: 0;
+    ">
+        <span class="user-badge" id="currentUser" style="
+            background:rgba(255,255,255,0.2);
+            color:white;
+            padding:3px 12px;
+            border-radius:16px;
+            font-size:12px;
+            font-weight:500;
+            white-space:nowrap;
+            border:1px solid rgba(255,255,255,0.1);
+            max-width:70px;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        ">کاربر</span>
+        
+        <button class="logout-btn" onclick="logout()" style="
+            background:rgba(255,255,255,0.15);
+            color:white;
+            border:1px solid rgba(255,255,255,0.2);
+            padding:3px 12px;
+            border-radius:16px;
+            cursor:pointer;
+            font-family:inherit;
+            font-size:12px;
+            transition:0.3s;
+            white-space:nowrap;
+            flex-shrink:0;
+        ">خروج</button>
+        
+        <div id="messageBellContainer" style="
+            position:relative;
+            display:none;
+            cursor:pointer;
+            padding:3px 4px;
+            border-radius:50%;
+            transition:0.3s;
+            flex-shrink:0;
+        " onclick="toggleMessagesVisibility()">
+            <i class="fas fa-bullhorn" style="font-size:18px;color:white;"></i>
+            <span id="msgBellBadge" style="
+                position:absolute;
+                top:-4px;
+                right:-4px;
+                background:#ff6b6b;
+                color:white;
+                border-radius:50%;
+                padding:0px 5px;
+                font-size:8px;
+                font-weight:700;
+                min-width:16px;
+                text-align:center;
+                display:none;
+                border:2px solid #e17055;
+                line-height:14px;
+            ">0</span>
+        </div>
+    </div>
+
+        <!-- ============================================================ -->
     <!-- بخش مخصوص تب اقدامات (وسط) - فقط در تب اقدامات نمایش داده میشه -->
     <!-- ============================================================ -->
     <div class="user-info" id="headerActionsInfo" style="display:none;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;flex:1;padding-top:6px;border-top:1px solid rgba(255,255,255,0.1);margin-top:6px;">
@@ -1441,7 +1589,7 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
 </div>
             <div class="dash-chart-card"><h4>📊 توزیع گرید تراکنش در منطقه</h4><canvas id="gradeChart"></canvas></div>
         </div>
-        
+
         <!-- PAGE TERMINALS -->
         <div class="page" id="page-terminals">
             <div class="stats-cards">
@@ -1449,69 +1597,397 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
                 <div class="stats-card-box pending" id="pendingCard" onclick="togglePendingFilter()"><div class="number" id="filterPending">۰</div><div class="label">⏳ فاقد اقدام</div><div class="hint" id="pendingHint">(کلیک کنید)</div></div>
             </div>
             
-            <div class="filter-section">
-                <div class="filter-row">
-                    <div class="filter-group"><label>📍 منطقه</label><select id="filterRegion" onchange="applyFilters()"><option value="">همه مناطق</option></select></div>
-                    <div class="filter-group">
-                        <label>📌 عملیات <span style="color:#b2bec3;font-size:9px;">(چندگانه)</span></label>
-                        <div class="multi-select-wrapper" id="operationWrapper">
-                            <div class="combo-display" onclick="toggleOperationDropdown()" tabindex="0">
-                                <span class="selected-text" id="opSelectedText">همه عملیات‌ها</span>
-                                <span class="badge-count" id="opBadgeCount">۰</span>
-                                <span class="arrow">▼</span>
-                            </div>
-                            <div class="combo-dropdown" id="operationDropdown">
-                                <div class="option-item" data-value="collect" onclick="toggleOperation('collect')"><span class="check" id="check-collect"></span><span>📦 جمع‌آوری</span></div>
-                                <div class="option-item" data-value="collect_out" onclick="toggleOperation('collect_out')"><span class="check" id="check-collect_out"></span><span>🚫 خارج از دستور</span></div>
-                                <div class="option-item" data-value="ineffective" onclick="toggleOperation('ineffective')"><span class="check" id="check-ineffective"></span><span>⚡ ناکارآمد</span></div>
-                                <div class="option-item" data-value="priority" onclick="toggleOperation('priority')"><span class="check" id="check-priority"></span><span>🔴 اولویت اول</span></div>
-                                <div class="option-item" data-value="kahraba" onclick="toggleOperation('kahraba')"><span class="check" id="check-kahraba"></span><span>🟡 کهربا</span></div>
-                                <div class="option-item" data-value="docs" onclick="toggleOperation('docs')"><span class="check" id="check-docs"></span><span>📄 مدارک</span></div>
-                                <div class="option-item" data-value="drop" onclick="toggleOperation('drop')"><span class="check" id="check-drop"></span><span>📉 افت</span></div>
-                                <div class="option-item" data-value="replace" onclick="toggleOperation('replace')"><span class="check" id="check-replace"></span><span>🔄 تعویض</span></div>
-                                <div class="option-item" data-value="arvand" onclick="toggleOperation('arvand')"><span class="check" id="check-arvand"></span><span>⭐ ارزشمند</span></div>
-                                <div class="option-item" data-value="marketing" onclick="toggleOperation('marketing')"><span class="check" id="check-marketing"></span><span>📢 بازاریابی</span></div>
-                                <div class="option-item" data-value="nasb" onclick="toggleOperation('nasb')"><span class="check" id="check-nasb"></span><span>🆕 نصب جدید</span></div>
-                                <div class="option-item" data-value="codebaz" onclick="toggleOperation('codebaz')"><span class="check" id="check-codebaz"></span><span>🔓 کد باز</span></div>
-                                <div class="option-item" data-value="inactive03" onclick="toggleOperation('inactive03')"><span class="check" id="check-inactive03"></span><span>🚫 غیرفعال مالیاتی (03)</span></div>
-                                <div class="option-item" data-value="shaba" onclick="toggleOperation('shaba')"><span class="check" id="check-shaba"></span><span>🏦 شبای پشتیبان</span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="filter-group"><label>✅ وضعیت PM</label><select id="filterPM" onchange="applyFilters()"><option value="">همه</option><option value="pm_shode">✅ PM شده</option><option value="pm_nashode">❌ PM نشده</option></select></div>
+ 
+<!-- ============================================================ -->
+<!-- فیلترها - چیدمان جدید -->
+<!-- ============================================================ -->
+<div class="filter-section" style="
+    background: white;
+    border-radius: 12px;
+    padding: 6px 12px;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+">
+
+    <!-- هدر کرکره -->
+    <div onclick="toggleFilterPanel()" style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        padding: 4px 0;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+    ">
+        <span style="font-size:13px; font-weight:600; color:#2d3436; display:flex; align-items:center; gap:8px;">
+            <i class="fas fa-sliders-h" style="color:#6c5ce7;"></i>
+            فیلترها
+            <span id="filterCountBadge" style="
+                background:#6c5ce7;
+                color:white;
+                border-radius:12px;
+                padding:0 8px;
+                font-size:10px;
+                font-weight:700;
+                line-height:18px;
+                display:none;
+            ">0</span>
+        </span>
+        <span id="filterToggleIcon" style="font-size:16px; color:#b2bec3; transition:0.3s;">
+            <i class="fas fa-chevron-down"></i>
+        </span>
+    </div>
+
+    <!-- محتوای کرکره -->
+    <div id="filterPanelContent" style="
+        display: none;
+        padding-top: 6px;
+        border-top: 1px solid #f0f0f0;
+        margin-top: 4px;
+        transition: all 0.3s ease;
+    ">
+        
+        <!-- ============================================================ -->
+        <!-- ردیف اول: منطقه + وضعیت PM (کنار هم) -->
+        <!-- ============================================================ -->
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <div style="flex:1; min-width:100px;">
+                <label style="font-size:10px; font-weight:600; color:#636e72; display:block; margin-bottom:2px;">📍 منطقه</label>
+                <select id="filterRegion" onchange="applyFilters()" style="
+                    width:100%; padding:5px 8px; border:2px solid #e8e8f0; border-radius:8px;
+                    font-size:11px; font-family:inherit; background:#f8f9fc; appearance:none;
+                    -webkit-appearance:none;
+                ">
+                    <option value="">همه مناطق</option>
+                </select>
+            </div>
+            
+            <div style="flex:1; min-width:100px;">
+                <label style="font-size:10px; font-weight:600; color:#636e72; display:block; margin-bottom:2px;">✅ وضعیت PM</label>
+                <select id="filterPM" onchange="applyFilters()" style="
+                    width:100%; padding:5px 8px; border:2px solid #e8e8f0; border-radius:8px;
+                    font-size:11px; font-family:inherit; background:#f8f9fc; appearance:none;
+                    -webkit-appearance:none;
+                ">
+                    <option value="">همه</option>
+                    <option value="pm_shode">✅ PM شده</option>
+                    <option value="pm_nashode">❌ PM نشده</option>
+                </select>
+            </div>
+        </div>
+      
+        <!-- ============================================================ -->
+        <!-- ردیف دوم: عملیات چندگانه (تمام عرض) -->
+        <!-- ============================================================ -->
+        <div style="margin-top:4px;">
+            <label style="font-size:10px; font-weight:600; color:#636e72; display:block; margin-bottom:2px;">
+                📌 عملیات <span style="color:#b2bec3;font-size:8px;">(چندگانه)</span>
+            </label>
+            <div class="multi-select-wrapper" id="operationWrapper" style="position:relative; width:100%;">
+                <div class="combo-display" onclick="toggleOperationDropdown()" tabindex="0" style="
+                    width:100%; padding:5px 8px; border:2px solid #e8e8f0; border-radius:8px;
+                    font-size:11px; font-family:inherit; background:#f8f9fc; cursor:pointer;
+                    display:flex; justify-content:space-between; align-items:center; min-height:30px;
+                ">
+                    <span class="selected-text" id="opSelectedText" style="color:#2d3436; font-size:11px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1;">همه عملیات‌ها</span>
+                    <span class="badge-count" id="opBadgeCount" style="
+                        background:#6c5ce7; color:white; border-radius:10px; padding:0 6px;
+                        font-size:9px; font-weight:600; margin:0 4px; display:none;
+                    ">0</span>
+                    <span class="arrow" style="color:#b2bec3; font-size:10px;">▼</span>
                 </div>
-                <div class="search-box" style="max-height:40px;"><i class="fas fa-search"></i><input type="text" id="searchTerminal" placeholder="جستجو..." oninput="applyFilters()"></div>
-                <div class="filter-actions">
-                    <button class="btn-reset" onclick="resetFilters()">🔄 بازنشانی</button>
-                    <button class="btn-export" onclick="exportToExcel()">📥 خروجی اکسل</button>
-                    <button class="btn-export-actions" id="exportActionsBtn" onclick="exportAllActionsToExcel()">📤 خروجی اقدامات</button>
-                    <div id="adminExportBtns" style="display:none;display:inline-flex;gap:4px;flex-wrap:wrap;">
-                        <button class="admin-export-btn" onclick="exportOperationExcel('collect')" style="background:#fff3cd;color:#856404;border-color:#fdcb6e;">📦 جمع‌آوری</button>
-                        <button class="admin-export-btn" onclick="exportOperationExcel('collect_out')" style="background:#f8d7da;color:#721c24;border-color:#ff6b6b;">🚫 خارج از دستور</button>
-                        <button class="admin-export-btn" onclick="exportOperationExcel('ineffective')" style="background:#f8d7da;color:#721c24;border-color:#ff6b6b;">⚡ ناکارآمد</button>
-                        <button class="admin-export-btn" onclick="exportOperationExcel('priority')" style="background:#f8d7da;color:#721c24;border-color:#ff6b6b;">🔴 اولویت اول</button>
-                        <button class="admin-export-btn" onclick="exportOperationExcel('kahraba')" style="background:#fff3cd;color:#856404;border-color:#fdcb6e;">🟡 کهربا</button>
-                        <button class="admin-export-btn" onclick="exportOperationExcel('docs')" style="background:#d1ecf1;color:#0c5460;border-color:#00b894;">📄 مدارک</button>
-                        <button class="admin-export-btn" onclick="exportOperationExcel('drop')" style="background:#f8d7da;color:#721c24;border-color:#ff6b6b;">📉 افت</button>
-                        <button class="admin-export-btn" onclick="exportOperationExcel('replace')" style="background:#d1ecf1;color:#0c5460;border-color:#00b894;">🔄 تعویض</button>
-                        <button class="admin-export-btn" onclick="exportOperationExcel('arvand')" style="background:#fdcb6e;color:#2d3436;border-color:#f39c12;">⭐ ارزشمند</button>
-                        <button class="admin-export-btn" onclick="exportOperationExcel('marketing')" style="background:#d1ecf1;color:#0c5460;border-color:#00b894;">📢 بازاریابی</button>
-                        <button class="admin-export-btn" onclick="exportOperationExcel('nasb')" style="background:#d4edda;color:#155724;border-color:#00b894;">🆕 نصب جدید</button>
-                        <button class="admin-export-btn" onclick="exportOperationExcel('inactive03')" style="background:#f8d7da;color:#721c24;border-color:#ff6b6b;">🚫 03</button>
-                        <button class="admin-export-btn" onclick="exportOperationExcel('shaba')" style="background:#d1ecf1;color:#0c5460;border-color:#00b894;">🏦 شبای پشتیبان</button>
-                        <button class="admin-export-btn" onclick="exportCompareDrop()" style="background:linear-gradient(135deg,#e17055,#d63031);color:white;border-color:#d63031;">📊 مقایسه افت</button>
+                <div class="combo-dropdown" id="operationDropdown" style="
+                    display:none; position:absolute; top:100%; right:0; left:0;
+                    background:white; border:2px solid #e8e8f0; border-radius:8px;
+                    margin-top:2px; max-height:160px; overflow-y:auto; z-index:50;
+                    box-shadow:0 4px 16px rgba(0,0,0,0.1);
+                ">
+                    <div class="option-item" data-value="collect" onclick="toggleOperation('collect')" style="
+                        padding:4px 10px; cursor:pointer; display:flex; align-items:center; gap:6px;
+                        font-size:11px; transition:0.2s; border-bottom:1px solid #f5f5f5;
+                    ">
+                        <span class="check" id="check-collect" style="
+                            width:14px; height:14px; border:2px solid #d1d1d1; border-radius:3px;
+                            display:flex; align-items:center; justify-content:center; font-size:9px; color:white; flex-shrink:0;
+                        "></span>
+                        <span>📦 جمع‌آوری</span>
+                    </div>
+                    <div class="option-item" data-value="collect_out" onclick="toggleOperation('collect_out')" style="
+                        padding:4px 10px; cursor:pointer; display:flex; align-items:center; gap:6px;
+                        font-size:11px; transition:0.2s; border-bottom:1px solid #f5f5f5;
+                    ">
+                        <span class="check" id="check-collect_out" style="
+                            width:14px; height:14px; border:2px solid #d1d1d1; border-radius:3px;
+                            display:flex; align-items:center; justify-content:center; font-size:9px; color:white; flex-shrink:0;
+                        "></span>
+                        <span>🚫 خارج از دستور</span>
+                    </div>
+                    <div class="option-item" data-value="ineffective" onclick="toggleOperation('ineffective')" style="
+                        padding:4px 10px; cursor:pointer; display:flex; align-items:center; gap:6px;
+                        font-size:11px; transition:0.2s; border-bottom:1px solid #f5f5f5;
+                    ">
+                        <span class="check" id="check-ineffective" style="
+                            width:14px; height:14px; border:2px solid #d1d1d1; border-radius:3px;
+                            display:flex; align-items:center; justify-content:center; font-size:9px; color:white; flex-shrink:0;
+                        "></span>
+                        <span>⚡ ناکارآمد</span>
+                    </div>
+                    <div class="option-item" data-value="priority" onclick="toggleOperation('priority')" style="
+                        padding:4px 10px; cursor:pointer; display:flex; align-items:center; gap:6px;
+                        font-size:11px; transition:0.2s; border-bottom:1px solid #f5f5f5;
+                    ">
+                        <span class="check" id="check-priority" style="
+                            width:14px; height:14px; border:2px solid #d1d1d1; border-radius:3px;
+                            display:flex; align-items:center; justify-content:center; font-size:9px; color:white; flex-shrink:0;
+                        "></span>
+                        <span>🔴 اولویت اول</span>
+                    </div>
+                    <div class="option-item" data-value="kahraba" onclick="toggleOperation('kahraba')" style="
+                        padding:4px 10px; cursor:pointer; display:flex; align-items:center; gap:6px;
+                        font-size:11px; transition:0.2s; border-bottom:1px solid #f5f5f5;
+                    ">
+                        <span class="check" id="check-kahraba" style="
+                            width:14px; height:14px; border:2px solid #d1d1d1; border-radius:3px;
+                            display:flex; align-items:center; justify-content:center; font-size:9px; color:white; flex-shrink:0;
+                        "></span>
+                        <span>🟡 کهربا</span>
+                    </div>
+                    <div class="option-item" data-value="docs" onclick="toggleOperation('docs')" style="
+                        padding:4px 10px; cursor:pointer; display:flex; align-items:center; gap:6px;
+                        font-size:11px; transition:0.2s; border-bottom:1px solid #f5f5f5;
+                    ">
+                        <span class="check" id="check-docs" style="
+                            width:14px; height:14px; border:2px solid #d1d1d1; border-radius:3px;
+                            display:flex; align-items:center; justify-content:center; font-size:9px; color:white; flex-shrink:0;
+                        "></span>
+                        <span>📄 مدارک</span>
+                    </div>
+                    <div class="option-item" data-value="drop" onclick="toggleOperation('drop')" style="
+                        padding:4px 10px; cursor:pointer; display:flex; align-items:center; gap:6px;
+                        font-size:11px; transition:0.2s; border-bottom:1px solid #f5f5f5;
+                    ">
+                        <span class="check" id="check-drop" style="
+                            width:14px; height:14px; border:2px solid #d1d1d1; border-radius:3px;
+                            display:flex; align-items:center; justify-content:center; font-size:9px; color:white; flex-shrink:0;
+                        "></span>
+                        <span>📉 افت</span>
+                    </div>
+                    <div class="option-item" data-value="replace" onclick="toggleOperation('replace')" style="
+                        padding:4px 10px; cursor:pointer; display:flex; align-items:center; gap:6px;
+                        font-size:11px; transition:0.2s; border-bottom:1px solid #f5f5f5;
+                    ">
+                        <span class="check" id="check-replace" style="
+                            width:14px; height:14px; border:2px solid #d1d1d1; border-radius:3px;
+                            display:flex; align-items:center; justify-content:center; font-size:9px; color:white; flex-shrink:0;
+                        "></span>
+                        <span>🔄 تعویض</span>
+                    </div>
+                    <div class="option-item" data-value="arvand" onclick="toggleOperation('arvand')" style="
+                        padding:4px 10px; cursor:pointer; display:flex; align-items:center; gap:6px;
+                        font-size:11px; transition:0.2s; border-bottom:1px solid #f5f5f5;
+                    ">
+                        <span class="check" id="check-arvand" style="
+                            width:14px; height:14px; border:2px solid #d1d1d1; border-radius:3px;
+                            display:flex; align-items:center; justify-content:center; font-size:9px; color:white; flex-shrink:0;
+                        "></span>
+                        <span>⭐ ارزشمند</span>
+                    </div>
+                    <div class="option-item" data-value="marketing" onclick="toggleOperation('marketing')" style="
+                        padding:4px 10px; cursor:pointer; display:flex; align-items:center; gap:6px;
+                        font-size:11px; transition:0.2s; border-bottom:1px solid #f5f5f5;
+                    ">
+                        <span class="check" id="check-marketing" style="
+                            width:14px; height:14px; border:2px solid #d1d1d1; border-radius:3px;
+                            display:flex; align-items:center; justify-content:center; font-size:9px; color:white; flex-shrink:0;
+                        "></span>
+                        <span>📢 بازاریابی</span>
+                    </div>
+                    <div class="option-item" data-value="nasb" onclick="toggleOperation('nasb')" style="
+                        padding:4px 10px; cursor:pointer; display:flex; align-items:center; gap:6px;
+                        font-size:11px; transition:0.2s; border-bottom:1px solid #f5f5f5;
+                    ">
+                        <span class="check" id="check-nasb" style="
+                            width:14px; height:14px; border:2px solid #d1d1d1; border-radius:3px;
+                            display:flex; align-items:center; justify-content:center; font-size:9px; color:white; flex-shrink:0;
+                        "></span>
+                        <span>🆕 نصب جدید</span>
+                    </div>
+                    <div class="option-item" data-value="codebaz" onclick="toggleOperation('codebaz')" style="
+                        padding:4px 10px; cursor:pointer; display:flex; align-items:center; gap:6px;
+                        font-size:11px; transition:0.2s; border-bottom:1px solid #f5f5f5;
+                    ">
+                        <span class="check" id="check-codebaz" style="
+                            width:14px; height:14px; border:2px solid #d1d1d1; border-radius:3px;
+                            display:flex; align-items:center; justify-content:center; font-size:9px; color:white; flex-shrink:0;
+                        "></span>
+                        <span>🔓 کد باز</span>
+                    </div>
+                    <div class="option-item" data-value="inactive03" onclick="toggleOperation('inactive03')" style="
+                        padding:4px 10px; cursor:pointer; display:flex; align-items:center; gap:6px;
+                        font-size:11px; transition:0.2s; border-bottom:1px solid #f5f5f5;
+                    ">
+                        <span class="check" id="check-inactive03" style="
+                            width:14px; height:14px; border:2px solid #d1d1d1; border-radius:3px;
+                            display:flex; align-items:center; justify-content:center; font-size:9px; color:white; flex-shrink:0;
+                        "></span>
+                        <span>🚫 غیرفعال مالیاتی (03)</span>
+                    </div>
+                    <div class="option-item" data-value="shaba" onclick="toggleOperation('shaba')" style="
+                        padding:4px 10px; cursor:pointer; display:flex; align-items:center; gap:6px;
+                        font-size:11px; transition:0.2s; border-bottom:1px solid #f5f5f5;
+                    ">
+                        <span class="check" id="check-shaba" style="
+                            width:14px; height:14px; border:2px solid #d1d1d1; border-radius:3px;
+                            display:flex; align-items:center; justify-content:center; font-size:9px; color:white; flex-shrink:0;
+                        "></span>
+                        <span>🏦 شبای پشتیبان</span>
                     </div>
                 </div>
             </div>
+        </div>
+       
+        <!-- ============================================================ -->
+        <!-- ردیف سوم: جستجو + بازنشانی (کنار هم) -->
+        <!-- ============================================================ -->
+        <div style="display:flex; gap:6px; margin-top:4px;">
+            <div style="flex:1;">
+                <div style="
+                    background:#f8f9fc; border-radius:8px; padding:2px 10px;
+                    display:flex; align-items:center; gap:6px;
+                    border:2px solid #e8e8f0; transition:0.3s;
+                    min-height:32px;
+                ">
+                    <i class="fas fa-search" style="color:#b2bec3; font-size:11px;"></i>
+                    <input type="text" id="searchTerminal" placeholder="جستجو..." oninput="applyFilters()" style="
+                        flex:1; padding:4px 0; border:none; outline:none;
+                        font-family:inherit; font-size:11px; background:transparent;
+                    ">
+                </div>
+            </div>
+            <button class="btn-reset" onclick="resetFilters()" style="
+                padding:4px 14px; border:none; border-radius:8px; cursor:pointer;
+                font-family:inherit; font-size:11px; font-weight:600; transition:0.3s;
+                background:#f8f9fa; color:#2d3436; border:2px solid #e8e8f0;
+                white-space:nowrap;
+            ">🔄 بازنشانی</button>
+        </div>
+ 
+        <!-- ============================================================ -->
+        <!-- ردیف چهارم: خروجی اکسل + خروجی اقدامات -->
+        <!-- ============================================================ -->
+        <div class="filter-actions" style="
+            display:flex; gap:4px; margin-top:4px; flex-wrap:wrap; padding-top:4px;
+            border-top:1px solid #f0f0f0;
+        ">
+            <button class="btn-export" onclick="exportToExcel()" style="
+                padding:4px 12px; border:none; border-radius:6px; cursor:pointer;
+                font-family:inherit; font-size:10px; font-weight:600; transition:0.3s;
+                background:linear-gradient(135deg,#00b894,#00a381); color:white;
+            ">📥 خروجی اکسل</button>
             
-            <div class="terminal-list-container" id="terminalListContainer" onscroll="handleScroll()">
-                <div class="terminal-list" id="terminalList"></div>
+            <button class="btn-export-actions" id="exportActionsBtn" onclick="exportAllActionsToExcel()" style="
+                padding:4px 12px; border:none; border-radius:6px; cursor:pointer;
+                font-family:inherit; font-size:10px; font-weight:600; transition:0.3s;
+                background:linear-gradient(135deg,#fdcb6e,#f39c12); color:white;
+            ">📤 خروجی اقدامات</button>
+            </div>
+            <!-- دکمه‌های مدیریتی (فقط مدیر) -->
+            <div id="adminExportBtns" style="display:none; display:inline-flex; gap:3px; flex-wrap:wrap;">
+                <button class="admin-export-btn" onclick="exportOperationExcel('collect')" style="
+                    padding:2px 8px; border-radius:4px; cursor:pointer; font-family:inherit;
+                    font-size:8px; font-weight:600; border:1px solid; transition:0.2s;
+                    background:#fff3cd; color:#856404; border-color:#fdcb6e;
+                ">📦</button>
+                <button class="admin-export-btn" onclick="exportOperationExcel('collect_out')" style="
+                    padding:2px 8px; border-radius:4px; cursor:pointer; font-family:inherit;
+                    font-size:8px; font-weight:600; border:1px solid; transition:0.2s;
+                    background:#f8d7da; color:#721c24; border-color:#ff6b6b;
+                ">🚫</button>
+                <button class="admin-export-btn" onclick="exportOperationExcel('ineffective')" style="
+                    padding:2px 8px; border-radius:4px; cursor:pointer; font-family:inherit;
+                    font-size:8px; font-weight:600; border:1px solid; transition:0.2s;
+                    background:#f8d7da; color:#721c24; border-color:#ff6b6b;
+                ">⚡</button>
+                <button class="admin-export-btn" onclick="exportOperationExcel('priority')" style="
+                    padding:2px 8px; border-radius:4px; cursor:pointer; font-family:inherit;
+                    font-size:8px; font-weight:600; border:1px solid; transition:0.2s;
+                    background:#f8d7da; color:#721c24; border-color:#ff6b6b;
+                ">🔴</button>
+                <button class="admin-export-btn" onclick="exportOperationExcel('kahraba')" style="
+                    padding:2px 8px; border-radius:4px; cursor:pointer; font-family:inherit;
+                    font-size:8px; font-weight:600; border:1px solid; transition:0.2s;
+                    background:#fff3cd; color:#856404; border-color:#fdcb6e;
+                ">🟡</button>
+                <button class="admin-export-btn" onclick="exportOperationExcel('docs')" style="
+                    padding:2px 8px; border-radius:4px; cursor:pointer; font-family:inherit;
+                    font-size:8px; font-weight:600; border:1px solid; transition:0.2s;
+                    background:#d1ecf1; color:#0c5460; border-color:#00b894;
+                ">📄</button>
+                <button class="admin-export-btn" onclick="exportOperationExcel('drop')" style="
+                    padding:2px 8px; border-radius:4px; cursor:pointer; font-family:inherit;
+                    font-size:8px; font-weight:600; border:1px solid; transition:0.2s;
+                    background:#f8d7da; color:#721c24; border-color:#ff6b6b;
+                ">📉</button>
+                <button class="admin-export-btn" onclick="exportOperationExcel('replace')" style="
+                    padding:2px 8px; border-radius:4px; cursor:pointer; font-family:inherit;
+                    font-size:8px; font-weight:600; border:1px solid; transition:0.2s;
+                    background:#d1ecf1; color:#0c5460; border-color:#00b894;
+                ">🔄</button>
+                <button class="admin-export-btn" onclick="exportOperationExcel('arvand')" style="
+                    padding:2px 8px; border-radius:4px; cursor:pointer; font-family:inherit;
+                    font-size:8px; font-weight:600; border:1px solid; transition:0.2s;
+                    background:#fdcb6e; color:#2d3436; border-color:#f39c12;
+                ">⭐</button>
+                <button class="admin-export-btn" onclick="exportOperationExcel('marketing')" style="
+                    padding:2px 8px; border-radius:4px; cursor:pointer; font-family:inherit;
+                    font-size:8px; font-weight:600; border:1px solid; transition:0.2s;
+                    background:#d1ecf1; color:#0c5460; border-color:#00b894;
+                ">📢</button>
+                <button class="admin-export-btn" onclick="exportOperationExcel('nasb')" style="
+                    padding:2px 8px; border-radius:4px; cursor:pointer; font-family:inherit;
+                    font-size:8px; font-weight:600; border:1px solid; transition:0.2s;
+                    background:#d4edda; color:#155724; border-color:#00b894;
+                ">🆕</button>
+                <button class="admin-export-btn" onclick="exportOperationExcel('inactive03')" style="
+                    padding:2px 8px; border-radius:4px; cursor:pointer; font-family:inherit;
+                    font-size:8px; font-weight:600; border:1px solid; transition:0.2s;
+                    background:#f8d7da; color:#721c24; border-color:#ff6b6b;
+                ">🚫</button>
+                <button class="admin-export-btn" onclick="exportOperationExcel('shaba')" style="
+                    padding:2px 8px; border-radius:4px; cursor:pointer; font-family:inherit;
+                    font-size:8px; font-weight:600; border:1px solid; transition:0.2s;
+                    background:#d1ecf1; color:#0c5460; border-color:#00b894;
+                ">🏦</button>
+                <button class="admin-export-btn" onclick="exportCompareDrop()" style="
+                    padding:2px 8px; border-radius:4px; cursor:pointer; font-family:inherit;
+                    font-size:8px; font-weight:600; border:1px solid; transition:0.2s;
+                    background:linear-gradient(135deg,#e17055,#d63031); color:white; border-color:#d63031;
+                ">📊</button>
+            </div>
+        </div>
+   </div>
+
+            <div class="terminal-list-container" id="terminalListContainer" onscroll="handleScroll()" style="
+    position: relative;
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    min-height: 300px;
+    height: auto;
+    max-height: calc(100vh - 350px);
+    padding-bottom: 10px;
+">
+    <div class="terminal-list" id="terminalList"></div>
+
             </div>
             <div style="text-align:center;font-size:10px;color:#b2bec3;padding:2px 0;" id="terminalCount"></div>
         </div>
-        
+
       <!-- PAGE ACTIONS -->
-<div class="page" id="page-actions">
+<div class="page" id="page-actions" style="
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+">
     <!-- تب‌ها در بالا -->
     <div style="display:flex;gap:4px;margin-bottom:10px;background:white;border-radius:12px;padding:4px;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
         <button class="tab-btn active" data-tab="tab-registered" onclick="switchActionTab('tab-registered')" style="flex:1;padding:10px;border:none;border-radius:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:0.3s;background:#f0f0f0;color:#333;border:1px solid #ddd;">
@@ -1547,8 +2023,9 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
             <i class="fas fa-upload"></i> بارگذاری فایل اقدامات
             <input type="file" id="bulkFileInput" accept=".xlsx,.xls" style="display:none;" onchange="handleBulkUpload(event)">
         </button>
-    </div>
+   </div>
 </div>
+
 <!-- Page Performance -->
 <div class="page" id="page-performance">
     <div style="background:white;border-radius:12px;padding:16px;">
@@ -3426,7 +3903,7 @@ async function fetchAllFromSupabase(tableName, selectQuery) {
 // ============================================================
 function openDatabase() {
     return new Promise(function(resolve, reject) {
-        var request = indexedDB.open('PMD_DB', 2);
+        var request = indexedDB.open('PMD_DB', 5);
         
         request.onupgradeneeded = function(e) {
             var db = e.target.result;
@@ -4483,6 +4960,7 @@ function processMarketingData(data) {
             grade: item.grade || '',
             deviceType: item.device_type || '',
             nationalCode: item.national_code || '',
+            marketingBy: item.marketing_by || '',
             raw: item.raw_data || {}
         };
     });
@@ -4518,6 +4996,7 @@ function processNasbData(data) {
             grade: item.grade || '',
             deviceType: item.device_type || '',
             nationalCode: item.national_code || '',
+            marketingBy: item.marketing_by || '',
             raw: item.raw_data || {}
         };
     });
@@ -4595,6 +5074,7 @@ function processBazData(data) {
             supporter: item.supporter || '',
             region: item.region || '',
             expert: item.expert || '',
+            marketingBy: item.marketing_by || '',
             raw: item.raw_data || {}
         };
     });
@@ -4614,6 +5094,7 @@ function processInactiveTaxData(data) {
             supporter: item.supporter || '',
             region: item.region || '',
             expert: item.expert || '',
+            marketingBy: item.marketing_by || '',
             raw: item.raw_data || {}
         };
     });
@@ -5130,7 +5611,9 @@ function hasPendingOperationForFilter(item, opFilter) {
 // ============================================================
 function toggleOperationDropdown() {
     var dropdown = document.getElementById('operationDropdown');
-    dropdown.classList.toggle('open');
+    if (dropdown) {
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
 }
 
 function toggleOperation(value) {
@@ -5142,6 +5625,7 @@ function toggleOperation(value) {
     }
     updateOperationUI();
     applyFilters();
+    checkFilterActive();
 }
 
 function updateOperationUI() {
@@ -5163,34 +5647,44 @@ function updateOperationUI() {
     };
     
     var allOps = ['collect', 'collect_out', 'ineffective', 'priority', 'kahraba', 'docs', 'drop', 'replace', 'arvand', 'marketing', 'nasb', 'codebaz', 'inactive03', 'shaba'];
+    
+    // بروزرسانی چک‌باکس‌ها
     for (var i = 0; i < allOps.length; i++) {
         var check = document.getElementById('check-' + allOps[i]);
         if (check) {
             if (selectedOperations.indexOf(allOps[i]) !== -1) {
-                check.classList.add('checked');
+                check.style.background = '#6c5ce7';
+                check.style.borderColor = '#6c5ce7';
+                check.innerHTML = '✓';
             } else {
-                check.classList.remove('checked');
+                check.style.background = 'transparent';
+                check.style.borderColor = '#d1d1d1';
+                check.innerHTML = '';
             }
         }
     }
     
+    // بروزرسانی متن و badge
     var text = document.getElementById('opSelectedText');
     var badge = document.getElementById('opBadgeCount');
+    
     if (selectedOperations.length === 0) {
         text.textContent = 'همه عملیات‌ها';
-        badge.textContent = '۰';
+        badge.style.display = 'none';
     } else {
         var displayNames = selectedOperations.map(function(op) { return names[op] || op; });
         text.textContent = displayNames.join('، ');
         badge.textContent = selectedOperations.length;
+        badge.style.display = 'inline';
     }
 }
 
+// بستن dropdown با کلیک خارج از آن
 document.addEventListener('click', function(e) {
     var wrapper = document.getElementById('operationWrapper');
     if (wrapper && !wrapper.contains(e.target)) {
         var dropdown = document.getElementById('operationDropdown');
-        if (dropdown) dropdown.classList.remove('open');
+        if (dropdown) dropdown.style.display = 'none';
     }
 });
 
@@ -5656,22 +6150,53 @@ function handleScroll() {
 }
 
 // ============================================================
-// CREATE CARD (برای سایر فیلترها: جمع‌آوری، کهربا، اولویت اول، مدارک، تعویض، افت، ارزشمند، شبای پشتیبان)
+// CREATE CARD - نسخه کامل و اصلاح شده
 // ============================================================
 function createCard(item) {
-    var terminalDisplay = String(item.terminal).padStart(8, '0');
+    // ============================================================
+    // بررسی وجود item
+    // ============================================================
+    if (!item) {
+        console.warn('⚠️ item undefined در createCard');
+        return '<div style="padding:10px;color:#ff6b6b;">خطا در نمایش کارت</div>';
+    }
+    
+    var terminalDisplay = String(item.terminal || '').padStart(8, '0');
     var tags = '';
     var isAdmin = (currentUser === 'مدیر سیستم');
     
-    // بررسی وجود اقدام برای این پایانه
-    var hasAction = actions[item.terminal] && actions[item.terminal].length > 0;
+    // ============================================================
+    // تعریف raw و متغیرها
+    // ============================================================
+    var raw = item.raw || {};
+    var deviceType = item.deviceType || raw['نوع دستگاه'] || raw['مدل دستگاه'] || '—';
+    var marketingBy = raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
+    
+    var shop = item.shop || '—';
+    var holder = item.holder || '—';
+    var region = item.region || '—';
+    var supporter = item.supporter || '—';
+    var expert = item.expert || '—';
+    var grade = item.grade || '—';
+    var transCount = item.transCount || 0;
+    var transAmount = item.transAmount || 0;
+    var mobile = raw['شماره موبایل'] || raw['شماره همراه'] || raw['موبایل'] || '';
+    if (!mobile && item.mobile) mobile = item.mobile;
+    if (!mobile) mobile = '—';
+    
+    // ============================================================
+    // بررسی وجود اقدام
+    // ============================================================
+    var hasAction = actions && actions[item.terminal] && actions[item.terminal].length > 0;
     var actionIndicator = '';
     if (hasAction) {
         var isPending = false;
-        for (var p = 0; p < pendingActions.length; p++) {
-            if (pendingActions[p].terminal === item.terminal) {
-                isPending = true;
-                break;
+        if (pendingActions && pendingActions.length > 0) {
+            for (var p = 0; p < pendingActions.length; p++) {
+                if (pendingActions[p].terminal === item.terminal) {
+                    isPending = true;
+                    break;
+                }
             }
         }
         
@@ -5682,7 +6207,9 @@ function createCard(item) {
         }
     }
     
-    // ===== عملیات‌ها =====
+    // ============================================================
+    // تگ‌های عملیات
+    // ============================================================
     if (item.hasCollect) {
         tags += item.collectDone ? 
             '<span class="tag tag-collect-done">✅ جمع‌آوری (' + (item.collectStatus || 'انجام شده') + ')</span>' : 
@@ -5749,33 +6276,41 @@ function createCard(item) {
     if (item.hasEbtal) {
         tags += '<span class="tag tag-ebtal">🚫 ابطال</span>';
     }
-    if (hasPendingOperation(item)) {
+    if (typeof hasPendingOperation === 'function' && hasPendingOperation(item)) {
         tags += '<span class="tag tag-pending">⏳ فاقد اقدام</span>';
     }
     
-    // ===== اطلاعات سمت چپ (پایانه، نام فروشگاه، دارنده حساب، موبایل، منطقه) =====
-    var raw = item.raw || {};
-    var mobile = raw['شماره موبایل'] || raw['شماره همراه'] || raw['موبایل'] || '';
-    if (!mobile && item.mobile) mobile = item.mobile;
-    
+    // ============================================================
+    // اطلاعات سمت چپ
+    // ============================================================
     var leftInfo = `
-        <div class="info-item"><i class="fas fa-store"></i> <span class="value">${item.shop || '—'}</span></div>
-        <div class="info-item"><i class="fas fa-user"></i> <span class="value">${item.holder || '—'}</span></div>
-        <div class="info-item"><i class="fas fa-phone"></i> <span class="value" style="direction:ltr;text-align:left;">${mobile || '—'}</span></div>
-        <div class="info-item"><i class="fas fa-map-marker-alt"></i> <span class="value">${item.region || '—'}</span></div>
+        <div class="info-item"><i class="fas fa-store"></i> <span class="value">${shop}</span></div>
+        <div class="info-item"><i class="fas fa-user"></i> <span class="value">${holder}</span></div>
+        <div class="info-item">
+            <i class="fas fa-phone" onclick="makeCall('${mobile}')" style="cursor:pointer;color:#6c5ce7;"></i>
+            <span class="value" style="direction:ltr;text-align:left;cursor:pointer;" onclick="makeCall('${mobile}')">${mobile}</span>
+        </div>
+        <div class="info-item"><i class="fas fa-server"></i> <span class="value">${deviceType}</span></div>
+        <div class="info-item"><i class="fas fa-map-marker-alt"></i> <span class="value">${region}</span></div>
     `;
     
-    // ===== اطلاعات سمت راست (تعداد و مبلغ تراکنش ماه جاری، گرید) =====
+    // ============================================================
+    // اطلاعات سمت راست (با بازاریابی توسط)
+    // ============================================================
     var rightInfo = `
-        <div class="info-item trans-item"><i class="fas fa-money-bill-wave" style="color:#00b894;"></i> <span class="trans-label">مبلغ:</span> <span class="trans-value">${(item.transAmount || 0).toLocaleString()}</span></div>
-        <div class="info-item trans-item"><i class="fas fa-exchange-alt" style="color:#6c5ce7;"></i> <span class="trans-label">تعداد:</span> <span class="trans-value">${(item.transCount || 0).toLocaleString()}</span></div>
+        <div class="info-item trans-item"><i class="fas fa-money-bill-wave" style="color:#00b894;"></i> <span class="trans-label">مبلغ:</span> <span class="trans-value">${transAmount.toLocaleString()}</span></div>
+        <div class="info-item trans-item"><i class="fas fa-exchange-alt" style="color:#6c5ce7;"></i> <span class="trans-label">تعداد:</span> <span class="trans-value">${transCount.toLocaleString()}</span></div>
+        ${grade && grade !== '—' ? `<div class="info-item grade-item"><i class="fas fa-star" style="color:#fdcb6e;"></i> <span class="grade-value">گرید: ${grade}</span></div>` : ''}
+        ${marketingBy ? `<div class="info-item" style="border-top:1px solid #f0f0f0;padding-top:3px;margin-top:2px;font-size:11px;color:#636e72;">
+            <i class="fas fa-user-tie" style="color:#fdcb6e;font-size:11px;"></i>
+            <span>بازاریابی: </span>
+            <span style="color:#2d3436;font-weight:500;">${marketingBy}</span>
+        </div>` : ''}
     `;
-    if (item.grade) {
-        rightInfo += `
-            <div class="info-item grade-item"><i class="fas fa-star" style="color:#fdcb6e;"></i> <span class="grade-value">گرید: ${item.grade}</span></div>
-        `;
-    }
     
+    // ============================================================
+    // کارت نهایی
+    // ============================================================
     return `
         <div class="terminal-card">
             <div class="terminal-header">
@@ -5794,7 +6329,7 @@ function createCard(item) {
 }
 
 // ============================================================
-// رندر کارت‌های بازاریابی (پایانه، نام فروشگاه، دارنده حساب، موبایل، منطقه، تعداد و مبلغ، گرید)
+// رندر کارت‌های بازاریابی (با بازاریابی توسط)
 // ============================================================
 function renderMarketingCards(data) {
     var list = document.getElementById('terminalList');
@@ -5816,16 +6351,31 @@ function renderMarketingCards(data) {
         var raw = item.raw || {};
         var mobile = raw['شماره موبایل'] || raw['شماره همراه'] || raw['موبایل'] || '';
         if (!mobile && item.mobile) mobile = item.mobile;
+        if (!mobile) mobile = '—';
+        
+        // ============================================================
+        // دریافت "بازاریابی توسط"
+        // ============================================================
+            var marketingBy = item.marketingBy || raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
+
         
         var infoHtml = `
             <div class="terminal-body" style="grid-template-columns:1fr 1fr;gap:2px 12px;display:grid;font-size:13px;color:#636e72;margin-bottom:3px;">
                 <div class="info-item"><i class="fas fa-store"></i> <span class="value">${item.shop || '—'}</span></div>
                 <div class="info-item"><i class="fas fa-user"></i> <span class="value">${item.holder || '—'}</span></div>
-                <div class="info-item"><i class="fas fa-phone"></i> <span class="value" style="direction:ltr;text-align:left;">${mobile || '—'}</span></div>
+                <div class="info-item">
+                    <i class="fas fa-phone" style="cursor:pointer;color:#6c5ce7;" onclick="makeCall('${mobile}')"></i>
+                    <span class="value" style="direction:ltr;text-align:left;cursor:pointer;color:#6c5ce7;font-weight:600;" onclick="makeCall('${mobile}')">${mobile}</span>
+                </div>
                 <div class="info-item"><i class="fas fa-map-marker-alt"></i> <span class="value">${item.region || '—'}</span></div>
                 <div class="info-item trans-item"><i class="fas fa-money-bill-wave" style="color:#00b894;"></i> <span class="trans-label">مبلغ:</span> <span class="trans-value">${(item.amount || 0).toLocaleString()}</span></div>
                 <div class="info-item trans-item"><i class="fas fa-exchange-alt" style="color:#6c5ce7;"></i> <span class="trans-label">تعداد:</span> <span class="trans-value">${(item.count || 0).toLocaleString()}</span></div>
                 ${item.grade ? '<div class="info-item grade-item"><i class="fas fa-star" style="color:#fdcb6e;"></i> <span class="grade-value">گرید: ' + item.grade + '</span></div>' : ''}
+                ${marketingBy ? `<div class="info-item" style="border-top:1px solid #f0f0f0;padding-top:2px;margin-top:2px;grid-column:1/-1;">
+                    <i class="fas fa-bullhorn" style="color:#fdcb6e;font-size:11px;"></i>
+                    <span style="font-size:11px;color:#636e72;">بازاریابی:</span>
+                    <span style="font-size:11px;color:#2d3436;font-weight:500;">${marketingBy}</span>
+                </div>` : ''}
             </div>
         `;
         
@@ -5847,8 +6397,10 @@ function renderMarketingCards(data) {
     list.style.position = 'static';
     document.getElementById('terminalCount').textContent = data.length + ' پایانه (بازاریابی)';
 }
+
+
 // ============================================================
-// رندر کارت‌های نصب جدید (پایانه، نام فروشگاه، دارنده حساب، موبایل، منطقه، تعداد و مبلغ، گرید)
+// رندر کارت‌های نصب جدید (با بازاریابی توسط)
 // ============================================================
 function renderNasbCards(data) {
     var list = document.getElementById('terminalList');
@@ -5870,16 +6422,31 @@ function renderNasbCards(data) {
         var raw = item.raw || {};
         var mobile = raw['شماره موبایل'] || raw['شماره همراه'] || raw['موبایل'] || '';
         if (!mobile && item.mobile) mobile = item.mobile;
+        if (!mobile) mobile = '—';
+        
+        // ============================================================
+        // دریافت "بازاریابی توسط"
+        // ============================================================
+             var marketingBy = item.marketingBy || raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
+
         
         var infoHtml = `
             <div class="terminal-body" style="grid-template-columns:1fr 1fr;gap:2px 12px;display:grid;font-size:13px;color:#636e72;margin-bottom:3px;">
                 <div class="info-item"><i class="fas fa-store"></i> <span class="value">${item.shop || '—'}</span></div>
                 <div class="info-item"><i class="fas fa-user"></i> <span class="value">${item.holder || '—'}</span></div>
-                <div class="info-item"><i class="fas fa-phone"></i> <span class="value" style="direction:ltr;text-align:left;">${mobile || '—'}</span></div>
+                <div class="info-item">
+                    <i class="fas fa-phone" style="cursor:pointer;color:#6c5ce7;" onclick="makeCall('${mobile}')"></i>
+                    <span class="value" style="direction:ltr;text-align:left;cursor:pointer;color:#6c5ce7;font-weight:600;" onclick="makeCall('${mobile}')">${mobile}</span>
+                </div>
                 <div class="info-item"><i class="fas fa-map-marker-alt"></i> <span class="value">${item.region || '—'}</span></div>
                 <div class="info-item trans-item"><i class="fas fa-money-bill-wave" style="color:#00b894;"></i> <span class="trans-label">مبلغ:</span> <span class="trans-value">${(item.amount || 0).toLocaleString()}</span></div>
                 <div class="info-item trans-item"><i class="fas fa-exchange-alt" style="color:#6c5ce7;"></i> <span class="trans-label">تعداد:</span> <span class="trans-value">${(item.count || 0).toLocaleString()}</span></div>
                 ${item.grade ? '<div class="info-item grade-item"><i class="fas fa-star" style="color:#fdcb6e;"></i> <span class="grade-value">گرید: ' + item.grade + '</span></div>' : ''}
+                ${marketingBy ? `<div class="info-item" style="border-top:1px solid #f0f0f0;padding-top:2px;margin-top:2px;grid-column:1/-1;">
+                    <i class="fas fa-bullhorn" style="color:#fdcb6e;font-size:11px;"></i>
+                    <span style="font-size:11px;color:#636e72;">بازاریابی:</span>
+                    <span style="font-size:11px;color:#2d3436;font-weight:500;">${marketingBy}</span>
+                </div>` : ''}
             </div>
         `;
         
@@ -5901,8 +6468,10 @@ function renderNasbCards(data) {
     list.style.position = 'static';
     document.getElementById('terminalCount').textContent = data.length + ' پایانه (نصب جدید)';
 }
+
+
 // ============================================================
-// رندر کارت‌های غیرفعال مالیاتی (پایانه، نام فروشگاه، دارنده حساب، موبایل، منطقه)
+// رندر کارت‌های غیرفعال مالیاتی (با بازاریابی توسط)
 // ============================================================
 function renderInactive03Cards(data) {
     var list = document.getElementById('terminalList');
@@ -5924,14 +6493,28 @@ function renderInactive03Cards(data) {
         var raw = item.raw || {};
         var mobile = raw['شماره موبایل'] || raw['شماره همراه'] || raw['موبایل'] || '';
         if (!mobile && item.mobile) mobile = item.mobile;
+        if (!mobile) mobile = '—';
         
-        // ⭐ بدون مبلغ و تعداد و گرید
+        // ============================================================
+        // دریافت "بازاریابی توسط"
+        // ============================================================
+            var marketingBy = item.marketingBy || raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
+
+        
         var infoHtml = `
             <div class="terminal-body" style="grid-template-columns:1fr 1fr;gap:2px 12px;display:grid;font-size:13px;color:#636e72;margin-bottom:3px;">
                 <div class="info-item"><i class="fas fa-store"></i> <span class="value">${item.shop || '—'}</span></div>
                 <div class="info-item"><i class="fas fa-user"></i> <span class="value">${item.holder || '—'}</span></div>
-                <div class="info-item"><i class="fas fa-phone"></i> <span class="value" style="direction:ltr;text-align:left;">${mobile || '—'}</span></div>
+                <div class="info-item">
+                    <i class="fas fa-phone" style="cursor:pointer;color:#6c5ce7;" onclick="makeCall('${mobile}')"></i>
+                    <span class="value" style="direction:ltr;text-align:left;cursor:pointer;color:#6c5ce7;font-weight:600;" onclick="makeCall('${mobile}')">${mobile}</span>
+                </div>
                 <div class="info-item"><i class="fas fa-map-marker-alt"></i> <span class="value">${item.region || '—'}</span></div>
+                ${marketingBy ? `<div class="info-item" style="border-top:1px solid #f0f0f0;padding-top:2px;margin-top:2px;grid-column:1/-1;">
+                    <i class="fas fa-bullhorn" style="color:#fdcb6e;font-size:11px;"></i>
+                    <span style="font-size:11px;color:#636e72;">بازاریابی:</span>
+                    <span style="font-size:11px;color:#2d3436;font-weight:500;">${marketingBy}</span>
+                </div>` : ''}
             </div>
         `;
         
@@ -5953,8 +6536,10 @@ function renderInactive03Cards(data) {
     list.style.position = 'static';
     document.getElementById('terminalCount').textContent = data.length + ' پایانه (غیرفعال مالیاتی)';
 }
+
+
 // ============================================================
-// رندر کارت‌های کد باز (فقط: پایانه، نام فروشگاه، دارنده حساب، موبایل، مدل دستگاه، وضعیت، آدرس)
+// رندر کارت‌های کد باز (با بازاریابی توسط)
 // ============================================================
 function renderCodeBazCards(data) {
     var list = document.getElementById('terminalList');
@@ -5973,19 +6558,31 @@ function renderCodeBazCards(data) {
         var raw = item.raw || {};
         var mobile = raw['شماره موبایل'] || raw['شماره همراه'] || raw['موبایل'] || '';
         if (!mobile && item.mobile) mobile = item.mobile;
+        if (!mobile) mobile = '—';
         
+        // ============================================================
+        // دریافت "بازاریابی توسط"
+        // ============================================================
+              var marketingBy = item.marketingBy || raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
         var deviceType = item.deviceType || raw['نوع دستگاه'] || raw['مدل دستگاه'] || '—';
         var status = raw['وضعیت'] || raw['Status'] || 'در انتظار';
         var address = raw['آدرس'] || raw['Address'] || raw['نشانی'] || '—';
         
-        // ⭐ فقط آیتم‌های مورد نظر
         var infoHtml = `
             <div class="terminal-body" style="grid-template-columns:1fr 1fr;gap:2px 12px;display:grid;font-size:13px;color:#636e72;margin-bottom:3px;">
                 <div class="info-item"><i class="fas fa-store"></i> <span class="value">${item.shop || '—'}</span></div>
                 <div class="info-item"><i class="fas fa-user"></i> <span class="value">${item.holder || '—'}</span></div>
-                <div class="info-item"><i class="fas fa-phone"></i> <span class="value" style="direction:ltr;text-align:left;">${mobile || '—'}</span></div>
+                <div class="info-item">
+                    <i class="fas fa-phone" style="cursor:pointer;color:#6c5ce7;" onclick="makeCall('${mobile}')"></i>
+                    <span class="value" style="direction:ltr;text-align:left;cursor:pointer;color:#6c5ce7;font-weight:600;" onclick="makeCall('${mobile}')">${mobile}</span>
+                </div>
                 <div class="info-item"><i class="fas fa-server"></i> <span class="value">${deviceType}</span></div>
                 <div class="info-item" style="grid-column:1/-1;"><i class="fas fa-flag"></i> <span class="value" style="font-weight:600;">وضعیت: ${status}</span></div>
+                ${marketingBy ? `<div class="info-item" style="border-top:1px solid #f0f0f0;padding-top:2px;margin-top:2px;grid-column:1/-1;">
+                    <i class="fas fa-bullhorn" style="color:#fdcb6e;font-size:11px;"></i>
+                    <span style="font-size:11px;color:#636e72;">بازاریابی:</span>
+                    <span style="font-size:11px;color:#2d3436;font-weight:500;">${marketingBy}</span>
+                </div>` : ''}
                 <div class="info-item" style="grid-column:1/-1;"><i class="fas fa-location-dot"></i> <span class="value">${address}</span></div>
             </div>
         `;
@@ -9009,7 +9606,9 @@ function updateReasonOptions() {
         'خسارتی و مفقودی (شرح خسارت در توضیحات درج گردد)',
         'عدم حضور پذیرنده',
         'مشکل مالیاتی',
-        'عدم همکاری',
+        ' عدم همکاری (علت ذکر گردد )',
+        'دستگاه مازاد ( استفاده از سایر دستگاه های ایران کیش)',
+        'کار با دستگاه سایر بانکها ( دلیل در توضیحات درج گردد)',
         'درخواست انصراف (علت دقیق در توضیحات درج گردد)',
         'نارضایتی از ایران کیش (علت دقیق در توضیحات درج گردد)',
         'نارضایتی از بانک (علت دقیق در توضیحات درج گردد)',
@@ -13256,6 +13855,37 @@ async function loadDataFromCache() {
         return false;
     }
 }
+
+// ============================================================
+// تماس با شماره موبایل
+// ============================================================
+function makeCall(phoneNumber) {
+    if (!phoneNumber || phoneNumber === '—' || phoneNumber === '') {
+        showMessage('', '⚠️ شماره موبایل در دسترس نیست!', 'warning');
+        return;
+    }
+    
+    // حذف کاراکترهای غیرعددی
+    var cleanNumber = phoneNumber.replace(/[^0-9]/g, '');
+    
+    if (cleanNumber.length < 10) {
+        showMessage('', '⚠️ شماره موبایل نامعتبر است!', 'warning');
+        return;
+    }
+    
+    // اضافه کردن 0 اگر شماره با 9 شروع شده باشد
+    if (cleanNumber.startsWith('9') && cleanNumber.length === 10) {
+        cleanNumber = '0' + cleanNumber;
+    }
+    
+    // ساخت لینک تماس
+    var telLink = 'tel:' + cleanNumber;
+    
+    // باز کردن دیالر
+    window.location.href = telLink;
+    
+    console.log('📞 تماس با:', cleanNumber);
+}
 // ============================================================
 // ثبت Service Worker - نسخه اصلاح شده با مدیریت خطا
 // ============================================================
@@ -13681,6 +14311,52 @@ function stopMessageChecker() {
     if (messageCheckInterval) {
         clearInterval(messageCheckInterval);
         messageCheckInterval = null;
+    }
+}
+
+// ============================================================
+// کرکره فیلترها
+// ============================================================
+var filterPanelOpen = false;
+
+function toggleFilterPanel() {
+    var panel = document.getElementById('filterPanelContent');
+    var icon = document.getElementById('filterToggleIcon');
+    
+    filterPanelOpen = !filterPanelOpen;
+    
+    if (filterPanelOpen) {
+        panel.style.display = 'block';
+        icon.innerHTML = '<i class="fas fa-chevron-up"></i>';
+    } else {
+        panel.style.display = 'none';
+        icon.innerHTML = '<i class="fas fa-chevron-down"></i>';
+    }
+}
+
+// باز کردن کرکره در صورت وجود فیلتر فعال
+function checkFilterActive() {
+    var selects = document.querySelectorAll('.filter-group select');
+    var hasFilter = false;
+    selects.forEach(function(sel) {
+        if (sel.value && sel.value !== '') {
+            hasFilter = true;
+        }
+    });
+    
+    var search = document.getElementById('searchTerminal');
+    if (search && search.value.trim() !== '') {
+        hasFilter = true;
+    }
+    
+    var badge = document.getElementById('filterCountBadge');
+    if (badge) {
+        if (hasFilter) {
+            badge.textContent = 'فعال';
+            badge.style.display = 'inline';
+        } else {
+            badge.style.display = 'none';
+        }
     }
 }
 
