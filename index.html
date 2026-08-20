@@ -4970,22 +4970,50 @@ function processMarketingData(data) {
 
 
 function processNasbData(data) {
-    console.log('📊 پردازش نصب جدید از Supabase...');
-    console.log('📊 تعداد رکوردها:', data.length);
+    console.log('📊 پردازش نصب جدید...');
+    console.log('📊 تعداد رکوردها:', data ? data.length : 0);
+    
+    if (!data || data.length === 0) {
+        nasbJadidData = [];
+        console.log('⚠️ داده‌ای برای نصب جدید وجود ندارد');
+        return;
+    }
+    
+    // ============================================================
+    // ⭐⭐⭐ دیباگ: ببین marketing_by از Supabase میاد یا نه
+    // ============================================================
+    if (data.length > 0) {
+        console.log('📥 نمونه از Supabase:', data[0]);
+        console.log('📥 marketing_by در Supabase:', data[0].marketing_by || '❌ خالی');
+    }
     
     nasbJadidData = data.map(function(item) {
-        // ===== خواندن وضعیت از دیتابیس =====
-        var status = item.status || 'مشکوک به صوری / ناکارآمد';
+        // ============================================================
+        // ⭐⭐⭐ دریافت marketingBy از item.marketing_by (از Supabase)
+        // ============================================================
+        var marketingBy = item.marketing_by || '';
         
-        // اگر وضعیت 'ندارد' یا خالی بود، به 'مشکوک به صوری / ناکارآمد' تبدیل کن
-        if (status === 'ندارد' || status === '' || status === 'فاقد اقدام') {
-            status = 'مشکوک به صوری / ناکارآمد';
+        // اگر از Supabase نیامد، از raw_data بگیر
+        if (!marketingBy) {
+            var raw = item.raw_data || {};
+            marketingBy = raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
+        }
+        
+        // اگر باز هم خالی بود، از __EMPTY بگیر (بعضی از شیت‌ها)
+        if (!marketingBy) {
+            var raw = item.raw_data || {};
+            marketingBy = raw['__EMPTY'] || '';
+        }
+        
+        // اگر مقدار عدد 0 بود، خالی کن
+        if (marketingBy === 0 || marketingBy === '0') {
+            marketingBy = '';
         }
         
         return {
             terminal: item.terminal || '',
             terminalWithZero: item.terminal_with_zero || '',
-            status: status,
+            status: item.status || 'مشکوک به صوری / ناکارآمد',
             count: item.count || 0,
             amount: item.amount || 0,
             shop: item.shop || '',
@@ -4996,19 +5024,15 @@ function processNasbData(data) {
             grade: item.grade || '',
             deviceType: item.device_type || '',
             nationalCode: item.national_code || '',
-            marketingBy: item.marketing_by || '',
+            marketingBy: marketingBy,
             raw: item.raw_data || {}
         };
     });
     
-    // ===== آمار برای دیباگ =====
-    var stats = {};
-    for (var i = 0; i < nasbJadidData.length; i++) {
-        var s = nasbJadidData[i].status || 'نامشخص';
-        if (!stats[s]) stats[s] = 0;
-        stats[s]++;
+    console.log('✅ نصب جدید پردازش شد:', nasbJadidData.length, 'رکورد');
+    if (nasbJadidData.length > 0) {
+        console.log('📊 نمونه اول با marketingBy:', nasbJadidData[0].marketingBy || '❌ خالی');
     }
-    console.log('📊 توزیع نصب جدید:', stats);
 }
 // ============================================================
 // PROCESS ACTIONS DATA - تطبیق user با پشتیبان پایانه
@@ -6403,9 +6427,15 @@ function renderMarketingCards(data) {
 // رندر کارت‌های نصب جدید (با بازاریابی توسط)
 // ============================================================
 function renderNasbCards(data) {
+    console.log('📊 renderNasbCards فراخوانی شد، تعداد:', data ? data.length : 0);
+    
     var list = document.getElementById('terminalList');
-    if (!list) return;
-    if (data.length === 0) {
+    if (!list) {
+        console.error('❌ terminalList پیدا نشد');
+        return;
+    }
+    
+    if (!data || data.length === 0) {
         list.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>هیچ پایانه‌ای در نصب جدید یافت نشد</p></div>';
         document.getElementById('terminalCount').textContent = '';
         return;
@@ -6415,6 +6445,7 @@ function renderNasbCards(data) {
     for (var i = 0; i < data.length; i++) {
         var item = data[i];
         var terminalDisplay = String(item.terminal).padStart(8, '0');
+        
         var statusTag = item.status === 'فعال' ? 
             '<span class="tag tag-nasb">✅ ' + item.status + '</span>' : 
             '<span class="tag tag-nasb-pending">⚡ ' + item.status + '</span>';
@@ -6425,10 +6456,9 @@ function renderNasbCards(data) {
         if (!mobile) mobile = '—';
         
         // ============================================================
-        // دریافت "بازاریابی توسط"
+        // دریافت marketingBy
         // ============================================================
-             var marketingBy = item.marketingBy || raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
-
+        var marketingBy = item.marketingBy || raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
         
         var infoHtml = `
             <div class="terminal-body" style="grid-template-columns:1fr 1fr;gap:2px 12px;display:grid;font-size:13px;color:#636e72;margin-bottom:3px;">
@@ -6444,7 +6474,7 @@ function renderNasbCards(data) {
                 ${item.grade ? '<div class="info-item grade-item"><i class="fas fa-star" style="color:#fdcb6e;"></i> <span class="grade-value">گرید: ' + item.grade + '</span></div>' : ''}
                 ${marketingBy ? `<div class="info-item" style="border-top:1px solid #f0f0f0;padding-top:2px;margin-top:2px;grid-column:1/-1;">
                     <i class="fas fa-bullhorn" style="color:#fdcb6e;font-size:11px;"></i>
-                    <span style="font-size:11px;color:#636e72;">بازاریابی:</span>
+                    <span style="font-size:11px;color:#636e72;">بازاریابی توسط:</span>
                     <span style="font-size:11px;color:#2d3436;font-weight:500;">${marketingBy}</span>
                 </div>` : ''}
             </div>
@@ -6468,8 +6498,6 @@ function renderNasbCards(data) {
     list.style.position = 'static';
     document.getElementById('terminalCount').textContent = data.length + ' پایانه (نصب جدید)';
 }
-
-
 // ============================================================
 // رندر کارت‌های غیرفعال مالیاتی (با بازاریابی توسط)
 // ============================================================
