@@ -511,12 +511,9 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
 /* ============================================================ */
 .terminal-list-container {
     position: relative;
-    flex: 1;
+    height: calc(100vh - 520px);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    min-height: 300px;
-    height: auto;
-    max-height: calc(100vh - 380px);
 }
 .terminal-list-container::-webkit-scrollbar { width: 4px; }
 .terminal-list-container::-webkit-scrollbar-track { background: transparent; }
@@ -536,12 +533,10 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
     box-sizing: border-box;
     font-size: 13px;
     height: auto !important;
-    min-height: 165px !important;
+    height: 165px;
     display: flex;
     flex-direction: column;
-margin-bottom: 8px !important; 
 }
-
 .terminal-card .terminal-header {
     display: flex;
     justify-content: space-between;
