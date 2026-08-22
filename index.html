@@ -535,7 +535,8 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
     overflow: visible;
     box-sizing: border-box;
     font-size: 13px;
-    height: 165px;
+    height: auto !important;
+    min-height: 170px !important;
     display: flex;
     flex-direction: column;
 }
@@ -1321,8 +1322,8 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
         font-size: 10px;
     }
     .terminal-card .terminal-tags .tag {
-        font-size: 7px;
-        padding: 1px 4px;
+        font-size: 12px;
+        padding: 2px 6px;
     }
 }
 
@@ -6307,69 +6308,72 @@ function createCard(item) {
     // ============================================================
     if (item.hasCollect) {
         tags += item.collectDone ? 
-            '<span class="tag tag-collect-done">✅ جمع‌آوری (' + (item.collectStatus || 'انجام شده') + ')</span>' : 
-            '<span class="tag tag-collect">📦 جمع‌آوری (فاقد اقدام)</span>';
+            '<span class="tag tag-collect-done"style="font-size:8px;padding:2px 6px;">✅ جمع‌آوری (' + (item.collectStatus || 'انجام شده') + ')</span>' : 
+            '<span class="tag tag-collect"style="font-size:11px;padding:2px 6px;">📦 جمع‌آوری (فاقد اقدام)</span>';
     }
     if (item.hasCollectOut) {
         tags += item.collectOutDone ? 
-            '<span class="tag tag-collect-done">✅ خارج از دستور (' + (item.collectOutStatus || 'انجام شده') + ')</span>' : 
-            '<span class="tag tag-collect">🚫 خارج از دستور (فاقد اقدام)</span>';
+            '<span class="tag tag-collect-done"style="font-size:8px;padding:2px 6px;">✅ خارج از دستور (' + (item.collectOutStatus || 'انجام شده') + ')</span>' : 
+            '<span class="tag tag-collect"style="font-size:11px;padding:2px 6px;">🚫 خارج از دستور (فاقد اقدام)</span>';
     }
     if (item.hasIneffective) {
         tags += item.ineffectiveDone ? 
-            '<span class="tag tag-ineffective-done">✅ ناکارآمد (' + (item.ineffectiveStatus || 'انجام شده') + ')</span>' : 
-            '<span class="tag tag-ineffective">⚡ ناکارآمد (فاقد اقدام)</span>';
+            '<span class="tag tag-ineffective-done"style="font-size:8px;padding:2px 6px;">✅ ناکارآمد (' + (item.ineffectiveStatus || 'انجام شده') + ')</span>' : 
+            '<span class="tag tag-ineffective"style="font-size:11px;padding:2px 6px;">⚡ ناکارآمد (فاقد اقدام)</span>';
     }
     if (item.hasKahraba) {
         tags += item.kahrabaDone ? 
-            '<span class="tag tag-kahraba-done">✅ کهربا (' + (item.kahrabaStatus || 'انجام شده') + ')</span>' : 
-            '<span class="tag tag-kahraba">🟡 کهربا (فاقد اقدام)</span>';
+            '<span class="tag tag-kahraba-done"style="font-size:8px;padding:2px 6px;">✅ کهربا (' + (item.kahrabaStatus || 'انجام شده') + ')</span>' : 
+            '<span class="tag tag-kahraba"style="font-size:11px;padding:2px 6px;">🟡 کهربا (فاقد اقدام)</span>';
     }
     if (item.hasPriority) {
         tags += item.priorityDone ? 
-            '<span class="tag tag-priority-done">✅ اولویت اول (' + (item.priorityStatus || 'انجام شده') + ')</span>' : 
-            '<span class="tag tag-priority">🔴 اولویت اول (فاقد اقدام)</span>';
+            '<span class="tag tag-priority-done"style="font-size:8px;padding:2px 6px;">✅ اولویت اول (' + (item.priorityStatus || 'انجام شده') + ')</span>' : 
+            '<span class="tag tag-priority"style="font-size:11px;padding:2px 6px;">🔴 اولویت اول (فاقد اقدام)</span>';
     }
     if (item.hasMadarek) {
         tags += (item.docsDone && item.docsStatus === 'تکمیل شده') ? 
-            '<span class="tag tag-docs-done">✅ مدارک (تکمیل شده)</span>' : 
-            '<span class="tag tag-docs">📄 مدارک (فاقد اقدام)</span>';
+            '<span class="tag tag-docs-done"style="font-size:8px;padding:2px 6px;">✅ مدارک (تکمیل شده)</span>' : 
+            '<span class="tag tag-docs"style="font-size:11px;padding:2px 6px;">📄 مدارک (فاقد اقدام)</span>';
     }
     if (item.hasReplace) {
         if (item.replaceStatus === 'فعال شده' || item.replaceStatus === 'تعویض شده') {
-            tags += '<span class="tag tag-replace-done">✅ تعویض (' + item.replaceStatus + ')</span>';
+            tags += '<span class="tag tag-replace-done"style="font-size:8px;padding:2px 6px;">✅ تعویض (' + item.replaceStatus + ')</span>';
         } else if (item.replaceStatus === 'ابطال شده') {
-            tags += '<span class="tag tag-ebtal">🔄 تعویض (ابطال شده)</span>';
+            tags += '<span class="tag tag-ebtal"style="font-size:8px;padding:2px 6px;">🔄 تعویض (ابطال شده)</span>';
         } else {
-            tags += '<span class="tag tag-replace">🔄 تعویض (فاقد اقدام)</span>';
+            tags += '<span class="tag tag-replace"style="font-size:11px;padding:2px 6px;">🔄 تعویض (فاقد اقدام)</span>';
         }
     }
     if (item.hasArvand) {
         tags += item.arvandDone ? 
-            '<span class="tag tag-arvand-done">⭐ ارزشمند (انجام شده)</span>' : 
-            '<span class="tag tag-arvand">⭐ ارزشمند (فاقد اقدام)</span>';
+            '<span class="tag tag-arvand-done"style="font-size:8px;padding:2px 6px;">⭐ ارزشمند (انجام شده)</span>' : 
+            '<span class="tag tag-arvand"style="font-size:11px;padding:2px 6px;">⭐ ارزشمند (فاقد اقدام)</span>';
     }
-    if (item.hasShaba) {
-        if (item.shabaDone || item.shabaStatus === 'ابطال شده') {
-            tags += item.shabaStatus === 'ابطال شده' ? 
-                '<span class="tag tag-ebtal">🏦 شبای پشتیبان (ابطال شده)</span>' : 
-                '<span class="tag tag-shaba-done">🏦 شبای پشتیبان (انجام شده)</span>';
+   if (item.hasShaba) {
+        var shebaStatus = item.shebaStatus || 'فاقد اقدام';
+        var shebaDone = item.shebaDone || false;
+        
+        if (shebaDone || shebaStatus === 'ابطال شده') {
+            tags += shebaStatus === 'ابطال شده' ? 
+                '<span class="tag tag-ebtal"style="font-size:8px;padding:2px 6px;">🏦 شبای پشتیبان (ابطال شده)</span>' : 
+                '<span class="tag tag-shaba-done"style="font-size:8px;padding:2px 6px;">🏦 شبای پشتیبان (انجام شده)</span>';
         } else {
-            tags += '<span class="tag tag-shaba">🏦 شبای پشتیبان (فاقد اقدام)</span>';
+            tags += '<span class="tag tag-shaba"style="font-size:11px;padding:2px 6px;">🏦 شبای پشتیبان (فاقد اقدام)</span>';
         }
     }
     if (item.hasDrop) {
         tags += item.dropStatus === 'احیا شده' ? 
-            '<span class="tag tag-drop-done">📉 افت (احیا شده)</span>' : 
-            '<span class="tag tag-drop">📉 افت (' + (item.dropPriority || 'نیاز به بررسی') + ')</span>';
+            '<span class="tag tag-drop-done"style="font-size:8px;padding:2px 6px;">📉 افت (احیا شده)</span>' : 
+            '<span class="tag tag-drop"style="font-size:11px;padding:2px 6px;">📉 افت (' + (item.dropPriority || 'نیاز به بررسی') + ')</span>';
     }
     if (item.isPM) {
-        tags += '<span class="tag tag-pm">✅ PM شده</span>';
+        tags += '<span class="tag tag-pm"style="font-size:8px;padding:2px 6px;">✅ PM شده</span>';
     } else {
-        tags += '<span class="tag tag-pm-not">❌ PM نشده</span>';
+        tags += '<span class="tag tag-pm-not"style="font-size:11px;padding:2px 6px;">❌ PM نشده</span>';
     }
     if (item.hasEbtal) {
-        tags += '<span class="tag tag-ebtal">🚫 ابطال</span>';
+        tags += '<span class="tag tag-ebtal"style="font-size:8px;padding:2px 6px;">🚫 ابطال</span>';
     }
     if (typeof hasPendingOperation === 'function' && hasPendingOperation(item)) {
         tags += '<span class="tag tag-pending">⏳ فاقد اقدام</span>';
