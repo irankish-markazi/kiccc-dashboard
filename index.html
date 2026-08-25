@@ -4687,7 +4687,6 @@ function hideSyncLoading(success) {
         }, 1500);
     }
 }
-
 function processTerminalsData(data) {
     console.log('📊 پردازش terminals از Supabase...');
     console.log('📊 تعداد رکوردها:', data.length);
@@ -4923,6 +4922,9 @@ function processTerminalsData(data) {
     console.log('📊 ارزشمند:', stats.arvand);
 }
 
+// ============================================================
+// پردازش بازاریابی (جدول مستقل marketing) - با شرط جدید
+// ============================================================
 function processMarketingData(data) {
     console.log('📊 پردازش بازاریابی...');
     console.log('📊 تعداد رکوردها:', data ? data.length : 0);
@@ -4933,46 +4935,19 @@ function processMarketingData(data) {
         return;
     }
     
-    // ============================================================
-    // ⭐⭐⭐ دیباگ: ببین marketing_by از Supabase میاد یا نه
-    // ============================================================
-    if (data.length > 0) {
-        console.log('📥 نمونه از Supabase (بازاریابی):', data[0]);
-        console.log('📥 marketing_by در Supabase (بازاریابی):', data[0].marketing_by || '❌ خالی');
-    }
-    
     bazaryabiData = data.map(function(item) {
-        // ============================================================
-        // ⭐⭐⭐ دریافت marketingBy از item.marketing_by (از Supabase)
-        // ============================================================
-        var marketingBy = item.marketing_by || '';
-        
-        // اگر از Supabase نیامد، از raw_data بگیر
-        if (!marketingBy) {
-            var raw = item.raw_data || {};
-            marketingBy = raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
+        var status = item.status || 'ناکارآمد';
+        if (status === 'ندارد' || status === '' || status === 'فاقد اقدام') {
+            status = 'ناکارآمد';
         }
-        
-        // اگر باز هم خالی بود، از __EMPTY بگیر
-        if (!marketingBy) {
-            var raw = item.raw_data || {};
-            marketingBy = raw['__EMPTY'] || '';
-        }
-        
-        // اگر مقدار عدد 0 بود، خالی کن
-        if (marketingBy === 0 || marketingBy === '0') {
-            marketingBy = '';
-        }
-        
-        console.log('📊 پردازش بازاریابی - terminal:', item.terminal, '| marketingBy:', marketingBy || '❌ خالی');
         
         return {
             terminal: item.terminal || '',
             terminalWithZero: item.terminal_with_zero || '',
-            status: item.status || 'ناکارآمد',
+            status: status,
             count: item.count || 0,
             amount: item.amount || 0,
-            day: item.day || 30,
+            day: item.trans_day || 30,
             shop: item.shop || '',
             holder: item.holder || '',
             supporter: item.supporter || '',
@@ -4981,64 +4956,31 @@ function processMarketingData(data) {
             grade: item.grade || '',
             deviceType: item.device_type || '',
             nationalCode: item.national_code || '',
-            marketingBy: marketingBy,
             raw: item.raw_data || {}
         };
     });
     
     console.log('✅ بازاریابی پردازش شد:', bazaryabiData.length, 'رکورد');
-    if (bazaryabiData.length > 0) {
-        console.log('📊 نمونه اول با marketingBy (بازاریابی):', bazaryabiData[0].marketingBy || '❌ خالی');
-    }
 }
 
+
 function processNasbData(data) {
-    console.log('📊 پردازش نصب جدید...');
-    console.log('📊 تعداد رکوردها:', data ? data.length : 0);
-    
-    if (!data || data.length === 0) {
-        nasbJadidData = [];
-        console.log('⚠️ داده‌ای برای نصب جدید وجود ندارد');
-        return;
-    }
-    
-    // ============================================================
-    // ⭐⭐⭐ دیباگ: ببین marketing_by از Supabase میاد یا نه
-    // ============================================================
-    if (data.length > 0) {
-        console.log('📥 نمونه از Supabase:', data[0]);
-        console.log('📥 marketing_by در Supabase:', data[0].marketing_by || '❌ خالی');
-    }
+    console.log('📊 پردازش نصب جدید از Supabase...');
+    console.log('📊 تعداد رکوردها:', data.length);
     
     nasbJadidData = data.map(function(item) {
-        // ============================================================
-        // ⭐⭐⭐ دریافت marketingBy از item.marketing_by (از Supabase)
-        // ============================================================
-        var marketingBy = item.marketing_by || '';
+        // ===== خواندن وضعیت از دیتابیس =====
+        var status = item.status || 'مشکوک به صوری / ناکارآمد';
         
-        // اگر از Supabase نیامد، از raw_data بگیر
-        if (!marketingBy) {
-            var raw = item.raw_data || {};
-            marketingBy = raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
+        // اگر وضعیت 'ندارد' یا خالی بود، به 'مشکوک به صوری / ناکارآمد' تبدیل کن
+        if (status === 'ندارد' || status === '' || status === 'فاقد اقدام') {
+            status = 'مشکوک به صوری / ناکارآمد';
         }
-        
-        // اگر باز هم خالی بود، از __EMPTY بگیر
-        if (!marketingBy) {
-            var raw = item.raw_data || {};
-            marketingBy = raw['__EMPTY'] || '';
-        }
-        
-        // اگر مقدار عدد 0 بود، خالی کن
-        if (marketingBy === 0 || marketingBy === '0') {
-            marketingBy = '';
-        }
-        
-        console.log('📊 پردازش - terminal:', item.terminal, '| marketingBy:', marketingBy || '❌ خالی');
         
         return {
             terminal: item.terminal || '',
             terminalWithZero: item.terminal_with_zero || '',
-            status: item.status || 'مشکوک به صوری / ناکارآمد',
+            status: status,
             count: item.count || 0,
             amount: item.amount || 0,
             shop: item.shop || '',
@@ -5049,15 +4991,18 @@ function processNasbData(data) {
             grade: item.grade || '',
             deviceType: item.device_type || '',
             nationalCode: item.national_code || '',
-            marketingBy: marketingBy,
             raw: item.raw_data || {}
         };
     });
     
-    console.log('✅ نصب جدید پردازش شد:', nasbJadidData.length, 'رکورد');
-    if (nasbJadidData.length > 0) {
-        console.log('📊 نمونه اول با marketingBy:', nasbJadidData[0].marketingBy || '❌ خالی');
+    // ===== آمار برای دیباگ =====
+    var stats = {};
+    for (var i = 0; i < nasbJadidData.length; i++) {
+        var s = nasbJadidData[i].status || 'نامشخص';
+        if (!stats[s]) stats[s] = 0;
+        stats[s]++;
     }
+    console.log('📊 توزیع نصب جدید:', stats);
 }
 // ============================================================
 // PROCESS ACTIONS DATA - تطبیق user با پشتیبان پایانه
@@ -5662,6 +5607,66 @@ function cascadeFilters() {
     renderTabs();
 }
 // ============================================================
+// ⭐ اصلاح تابع hasPendingOperationForFilter برای شیت‌های مستقل
+// ============================================================
+
+function hasPendingOperationForFilter(item, opFilter) {
+    if (!opFilter) return hasPendingOperation(item);
+    
+    // ============================================================
+    // عملیات‌های DATA
+    // ============================================================
+    switch(opFilter) {
+        case 'collect': 
+            return item.hasCollect && !item.collectDone;
+        case 'collect_out': 
+            return item.hasCollectOut && !item.collectOutDone;
+        case 'ineffective': 
+            return item.hasIneffective && !item.ineffectiveDone;
+        case 'kahraba': 
+            return item.hasKahraba && !item.kahrabaDone;
+        case 'priority': 
+            return item.hasPriority && !item.priorityDone;
+        case 'docs': 
+            return item.hasMadarek && !item.docsDone;
+        case 'replace': 
+            return item.hasReplace && 
+                   item.replaceStatus !== 'تعویض شده' && 
+                   item.replaceStatus !== 'فعال شده' && 
+                   item.replaceStatus !== 'ابطال شده';
+        case 'arvand': 
+            return item.hasArvand && !item.arvandDone;
+        case 'drop': 
+            return item.hasDrop && item.dropStatus !== 'احیا شده' && item.dropStatus !== 'عادی';
+        case 'shaba': 
+            return item.hasShaba && !item.shabaDone && item.shabaStatus !== 'ابطال شده';
+            
+        // ============================================================
+        // ⭐⭐ شیت‌های مستقل: بازاریابی، نصب جدید، غیرفعال مالیاتی، کد باز
+        // ============================================================
+        case 'marketing':
+            // اگر در filteredData هستیم و آیتم بازاریابی است
+            return item.status === 'ناکارآمد' || item.status === 'فاقد اقدام';
+            
+        case 'nasb':
+            // نصب جدید: مشکوک به صوری = فاقد اقدام
+            return item.status === 'مشکوک به صوری / ناکارآمد' || item.status === 'فاقد اقدام';
+            
+        case 'inactive03':
+            // غیرفعال مالیاتی: فاقد اقدام
+            return item.status === 'فاقد اقدام';
+            
+        case 'codebaz':
+            // کد باز: همیشه فاقد اقدام محسوب می‌شود (چون عملیاتی روی آن انجام نمی‌شود)
+            return true;
+            
+        default:
+            return false;
+    }
+}
+
+
+// ============================================================
 // HAS PENDING OPERATION (مشابه پروژه اول)
 // ============================================================
 function hasPendingOperation(item) {
@@ -5673,30 +5678,13 @@ function hasPendingOperation(item) {
     if (item.hasMadarek && !item.docsDone) return true;
     if (item.hasReplace && !item.replaceDone) return true;
     if (item.hasArvand && !item.arvandDone) return true;
-    if (item.hasShaba && !item.shabaDone && item.shabaStatus !== 'ابطال شده') return true;
+    
+    // ============================================================
+    // ⭐⭐⭐ اصلاح: استفاده از shebaDone (نه shabaDone)
+    // ============================================================
+    if (item.hasShaba && !item.shebaDone && item.shebaStatus !== 'ابطال شده') return true;
+    
     return false;
-}
-
-function hasPendingOperationForFilter(item, opFilter) {
-    if (!opFilter) return hasPendingOperation(item);
-    switch(opFilter) {
-        case 'collect': return item.hasCollect && !item.collectDone;
-        case 'collect_out': return item.hasCollectOut && !item.collectOutDone;
-        case 'ineffective': return item.hasIneffective && !item.ineffectiveDone;
-        case 'kahraba': return item.hasKahraba && !item.kahrabaDone;
-        case 'priority': return item.hasPriority && !item.priorityDone;
-        case 'docs': return item.hasMadarek && !item.docsDone;
-        case 'replace': 
-            // اصلاح شده برای تعویض بر اساس منطق پروژه اول
-            return item.hasReplace && 
-                   item.replaceStatus !== 'تعویض شده' && 
-                   item.replaceStatus !== 'فعال شده' && 
-                   item.replaceStatus !== 'ابطال شده';
-        case 'arvand': return item.hasArvand && !item.arvandDone;
-        case 'drop': return item.hasDrop && item.dropStatus !== 'احیا شده' && item.dropStatus !== 'عادی';
-        case 'shaba': return item.hasShaba && !item.shabaDone && item.shabaStatus !== 'ابطال شده';
-        default: return false;
-    }
 }
 // ============================================================
 // TOGGLE OPERATION (کامبو چندگانه)
@@ -5796,20 +5784,39 @@ function toggleTotalFilter() {
 function togglePendingFilter() {
     pendingFilterActive = !pendingFilterActive;
     totalFilterActive = false;
+    
     document.getElementById('pendingCard').classList.toggle('active');
-    var names = { 'collect': 'جمع‌آوری', 'collect_out': 'خارج از دستور', 'ineffective': 'ناکارآمد', 
-                  'priority': 'اولویت اول', 'kahraba': 'کهربا', 'docs': 'مدارک', 'drop': 'افت', 
-                  'replace': 'تعویض', 'arvand': 'ارزشمند', 'shaba': 'شبای پشتیبان' };
-    var opName = selectedOperations.length > 0 ? selectedOperations.map(function(o) { return names[o] || o; }).join(' و ') : 'همه';
-    document.getElementById('pendingHint').textContent = pendingFilterActive ? '(نمایش ' + opName + ' فاقد اقدام)' : '(کلیک کنید)';
     document.getElementById('totalCard').classList.remove('active');
-    document.getElementById('totalHint').textContent = '(کلیک کنید)';
+    
+    var names = { 
+        'collect': 'جمع‌آوری', 
+        'collect_out': 'خارج از دستور', 
+        'ineffective': 'ناکارآمد', 
+        'priority': 'اولویت اول', 
+        'kahraba': 'کهربا', 
+        'docs': 'مدارک', 
+        'drop': 'افت', 
+        'replace': 'تعویض', 
+        'arvand': 'ارزشمند', 
+        'shaba': 'شبای پشتیبان',
+        'marketing': 'بازاریابی',
+        'nasb': 'نصب جدید',
+        'inactive03': 'غیرفعال مالیاتی',
+        'codebaz': 'کد باز'
+    };
+    
+    var opName = selectedOperations.length > 0 ? 
+        selectedOperations.map(function(o) { return names[o] || o; }).join(' و ') : 
+        'همه';
+    
+    document.getElementById('pendingHint').textContent = 
+        pendingFilterActive ? '(نمایش ' + opName + ' فاقد اقدام)' : '(کلیک کنید)';
+    
+    // ============================================================
+    // ⭐⭐ دوباره فیلترها را اعمال کن
+    // ============================================================
     applyFilters();
 }
-
-// ============================================================
-// APPLY FILTERS - با حفظ مقدار منطقه
-// ============================================================
 function applyFilters() {
     console.log('📊 شروع applyFilters (پایانه‌ها)');
     
@@ -5830,6 +5837,7 @@ function applyFilters() {
         
         console.log('📊 region:', selectedRegion, 'pm:', pm, 'search:', search);
         console.log('📊 selectedOperations:', selectedOperations);
+        console.log('📊 pendingFilterActive:', pendingFilterActive);
         
         var data = [];
         
@@ -5860,9 +5868,6 @@ function applyFilters() {
             renderCodeBazCards(data);
             renderDashboardStats();
             
-            // ============================================================
-            // ⭐⭐ برگرداندن مقدار منطقه
-            // ============================================================
             if (regionSelect && selectedRegion) {
                 regionSelect.value = selectedRegion;
             }
@@ -5894,6 +5899,17 @@ function applyFilters() {
                            mobile.includes(search) || supporter.includes(search);
                 });
             }
+            
+            // ============================================================
+            // ⭐⭐⭐ اگر فیلتر pending فعال است، فقط فاقد اقدام را نشان بده
+            // ============================================================
+            if (pendingFilterActive) {
+                data = data.filter(function(item) {
+                    return item.status === 'ناکارآمد' || item.status === 'فاقد اقدام';
+                });
+                console.log('📊 بعد از فیلتر pending (بازاریابی):', data.length);
+            }
+            
             displayData = data;
             var total = data.length;
             var pending = data.filter(function(item) { return item.status === 'ناکارآمد'; }).length;
@@ -5933,6 +5949,17 @@ function applyFilters() {
                            mobile.includes(search) || supporter.includes(search);
                 });
             }
+            
+            // ============================================================
+            // ⭐⭐⭐ اگر فیلتر pending فعال است، فقط فاقد اقدام را نشان بده
+            // ============================================================
+            if (pendingFilterActive) {
+                data = data.filter(function(item) {
+                    return item.status === 'مشکوک به صوری / ناکارآمد';
+                });
+                console.log('📊 بعد از فیلتر pending (نصب جدید):', data.length);
+            }
+            
             displayData = data;
             var total = data.length;
             var pending = data.filter(function(item) { return item.status === 'مشکوک به صوری / ناکارآمد'; }).length;
@@ -5964,6 +5991,17 @@ function applyFilters() {
                            mobile.includes(search);
                 });
             }
+            
+            // ============================================================
+            // ⭐⭐⭐ اگر فیلتر pending فعال است، فقط فاقد اقدام را نشان بده
+            // ============================================================
+            if (pendingFilterActive) {
+                data = data.filter(function(item) {
+                    return item.shebaStatus === 'فاقد اقدام';
+                });
+                console.log('📊 بعد از فیلتر pending (شبا):', data.length);
+            }
+            
             displayData = data;
             var total = data.length;
             var pending = data.filter(function(item) { return item.shebaStatus === 'فاقد اقدام'; }).length;
@@ -5997,6 +6035,17 @@ function applyFilters() {
                            mobile.includes(search) || supporter.includes(search);
                 });
             }
+            
+            // ============================================================
+            // ⭐⭐⭐ اگر فیلتر pending فعال است، فقط فاقد اقدام را نشان بده
+            // ============================================================
+            if (pendingFilterActive) {
+                data = data.filter(function(item) {
+                    return item.status === 'فاقد اقدام';
+                });
+                console.log('📊 بعد از فیلتر pending (غیرفعال مالیاتی):', data.length);
+            }
+            
             displayData = data;
             var total = data.length;
             var pending = data.filter(function(item) { return item.status === 'فاقد اقدام'; }).length;
@@ -6051,6 +6100,9 @@ function applyFilters() {
             }
             console.log('📊 بعد از فیلتر PM:', data.length);
             
+            // ============================================================
+            // ⭐⭐⭐ فیلتر pending برای DATA اصلی
+            // ============================================================
             if (pendingFilterActive) {
                 data = data.filter(function(item) {
                     var hasPending = false;
@@ -6065,7 +6117,7 @@ function applyFilters() {
                     }
                     return hasPending;
                 });
-                console.log('📊 بعد از فیلتر pending:', data.length);
+                console.log('📊 بعد از فیلتر pending (DATA):', data.length);
             }
         }
         
@@ -6352,10 +6404,10 @@ function createCard(item) {
         
         if (shebaDone || shebaStatus === 'ابطال شده') {
             tags += shebaStatus === 'ابطال شده' ? 
-                '<span class="tag tag-ebtal"style="font-size:8px;padding:2px 6px;">🏦 شبای پشتیبان (ابطال شده)</span>' : 
-                '<span class="tag tag-shaba-done"style="font-size:8px;padding:2px 6px;">🏦 شبای پشتیبان (انجام شده)</span>';
+                '<span class="tag tag-ebtal"style="font-size:8px;padding:2px 6px;"> شبای پشتیبان (ابطال شده)</span>' : 
+                '<span class="tag tag-shaba-done"style="font-size:8px;padding:2px 6px;"> شبای پشتیبان (انجام شده)</span>';
         } else {
-            tags += '<span class="tag tag-shaba"style="font-size:11px;padding:2px 6px;">🏦 شبای پشتیبان (فاقد اقدام)</span>';
+            tags += '<span class="tag tag-shaba"style="font-size:11px;padding:2px 6px;"> شبای پشتیبان (فاقد اقدام)</span>';
         }
     }
     if (item.hasDrop) {
@@ -7708,12 +7760,8 @@ function renderRegisteredActions(search) {
         `;
     }
     container.innerHTML = html;
-}
-// ============================================================
-// RENDER ACTIONS LIST - پروژه دوم (اصلاح نهایی - پشتیبان)
-// ============================================================
-// ============================================================
-// RENDER ACTIONS LIST - پروژه دوم (اصلاح برای اقدامات گروهی)
+}// ============================================================
+// RENDER ACTIONS LIST - اصلاح شده برای فیلتر صحیح پشتیبان
 // ============================================================
 function renderActionsList(search) {
     var container = document.getElementById('actionsList');
@@ -7730,6 +7778,9 @@ function renderActionsList(search) {
     if (isExpert) {
         supporterList = supporterMap[currentUser] || [];
     }
+    
+    console.log('📊 renderActionsList - currentUser:', currentUser);
+    console.log('📊 isSupporter:', isSupporter);
     
     for (var i = 0; i < keys.length; i++) {
         var t = keys[i];
@@ -7749,7 +7800,7 @@ function renderActionsList(search) {
                                 (action.nextAction && action.nextAction.trim() !== '');
             
             // ============================================================
-            // فیلتر بر اساس نقش کاربر
+            // ⭐⭐⭐ فیلتر بر اساس نقش کاربر
             // ============================================================
             if (isAdmin) {
                 // مدیر: همه را می‌بیند (به جز تکمیل شده)
@@ -7773,7 +7824,7 @@ function renderActionsList(search) {
                 
             } else if (isSupporter) {
                 // ============================================================
-                // ⭐⭐ پشتیبان: نمایش اقدامات گروهی بدون کارشناس
+                // ⭐⭐⭐ پشتیبان: فقط اقدامات مربوط به خودش
                 // ============================================================
                 
                 // 1. تکمیل شده → نمایش نده
@@ -7785,37 +7836,52 @@ function renderActionsList(search) {
                 // 3. اقدام گروهی با expert پر شده و عدم تایید نشده → پشتیبان نباید ببیند
                 if (isBulk && actionExpert && !isRejected) continue;
                 
+                // ============================================================
+                // ⭐⭐ پیدا کردن پشتیبان پایانه
+                // ============================================================
+                var terminalInfo = null;
+                for (var k = 0; k < allData.length; k++) {
+                    if (allData[k].terminal === t || allData[k].terminalWithZero === t) {
+                        terminalInfo = allData[k];
+                        break;
+                    }
+                }
+                
+                var terminalSupporter = terminalInfo ? terminalInfo.supporter : '';
+                
+                // ============================================================
+                // ⭐⭐ اگر پشتیبان پایانه با کاربر فعلی یکی نیست، نمایش نده
+                // ============================================================
+                if (terminalSupporter !== currentUser) {
+                    console.log('⏭️ پشتیبان پایانه:', terminalSupporter, '!=', currentUser, '- نمایش داده نشد:', t);
+                    continue;
+                }
+                
+                // ============================================================
+                // ✅ شرایطی که پشتیبان می‌تونه ببینه:
+                // ============================================================
                 var shouldShow = false;
                 
-                // 4. عدم تایید و تکمیل نشده → نمایش بده
+                // 1. عدم تایید و تکمیل نشده → نمایش بده
                 if (isRejected && action.completed === false) {
                     shouldShow = true;
                 }
                 
-                // 5. تکمیل نشده خودش با next_action
+                // 2. تکمیل نشده خودش با next_action
                 if (!shouldShow && !isRejected && action.completed === false) {
                     if (actionUser === currentUser && hasNextAction) {
                         shouldShow = true;
                     }
                 }
                 
-                // ⭐⭐⭐ 6. اقدام گروهی بدون expert و تکمیل نشده → پشتیبان باید ببیند
+                // 3. اقدام گروهی بدون expert و تکمیل نشده (فقط اگر پشتیبان خودش باشد)
                 if (!shouldShow && isBulk && !actionExpert && action.completed === false) {
-                    // پیدا کردن پشتیبان پایانه
-                    var terminalInfo = null;
-                    for (var k = 0; k < allData.length; k++) {
-                        if (allData[k].terminal === t || allData[k].terminalWithZero === t) {
-                            terminalInfo = allData[k];
-                            break;
-                        }
-                    }
-                    // اگر پشتیبان این پایانه، خودش است → نمایش بده
-                    if (terminalInfo && terminalInfo.supporter === currentUser) {
+                    if (terminalSupporter === currentUser) {
                         shouldShow = true;
                     }
                 }
                 
-                // 7. تکمیل نشده خودش (حتی بدون next_action)
+                // 4. تکمیل نشده خودش (حتی بدون next_action)
                 if (!shouldShow && !isRejected && action.completed === false && !isReview) {
                     if (actionUser === currentUser) {
                         shouldShow = true;
@@ -7827,6 +7893,8 @@ function renderActionsList(search) {
             }
         }
     }
+    
+    console.log('📊 تعداد کل اقدامات بعد از فیلتر:', items.length);
     
     // جستجو
     if (search) {
@@ -7845,7 +7913,6 @@ function renderActionsList(search) {
         updateAllBadges(0);
         return;
     }
-    
     // رندر کارت‌ها
     var html = '';
     for (var i = 0; i < items.length; i++) {
@@ -11173,6 +11240,381 @@ function updatePendingBadgeHeader() {
     }
 }
 // ============================================================
+// ⭐ اصلاح نهایی دسترسی پشتیبان در تب اقدامات
+// ============================================================
+
+// ============================================================
+// 1. تابع کمکی برای دریافت اطلاعات پایانه
+// ============================================================
+function getTerminalInfo(terminal) {
+    if (!terminal) return null;
+    
+    for (var i = 0; i < allData.length; i++) {
+        var item = allData[i];
+        if (item.terminal === terminal || item.terminalWithZero === terminal) {
+            var mobile = (item.raw && item.raw['شماره موبایل']) || 
+                        (item.raw && item.raw['شماره همراه']) || 
+                        (item.raw && item.raw['موبایل']) || 
+                        item.mobile || '';
+            mobile = String(mobile).replace(/[\s\-\(\)]/g, '');
+            
+            return {
+                shop: item.shop || '—',
+                holder: item.holder || '—',
+                deviceType: item.deviceType || '—',
+                mobile: mobile,
+                mobileDisplay: mobile || '—',
+                region: item.region || '—',
+                supporter: item.supporter || '',
+                expert: item.expert || ''
+            };
+        }
+    }
+    
+    if (bazaryabiData) {
+        for (var i = 0; i < bazaryabiData.length; i++) {
+            var item = bazaryabiData[i];
+            if (item.terminal === terminal || item.terminalWithZero === terminal) {
+                var mobile = (item.raw && item.raw['شماره موبایل']) || 
+                            (item.raw && item.raw['شماره همراه']) || 
+                            (item.raw && item.raw['موبایل']) || 
+                            item.mobile || '';
+                mobile = String(mobile).replace(/[\s\-\(\)]/g, '');
+                
+                return {
+                    shop: item.shop || '—',
+                    holder: item.holder || '—',
+                    deviceType: item.deviceType || '—',
+                    mobile: mobile,
+                    mobileDisplay: mobile || '—',
+                    region: item.region || '—',
+                    supporter: item.supporter || '',
+                    expert: item.expert || ''
+                };
+            }
+        }
+    }
+    
+    return null;
+}
+
+// ============================================================
+// 2. اصلاح تابع renderActionsList با قوانین دقیق
+// ============================================================
+var originalRenderActionsList = window.renderActionsList;
+
+window.renderActionsList = function(search) {
+    console.log('📊 renderActionsList با قوانین دقیق پشتیبان...');
+    
+    var container = document.getElementById('actionsList');
+    if (!container) return;
+    
+    var items = [];
+    var keys = Object.keys(actions);
+    
+    var isAdmin = (currentUser === 'مدیر سیستم');
+    var isExpert = VALID_EXPERTS.indexOf(currentUser) !== -1;
+    var isSupporter = !isAdmin && !isExpert;
+    
+    var supporterList = [];
+    if (isExpert) {
+        supporterList = supporterMap[currentUser] || [];
+    }
+    
+    console.log('📊 نقش کاربر:', isAdmin ? 'مدیر' : (isExpert ? 'کارشناس' : 'پشتیبان'));
+    
+    for (var i = 0; i < keys.length; i++) {
+        var t = keys[i];
+        var history = actions[t] || [];
+        
+        // پیدا کردن پشتیبان پایانه
+        var terminalInfo = getTerminalInfo(t);
+        var terminalSupporter = terminalInfo ? terminalInfo.supporter : '';
+        
+        if (!terminalSupporter) {
+            for (var k = 0; k < allData.length; k++) {
+                if (allData[k].terminal === t || allData[k].terminalWithZero === t) {
+                    terminalSupporter = allData[k].supporter || '';
+                    break;
+                }
+            }
+        }
+        
+        for (var j = 0; j < history.length; j++) {
+            var action = history[j];
+            
+            if (!action.user && !action.username) continue;
+            
+            var actionUser = action.user || action.username || '';
+            var actionExpert = action.expert || '';
+            var isBulk = action.is_bulk || action.isBulk || false;
+            var isCompleted = (action.completed === true);
+            var isVerified = (action.verified === true);
+            var isRejected = (action.rejected === true);
+            var isReview = (action.needs_review === true || action.needsReview === true);
+            var hasNextAction = (action.next_action && action.next_action.trim() !== '') || 
+                                (action.nextAction && action.nextAction.trim() !== '');
+            
+            // ============================================================
+            // ⭐⭐⭐ فیلتر بر اساس نقش
+            // ============================================================
+            var shouldShow = false;
+            
+            // ---------- مدیر: همه را می‌بیند (به جز تکمیل شده و تایید شده) ----------
+            if (isAdmin) {
+                if (isCompleted && isVerified) continue;
+                shouldShow = true;
+            }
+            
+            // ---------- کارشناس: فقط موارد مربوط به خودش ----------
+            else if (isExpert) {
+                if (actionExpert === currentUser) {
+                    if (isCompleted && isVerified) continue;
+                    shouldShow = true;
+                }
+                else if (terminalSupporter && supporterList.indexOf(terminalSupporter) !== -1) {
+                    if (isCompleted && isVerified) continue;
+                    shouldShow = true;
+                }
+                else if (actionUser && supporterList.indexOf(actionUser) !== -1) {
+                    if (isCompleted && isVerified) continue;
+                    shouldShow = true;
+                }
+                else if (isBulk && !actionExpert && terminalSupporter && supporterList.indexOf(terminalSupporter) !== -1) {
+                    if (isCompleted && isVerified) continue;
+                    shouldShow = true;
+                }
+            }
+            
+            // ---------- ⭐⭐⭐ پشتیبان: قوانین دقیق ----------
+            else if (isSupporter) {
+                // ============================================================
+                // شرط اولیه: فقط پایانه‌هایی که پشتیبانش خودش است
+                // ============================================================
+                if (terminalSupporter !== currentUser) {
+                    console.log('⏭️ پشتیبان پایانه (' + terminalSupporter + ') != کاربر (' + currentUser + ')');
+                    continue;
+                }
+                
+                // ============================================================
+                // شرط: تکمیل شده و تایید شده → نمایش نده
+                // ============================================================
+                if (isCompleted && isVerified) {
+                    console.log('⏭️ تکمیل شده و تایید شده:', t);
+                    continue;
+                }
+                
+                // ============================================================
+                // شرط: در حال بررسی (نیاز به بررسی) و عدم تایید نشده → نمایش نده
+                // ============================================================
+                if (isReview && !isRejected) {
+                    console.log('⏭️ در حال بررسی:', t);
+                    continue;
+                }
+                
+                // ============================================================
+                // ⭐⭐⭐ قانون ۱: ✅ عدم تایید شده → نمایش بده (اولویت اول)
+                // ============================================================
+                if (isRejected) {
+                    console.log('✅ قانون ۱ - عدم تایید:', t);
+                    shouldShow = true;
+                }
+                
+                // ============================================================
+                // ⭐⭐⭐ قانون ۲: ✅ تکمیل نشده + خودش ثبت کرده + دارای اقدام بعدی → نمایش بده
+                // ============================================================
+                if (!shouldShow && !isCompleted && actionUser === currentUser && hasNextAction) {
+                    console.log('✅ قانون ۲ - تکمیل نشده خودش:', t);
+                    shouldShow = true;
+                }
+                
+                // ============================================================
+                // ⭐⭐⭐ قانون ۳: ✅ اقدام گروهی + ستون کارشناس خالی → نمایش بده
+                // ============================================================
+                if (!shouldShow && isBulk && !actionExpert) {
+                    console.log('✅ قانون ۳ - اقدام گروهی بدون کارشناس:', t);
+                    shouldShow = true;
+                }
+                
+                // ============================================================
+                // ❌ اقدام گروهی با ستون کارشناس پر شده → نمایش نده (حتی اگر تکمیل نشده باشد)
+                // ============================================================
+                if (isBulk && actionExpert && !isRejected) {
+                    console.log('⏭️ اقدام گروهی با کارشناس پر شده:', t);
+                    shouldShow = false;
+                }
+                
+                // ============================================================
+                // اگر هیچکدام از قوانین بالا برقرار نشد → نمایش نده
+                // ============================================================
+                if (!shouldShow) {
+                    console.log('⏭️ هیچ قانونی برقرار نیست:', t);
+                    continue;
+                }
+            }
+            
+            if (shouldShow) {
+                items.push({ terminal: t, index: j, action: action });
+            }
+        }
+    }
+    
+    // جستجو
+    if (search) {
+        items = items.filter(function(item) {
+            var term = String(item.terminal).padStart(8, '0');
+            var termWithoutZero = term.replace(/^0+/, '');
+            return term.includes(search) || termWithoutZero.includes(search) || 
+                   search.includes(term) || search.includes(termWithoutZero);
+        });
+    }
+    
+    cachedFilteredCount = items.length;
+    
+    if (items.length === 0) {
+        container.innerHTML = '<div class="empty-state"><i class="fas fa-check-circle" style="color:#00b894;font-size:48px;"></i><p style="font-size:14px;margin-top:10px;">✅ هیچ اقدامی برای نمایش وجود ندارد</p></div>';
+        updateAllBadges(0);
+        return;
+    }
+    
+    // ============================================================
+    // رندر کارت‌ها
+    // ============================================================
+    var html = '';
+    for (var i = 0; i < items.length; i++) {
+        var item = items[i];
+        var terminalDisplay = String(item.terminal).padStart(8, '0');
+        var action = item.action;
+        var isRejected = action.rejected || false;
+        var isBulk = action.is_bulk || action.isBulk || false;
+        var bulkBadge = isBulk ? '<span style="background:#fdcb6e;color:#2d3436;padding:1px 10px;border-radius:6px;font-size:10px;font-weight:600;margin-right:6px;">📤 گروهی</span>' : '';
+        
+        var terminalInfo = getTerminalInfo(item.terminal);
+        var shop = terminalInfo ? terminalInfo.shop : '—';
+        var holder = terminalInfo ? terminalInfo.holder : '—';
+        var deviceType = terminalInfo ? terminalInfo.deviceType : '—';
+        var mobile = terminalInfo ? terminalInfo.mobile : '';
+        var mobileDisplay = terminalInfo ? terminalInfo.mobileDisplay : '—';
+        
+        var mobileLink = '';
+        if (mobile && mobile.length >= 10) {
+            mobileLink = '<a href="tel:' + mobile + '" style="color:#6c5ce7;text-decoration:none;font-weight:600;direction:ltr;text-align:left;display:inline-block;" onclick="event.stopPropagation();">📞 ' + mobile + '</a>';
+        } else if (mobileDisplay && mobileDisplay !== '—') {
+            mobileLink = '<span style="direction:ltr;text-align:left;display:inline-block;">' + mobileDisplay + '</span>';
+        } else {
+            mobileLink = '<span style="color:#b2bec3;">—</span>';
+        }
+        
+        var isPending = false;
+        for (var p = 0; p < pendingActions.length; p++) {
+            if (pendingActions[p].terminal === item.terminal && 
+                pendingActions[p].action.actionId === action.actionId) {
+                isPending = true;
+                break;
+            }
+        }
+        
+        var opType = action.operation_type || action.operationType || 'اقدام';
+        var reason = action.reason || '';
+        var details = action.details || '';
+        var nextAct = action.next_action || action.nextAction || '';
+        var rejectReason = action.reject_reason || action.rejectReason || '';
+        var actionDate = action.action_date || action.date || '';
+        var username = action.username || action.user || '';
+        
+        var groupLabel = '';
+        if (isBulk && !action.expert) {
+            groupLabel = '<span style="background:#e8d5f5;color:#6c2e8a;padding:1px 8px;border-radius:4px;font-size:9px;font-weight:600;margin-right:4px;">👤 بدون کارشناس</span>';
+        }
+        if (isBulk && action.expert) {
+            groupLabel = '<span style="background:#d4edda;color:#155724;padding:1px 8px;border-radius:4px;font-size:9px;font-weight:600;margin-right:4px;">👤 کارشناس: ' + action.expert + '</span>';
+        }
+        
+        // ============================================================
+        // کارت عدم تایید
+        // ============================================================
+        if (isRejected) {
+            html += `
+                <div class="action-card" style="border-right-color: #ff6b6b;padding:14px 16px;margin-bottom:8px;background:#fff5f5;border:2px solid #ff6b6b;">
+                    <div class="action-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
+                        <span class="action-terminal" style="font-size:15px;font-weight:700;color:#ff6b6b;">
+                            ${terminalDisplay}
+                            <span style="background:#ff6b6b;color:white;padding:2px 12px;border-radius:12px;font-size:11px;font-weight:bold;">❌ عدم تایید</span>
+                            ${isBulk ? bulkBadge : ''}
+                        </span>
+                        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+                            <button class="action-btn" onclick="resolveReview('${item.terminal}', ${item.index})" 
+                                style="background:#6c5ce7;color:white;border:none;padding:5px 16px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;transition:0.3s;">
+                                🔄 بررسی مجدد
+                            </button>
+                            ${isPending ? '<span class="sync-status-badge pending" style="background:#fff3cd;color:#856404;padding:2px 12px;border-radius:12px;font-size:11px;">📤 در صف</span>' : ''}
+                        </div>
+                    </div>
+                    
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;margin-top:6px;font-size:12px;color:#636e72;background:#fafafa;padding:6px 10px;border-radius:8px;">
+                        <div><i class="fas fa-store" style="color:#6c5ce7;width:16px;"></i> ${shop}</div>
+                        <div><i class="fas fa-user" style="color:#6c5ce7;width:16px;"></i> ${holder}</div>
+                        <div><i class="fas fa-server" style="color:#6c5ce7;width:16px;"></i> ${deviceType}</div>
+                        <div><i class="fas fa-phone" style="color:#6c5ce7;width:16px;"></i> ${mobileLink}</div>
+                    </div>
+                    
+                    <div class="action-text" style="font-size:13px;margin-top:4px;">📌 ${opType} ${groupLabel} | ${reason || ''}</div>
+                    ${details ? '<div class="action-text" style="color:#636e72;font-size:12px;">📝 ' + details + '</div>' : ''}
+                    ${nextAct ? '<div class="action-text" style="color:#6c5ce7;font-weight:600;font-size:12px;">🎯 ' + nextAct + '</div>' : '<div class="action-text" style="color:#b2bec3;font-size:12px;">— بدون اقدام بعدی</div>'}
+                    ${rejectReason ? `<div style="font-size:11px;color:#e17055;margin-top:4px;">⛔ ${rejectReason}</div>` : ''}
+                    <div class="action-meta" style="font-size:11px;color:#b2bec3;margin-top:4px;">
+                        ${actionDate || ''} | ${username || ''}
+                    </div>
+                </div>
+            `;
+            continue;
+        }
+        
+        // ============================================================
+        // کارت تکمیل نشده (قانون ۲ و ۳)
+        // ============================================================
+        var statusText = 'در انتظار تکمیل';
+        html += `
+            <div class="action-card" style="border-right-color: #fdcb6e;padding:14px 16px;margin-bottom:8px;">
+                <div class="action-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
+                    <span class="action-terminal" style="font-size:15px;font-weight:700;">${terminalDisplay}</span>
+                    <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+                        <button class="action-btn" onclick="openCompleteModal('${item.terminal}', ${item.index})" 
+                            style="background:#00b894;color:white;border:none;padding:5px 16px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;">✅ تکمیل</button>
+                        ${isPending ? '<span class="sync-status-badge pending" style="background:#fff3cd;color:#856404;padding:2px 12px;border-radius:12px;font-size:11px;">📤 در صف</span>' : ''}
+                    </div>
+                </div>
+                
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;margin-top:6px;font-size:12px;color:#636e72;background:#fafafa;padding:6px 10px;border-radius:8px;">
+                    <div><i class="fas fa-store" style="color:#6c5ce7;width:16px;"></i> ${shop}</div>
+                    <div><i class="fas fa-user" style="color:#6c5ce7;width:16px;"></i> ${holder}</div>
+                    <div><i class="fas fa-server" style="color:#6c5ce7;width:16px;"></i> ${deviceType}</div>
+                    <div><i class="fas fa-phone" style="color:#6c5ce7;width:16px;"></i> ${mobileLink}</div>
+                </div>
+                
+                <div class="action-text" style="font-size:13px;margin-top:4px;">📌 ${opType} ${bulkBadge} ${groupLabel} | ${reason || ''}</div>
+                ${details ? '<div class="action-text" style="color:#636e72;font-size:12px;">📝 ' + details + '</div>' : ''}
+                ${nextAct ? '<div class="action-text" style="color:#6c5ce7;font-weight:600;font-size:12px;">🎯 ' + nextAct + '</div>' : '<div class="action-text" style="color:#b2bec3;font-size:12px;">— بدون اقدام بعدی</div>'}
+                <div class="action-meta" style="font-size:11px;color:#b2bec3;margin-top:4px;">
+                    ${actionDate || ''} | ${username || ''}
+                    <span class="action-status pending" style="padding:2px 10px;border-radius:10px;font-size:11px;font-weight:600;margin-right:8px;background:#fff3cd;color:#856404;">${statusText}</span>
+                </div>
+            </div>
+        `;
+    }
+    container.innerHTML = html;
+    
+    updateAllBadges(items.length);
+};
+
+console.log('✅ قوانین دقیق پشتیبان اعمال شد:');
+console.log('  📋 قانون ۱: عدم تایید شده → نمایش داده می‌شود');
+console.log('  📋 قانون ۲: تکمیل نشده + خودش ثبت کرده + دارای اقدام بعدی → نمایش داده می‌شود');
+console.log('  📋 قانون ۳: اقدام گروهی + ستون کارشناس خالی → نمایش داده می‌شود');
+console.log('  ❌ اقدام گروهی با ستون کارشناس پر شده → نمایش داده نمی‌شود (مگر عدم تایید شده باشد)');
+console.log('  ✅ فقط پایانه‌هایی که پشتیبانش خودش است نمایش داده می‌شود');
+
+// ============================================================
 // اصلاح تابع updatePendingBadge برای بروزرسانی هر دو
 // ============================================================
 function updatePendingBadge() {
@@ -11339,7 +11781,11 @@ function resetFilters() {
 // ۲۱. خروجی اکسل (با گرفتن آخرین مقدار هر فیلد از تاریخچه)
 // ============================================================
 function exportToExcel() {
-    var dataToExport = displayData.length > 0 ? displayData : filteredData;
+    // ============================================================
+    // ⭐⭐ استفاده از filteredData به جای displayData برای اطمینان از داده‌های کامل
+    // ============================================================
+    var dataToExport = filteredData.length > 0 ? filteredData : displayData;
+    
     if (dataToExport.length === 0) {
         showMessage('❌ داده‌ای برای خروجی وجود ندارد!');
         return;
@@ -11405,31 +11851,24 @@ function exportToExcel() {
             for (var j = 0; j < sortedByDate.length; j++) {
                 var act = sortedByDate[j];
                 
-                // آخرین failReason
                 var failVal = getVal(act, ['fail_reason', 'failReason']);
                 if (failVal) lastFailReason = failVal;
                 
-                // آخرین rejectReason
                 var rejectVal = getVal(act, ['reject_reason', 'rejectReason']);
                 if (rejectVal) lastRejectReason = rejectVal;
                 
-                // آخرین reviewRejectResult
                 var reviewVal = getVal(act, ['review_reject_result', 'reviewRejectResult']);
                 if (reviewVal) lastReviewRejectResult = reviewVal;
                 
-                // آخرین rejectedBy
                 var rejByVal = getVal(act, ['rejected_by', 'rejectedBy']);
                 if (rejByVal) lastRejectedBy = rejByVal;
                 
-                // آخرین rejectedDate
                 var rejDateVal = getVal(act, ['rejected_date', 'rejectedDate']);
                 if (rejDateVal) lastRejectedDate = rejDateVal;
                 
-                // آخرین reviewedBy
                 var revByVal = getVal(act, ['reviewed_by', 'reviewedBy']);
                 if (revByVal) lastReviewedBy = revByVal;
                 
-                // آخرین reviewedDate
                 var revDateVal = getVal(act, ['reviewed_date', 'reviewedDate']);
                 if (revDateVal) lastReviewedDate = revDateVal;
             }
@@ -11492,7 +11931,34 @@ function exportToExcel() {
             }
             
             // ============================================================
-            // ⭐⭐ ساخت ردیف
+            // ⭐⭐ محاسبه وضعیت‌های نمایشی (با مقادیر پیش‌فرض)
+            // ============================================================
+            var collectStatusDisplay = d.collectStatus || 'ندارد';
+            var collectOutStatusDisplay = d.collectOutStatus || 'ندارد';
+            var ineffectiveStatusDisplay = d.ineffectiveStatus || 'ندارد';
+            var kahrabaStatusDisplay = d.kahrabaStatus || 'ندارد';
+            var priorityStatusDisplay = d.priorityStatus || 'ندارد';
+            var docsStatusDisplay = d.docsStatus || 'ندارد';
+            var replaceStatusDisplay = d.replaceStatus || 'ندارد';
+            var shebaStatusDisplay = d.shebaStatus || 'فاقد اقدام';
+            var dropStatusDisplay = d.dropStatus || 'عادی';
+            var dropPriorityDisplay = d.dropPriority || 'فاقد اولویت';
+            
+            // ============================================================
+            // ⭐⭐ محاسبه وضعیت PM
+            // ============================================================
+            var pmStatusDisplay = d.isPM ? 'pm شده' : 'pm نشده';
+            
+            // ============================================================
+            // ⭐⭐ محاسبه وضعیت ارزشمند
+            // ============================================================
+            var arvandStatusDisplay = d.arvandStatus || 'ندارد';
+            if (d.hasArvand && !arvandStatusDisplay || arvandStatusDisplay === 'ندارد') {
+                arvandStatusDisplay = d.isPM ? 'انجام شده' : 'فاقد اقدام';
+            }
+            
+            // ============================================================
+            // ⭐⭐ ساخت ردیف با اطمینان از وجود همه فیلدها
             // ============================================================
             exportData.push({
                 // ===== اطلاعات پایانه =====
@@ -11503,7 +11969,7 @@ function exportToExcel() {
                 'منطقه': d.region || '',
                 'پشتیبان': d.supporter || '',
                 'کارشناس': d.expert || '',
-                'نوع دستگاه': d.deviceType || '',
+                'نوع دستگاه': d.deviceType || raw['نوع دستگاه'] || '',
                 'گرید': d.grade || '',
                 'نوع پذیرنده': d.acceptorType || '',
                 'مبلغ جاری': d.transAmount || 0,
@@ -11513,18 +11979,20 @@ function exportToExcel() {
                 'مبلغ دو ماه قبل': d.trans2Amount || 0,
                 'تعداد دو ماه قبل': d.trans2Count || 0,
                 'روز': d.transDay || 30,
-                'وضعیت PM': d.isPM ? 'pm شده' : 'pm نشده',
-                'وضعیت جمع‌آوری': d.collectStatus || '',
-                'وضعیت خارج از دستور': d.collectOutStatus || '',
-                'وضعیت ناکارآمد': d.ineffectiveStatus || '',
-                'وضعیت کهربا': d.kahrabaStatus || '',
-                'وضعیت اولویت اول': d.priorityStatus || '',
-                'وضعیت مدارک': d.docsStatus || '',
-                'وضعیت تعویض': d.replaceStatus || '',
-                'وضعیت افت': d.dropStatus || '',
-                'اولویت افت': d.dropPriority || '',
-                'وضعیت ارزشمند': d.arvandStatus || '',
-                'وضعیت شبای پشتیبان': d.shabaStatus || '',
+                
+                // ===== وضعیت‌ها =====
+                'وضعیت PM': pmStatusDisplay,
+                'وضعیت جمع‌آوری': collectStatusDisplay,
+                'وضعیت خارج از دستور': collectOutStatusDisplay,
+                'وضعیت ناکارآمد': ineffectiveStatusDisplay,
+                'وضعیت کهربا': kahrabaStatusDisplay,
+                'وضعیت اولویت اول': priorityStatusDisplay,
+                'وضعیت مدارک': docsStatusDisplay,
+                'وضعیت تعویض': replaceStatusDisplay,
+                'وضعیت افت': dropStatusDisplay,
+                'اولویت افت': dropPriorityDisplay,
+                'وضعیت ارزشمند': arvandStatusDisplay,
+                'وضعیت شبای پشتیبان': shebaStatusDisplay,
                 
                 // ===== اطلاعات آخرین اقدام =====
                 'نوع عملیات آخرین اقدام': actionOperationType,
@@ -11571,6 +12039,7 @@ function exportToExcel() {
         document.body.removeChild(link);
         URL.revokeObjectURL(link.href);
         showMessage('✅ خروجی ' + exportData.length + ' رکورد با اطلاعات اقدامات دانلود شد!');
+        
     } catch (error) {
         console.error('❌ خطا:', error);
         showMessage('❌ خطا: ' + error.message);
