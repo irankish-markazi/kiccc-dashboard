@@ -522,34 +522,35 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
 .terminal-list { position: relative; width: 100%; }
 
 .terminal-card {
-    background: white;
-    border-radius: 12px;
-    padding: 6px 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    border: 1px solid rgba(108, 92, 231, 0.05);
-    width: 100%;
-    min-width: 0;
-    overflow: visible;
-    box-sizing: border-box;
-    font-size: 13px;
-    height: auto !important;
-    height: 165px;
-    display: flex;
-    flex-direction: column;
+    margin: 0 !important;
+   
+    min-height: 200px !important;
+    max-height:250px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-sizing: border-box !important;
+    padding: 0 !important;
 }
-.terminal-card .terminal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 3px;
-    gap: 6px;
-    flex-wrap: wrap;
-    flex-shrink: 0;
+.terminal-card:hover {
+    box-shadow: 0 4px 20px rgba(108, 92, 231, 0.15);
+}
+
+.terminal-list {
+     gap: 8px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    
+}
+
+.terminal-list-container {
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 .terminal-card .terminal-id {
     font-weight: 700;
-    font-size: 15px;
+    font-size: 14px;
     color: #1a1a2e;
     direction: ltr;
     text-align: left;
@@ -559,12 +560,26 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
     gap: 6px;
 }
 
-.terminal-card .terminal-id .action-indicator {
-    font-size: 10px;
-    padding: 0px 8px;
-    border-radius: 12px;
-    font-weight: 600;
-    cursor: pointer;
+.terminal-card .terminal-actions-btn:active {
+    transform: scale(0.95);
+}
+
+.terminal-card .card-content {
+    height: 100% !important;
+    overflow: hidden !important;
+    display: flex;
+    flex-direction: column;
+}
+.terminal-card .terminal-body {
+    flex: 1;
+    overflow: hidden;
+}
+/* وقتی کارت باز است */
+.terminal-card.open {
+    box-shadow: 0 4px 20px rgba(108, 92, 231, 0.18);
+}
+.terminal-card .terminal-header-card:active {
+    background: linear-gradient(135deg, #f0edff, #f8f9fc);
 }
 .terminal-card .terminal-id .action-indicator.has-action {
     background: #6c5ce7;
@@ -585,7 +600,7 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
     border: none;
     padding: 3px 12px;
     border-radius: 8px;
-    font-size: 12px;
+    font-size: 13px;
     font-family: inherit;
     font-weight: 600;
     cursor: pointer;
@@ -596,19 +611,14 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
     flex-shrink: 0;
 }
 
-.terminal-card .terminal-body {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px 10px;
-    flex: 1;
-    min-height: 0;
-}
+
 
 .terminal-card .terminal-info-left {
     display: flex;
     flex-direction: column;
     gap: 0px;
     justify-content: center;
+font-size: 14px !important;
 }
 
 .terminal-card .terminal-info-right {
@@ -617,13 +627,14 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
     gap: 0px;
     justify-content: center;
     align-items: flex-start;
+font-size: 14px !important;
 }
 
 .terminal-card .info-item {
     display: flex;
     align-items: center;
     gap: 3px;
-    font-size: 12px;
+    font-size: 16px;
     color: #636e72;
     min-width: 0;
     overflow: hidden;
@@ -634,7 +645,7 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
 
 .terminal-card .info-item i {
     color: #e74c3c !important;
-    font-size: 11px;
+    font-size:13px;
     width: 14px;
     flex-shrink: 0;
 }
@@ -645,13 +656,13 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .terminal-card .info-item .trans-label {
     font-weight: 500;
     color: #636e72;
-    font-size: 11px;
+    font-size: 13px;
 }
 
 .terminal-card .info-item .trans-value {
@@ -659,7 +670,7 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
     color: #6c5ce7;
     direction: ltr;
     text-align: left;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .terminal-card .info-item.grade-item i {
@@ -669,7 +680,7 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
 .terminal-card .info-item .grade-value {
     font-weight: 700;
     color: #fdcb6e;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .terminal-card .terminal-tags {
@@ -686,7 +697,7 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
 .terminal-card .terminal-tags .tag {
     padding: 1px 6px;
     border-radius: 8px;
-    font-size: 8px;
+    font-size: 12px;
     font-weight: 600;
     white-space: normal;
     word-break: break-word;
@@ -1162,17 +1173,17 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
         gap: 2px 8px;
     }
     .terminal-card .terminal-id {
-        font-size: 14px;
+        font-size: 16px;
     }
     .terminal-card .terminal-actions-btn {
         font-size: 12px;
         padding: 3px 10px;
     }
     .terminal-card .info-item {
-        font-size: 12px;
+        font-size: 14px;
     }
     .terminal-card .info-item i {
-        font-size: 11px;
+        font-size: 14px;
         width: 14px;
     }
     .terminal-card .info-item .value {
@@ -1362,6 +1373,210 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
     animation: bellRing 0.5s ease 3;
     color: #fdcb6e !important;
 }
+#trendChart {
+    width: 100% !important;
+    height: 200px !important;
+}
+/* ============================================================ */
+/* ⭐⭐⭐ کارت‌های ساده - ارتفاع دقیقاً به اندازه محتوا */
+/* ============================================================ */
+
+/* کارت اصلی - بدون min-height */
+.terminal-card.simple-card {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin-bottom: 6px !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+}
+
+/* محتوای کارت - padding کم */
+.terminal-card.simple-card .card-content {
+    padding: 8px 12px !important;
+    height: auto !important;
+    min-height: 0 !important;
+}
+
+/* ردیف بالا (هدر) - فاصله کم */
+.terminal-card.simple-card .card-content > div:first-child {
+    padding-bottom: 5px !important;
+    margin-bottom: 5px !important;
+}
+
+/* بدنه اصلی - gap کم */
+.terminal-card.simple-card .terminal-body {
+    gap: 0 10px !important;
+    padding:4px !important;
+    margin: 0 !important;
+}
+
+/* ستون‌های اطلاعات - بدون فاصله اضافی */
+.terminal-card.simple-card .terminal-info-left,
+.terminal-card.simple-card .terminal-info-right {
+    display: flex;
+    flex-direction: column;
+    gap: 0 !important;   /* ⭐ حذف فاصله بین آیتم‌ها */
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* هر آیتم اطلاعات - فشرده */
+.terminal-card.simple-card .info-item {
+    font-size: 14px !important;
+    line-height: 1.15 !important;    /* ⭐ کاهش line-height */
+    padding: 2px !important;            /* ⭐ حذف padding */
+    margin: 0 !important;             /* ⭐ حذف margin */
+    min-height: 0 !important;         /* ⭐ حذف min-height */
+    height: auto !important;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.terminal-card.simple-card .info-item .value {
+    font-size: 12px !important;
+    line-height: 1.15 !important;
+}
+
+.terminal-card.simple-card .info-item i {
+    font-size: 12px !important;
+    width: 12px !important;
+    line-height: 1 !important;
+}
+
+/* تگ‌ها - حذف کامل */
+.terminal-card.simple-card .terminal-tags {
+    display: none !important;
+}
+
+/* دکمه ثبت عملیات - کوچیک */
+.terminal-card.simple-card .terminal-actions-btn {
+    padding: 3px 10px !important;
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+}
+
+/* شماره پایانه */
+.terminal-card.simple-card .terminal-id {
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* ردیف‌های مبلغ/تعداد */
+.terminal-card.simple-card .trans-item {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.terminal-card.simple-card .trans-label {
+    font-size: 12px !important;
+}
+
+.terminal-card.simple-card .trans-value {
+    font-size: 12px !important;
+    line-height: 1.15 !important;
+}
+
+.terminal-card.simple-card .grade-value {
+    font-size: 12px !important;
+    line-height: 1.15 !important;
+}
+
+/* ============================================================ */
+/* ⭐⭐⭐ ارتفاع اتوماتیک برای کارت‌ها (جلوگیری از بریده شدن) */
+/* ============================================================ */
+
+/* کارت‌های عادی (دیتا) - ارتفاع اتوماتیک */
+.terminal-card:not(.simple-card) {
+    
+    
+    min-height: 230px !important;
+    max-height: 270px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;       /* ← حذف margin */
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+}
+
+.terminal-card:not(.simple-card) .card-content {
+   
+      padding: 10px 12px !important;
+    min-height: 230px !important;
+    max-height: 270px !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+    min-height: 0 !important;
+}
+
+.terminal-card:not(.simple-card) .terminal-body {
+    flex: 1;
+    overflow: visible !important;
+    min-height: 0;
+}
+
+/* تگ‌های عملیات - نمایش همه، بدون بریده شدن */
+.terminal-card:not(.simple-card) .terminal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 6px 0 0 0;
+    margin-top: 6px;
+    border-top: 1px dashed #e8e8f0;
+    max-height: none !important;
+    overflow: visible !important;
+    flex-shrink: 0;
+}
+
+.terminal-card:not(.simple-card) .terminal-tags .tag {
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+    display: inline-block;
+    line-height: 1.6;
+}
+
+.terminal-card:not(.simple-card) .info-item {
+    font-size: 12px !important;
+    line-height: 1.6 !important;
+}
+
+.terminal-card:not(.simple-card) .info-item i {
+    font-size: 12px !important;
+    width: 18px !important;
+}
+
+.terminal-card:not(.simple-card) .info-item .value {
+    font-size: 12px !important;
+}
+
+.terminal-card:not(.simple-card) .info-item .trans-label {
+    font-size: 12px !important;
+}
+
+.terminal-card:not(.simple-card) .info-item .trans-value {
+    font-size: 11px !important;
+    font-weight: 700;
+}
+
+.terminal-card:not(.simple-card) .info-item .grade-value {
+    font-size: 11px !important;
+}
+
+.terminal-card:not(.simple-card) .terminal-id {
+    font-size: 12px !important;
+}
+
     </style>
 </head>
 <body>
@@ -1567,6 +1782,7 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
             </div>
             
             <div class="dash-chart-card"><h4>📈 روند تراکنش‌های ۳ ماه اخیر</h4><canvas id="trendChart"></canvas></div>
+
             
             <div class="dash-chart-card">
     <h4 style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
@@ -1855,7 +2071,7 @@ body { font-family: 'Vazirmatn', 'IRANSans', Tahoma, sans-serif; background: #f0
                     min-height:32px;
                 ">
                     <i class="fas fa-search" style="color:#b2bec3; font-size:11px;"></i>
-                    <input type="text" id="searchTerminal" placeholder="جستجو..." oninput="applyFilters()" style="
+                    <input type="text" id="searchTerminal" placeholder="جستجو..." oninput="debouncedSearch()" style="
                         flex:1; padding:4px 0; border:none; outline:none;
                         font-family:inherit; font-size:11px; background:transparent;
                     ">
@@ -2678,7 +2894,7 @@ function removeActionFromTerminal(terminal, actionId) {
 // ============================================================
 function openDatabaseMobile() {
     return new Promise(function(resolve, reject) {
-        var request = indexedDB.open('PMD_Mobile_DB', 1);
+        var request = indexedDB.open('PMD_Mobile_DB', 10);
         
         request.onupgradeneeded = function(e) {
             var db = e.target.result;
@@ -3650,18 +3866,18 @@ var bazaryabiData = [];
 var nasbJadidData = [];
 var bazSheet = [];
 var inactive03Data = [];
-
+var supporterMap = {}; 
 var tarJariData = [];
 var tar1Data = [];
 var tar2Data = [];
 var pmSet = new Set();
 var totalFilterActive = false;
 var pendingFilterActive = false;
-
+var tarkoliData = [];
 var trendChartInstance = null;
 var gradeChartInstance = null;
 
-var ITEM_HEIGHT = 185;
+var ITEM_HEIGHT = 160;
 var scrollTop = 0;
 var searchTimeout = null;
 var selectedOperations = [];
@@ -3898,15 +4114,33 @@ async function fetchAllFromSupabase(tableName, selectQuery) {
 // ============================================================
 // INDEXEDDB FUNCTIONS - برای پروژه دوم
 // ============================================================
+// ============================================================
+// ✅ openDatabase - نسخه ۶ با tarkoli
+// ============================================================
 function openDatabase() {
     return new Promise(function(resolve, reject) {
-        var request = indexedDB.open('PMD_DB', 5);
+        var request = indexedDB.open('PMD_DB', 6);
         
         request.onupgradeneeded = function(e) {
             var db = e.target.result;
             console.log('🔄 بروزرسانی دیتابیس به نسخه:', e.oldVersion, '→', e.newVersion);
             
-            var storeNames = ['terminals', 'marketing', 'nasb_jadid', 'actions', 'baz', 'inactive_tax'];
+            // ============================================================
+            // لیست کامل ObjectStoreها
+            // ============================================================
+            var storeNames = [
+                'terminals', 
+                'marketing', 
+                'nasb_jadid', 
+                'actions', 
+                'baz', 
+                'inactive_tax',
+                'tarkoli'                    // ← اضافه شد
+            ];
+            
+            // ============================================================
+            // حذف ObjectStoreهای قدیمی
+            // ============================================================
             for (var i = 0; i < storeNames.length; i++) {
                 if (db.objectStoreNames.contains(storeNames[i])) {
                     db.deleteObjectStore(storeNames[i]);
@@ -3914,36 +4148,57 @@ function openDatabase() {
                 }
             }
             
+            // ============================================================
+            // ایجاد ObjectStoreهای جدید
+            // ============================================================
+            
+            // terminals
             var terminalsStore = db.createObjectStore('terminals', { keyPath: 'id' });
             terminalsStore.createIndex('terminal', 'terminal', { unique: false });
             
+            // marketing
             var marketingStore = db.createObjectStore('marketing', { keyPath: 'id' });
             marketingStore.createIndex('terminal', 'terminal', { unique: false });
             
+            // nasb_jadid
             var nasbStore = db.createObjectStore('nasb_jadid', { keyPath: 'id' });
             nasbStore.createIndex('terminal', 'terminal', { unique: false });
             
+            // actions
             var actionsStore = db.createObjectStore('actions', { keyPath: 'id' });
             actionsStore.createIndex('terminal', 'terminal', { unique: false });
             
+            // baz
             var bazStore = db.createObjectStore('baz', { keyPath: 'id' });
             bazStore.createIndex('terminal', 'terminal', { unique: false });
             
+            // inactive_tax
             var taxStore = db.createObjectStore('inactive_tax', { keyPath: 'id' });
             taxStore.createIndex('terminal', 'terminal', { unique: false });
             
+            // ⭐⭐⭐ tarkoli - جدید
+            var tarkoliStore = db.createObjectStore('tarkoli', { keyPath: 'id' });
+            tarkoliStore.createIndex('supporter', 'supporter', { unique: false });
+            
             console.log('✅ دیتابیس IndexedDB با موفقیت ایجاد/بروزرسانی شد');
+            console.log('   ObjectStoreها:', Array.from(db.objectStoreNames));
         };
         
         request.onsuccess = function(e) {
             var db = e.target.result;
             console.log('✅ دیتابیس IndexedDB باز شد، نسخه:', db.version);
+            console.log('   ObjectStoreها:', Array.from(db.objectStoreNames));
             resolve(db);
         };
         
         request.onerror = function(e) {
             console.error('❌ خطا در باز کردن IndexedDB:', e.target.error);
             reject(e.target.error);
+        };
+        
+        request.onblocked = function(e) {
+            console.warn('⚠️ دیتابیس مسدود است، لطفاً همه تب‌های باز را ببندید');
+            reject(new Error('دیتابیس مسدود است'));
         };
     });
 }
@@ -3961,8 +4216,16 @@ async function saveToIndexedDB(storeName, data) {
         
         store.clear();
         
+        // ⭐⭐⭐ برای هر رکورد، اگه id نداشت، یه id مصنوعی بساز
         for (var i = 0; i < data.length; i++) {
-            store.add(data[i]);
+            var item = data[i];
+            
+            // اگه id نداره، بساز
+            if (!item.id) {
+                item.id = storeName + '_' + i + '_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+            }
+            
+            store.add(item);
         }
         
         return new Promise(function(resolve, reject) {
@@ -3980,7 +4243,6 @@ async function saveToIndexedDB(storeName, data) {
         return false;
     }
 }
-
 async function loadFromIndexedDB(storeName) {
     try {
         var db = await openDatabase();
@@ -4313,15 +4575,53 @@ async function syncFromCloud() {
         // ============================================================
         // 2. دریافت terminals
         // ============================================================
-        updateSyncProgress('دریافت لیست پایانه‌ها...');
         var terminalData = await fetchAllFromSupabaseOptimized('terminals');
-        if (terminalData && terminalData.length > 0) {
-            processTerminalsData(terminalData);
-            console.log('✅ terminals دریافت شد:', allData.length);
-        } else {
-            console.warn('⚠️ terminals دریافت نشد یا خالی است');
-        }
+if (terminalData && terminalData.length > 0) {
+    processTerminalsData(terminalData);
+    console.log('✅ terminals دریافت شد:', allData.length);
+}
+
+// ============================================================
+// ⭐⭐⭐ دریافت tarkoli از Supabase
+// ============================================================
+try {
+    console.log('📥 دریافت tarkoli از ابر...');
+    var { data: tarkoliCloudData, error: tarkoliError } = await supabaseClient
+        .from('tarkoli')
+        .select('*');
+    
+    if (tarkoliError) {
+        console.warn('⚠️ خطا در دریافت tarkoli:', tarkoliError);
+    } else if (tarkoliCloudData && tarkoliCloudData.length > 0) {
+        tarkoliData = tarkoliCloudData.map(function(item, index) {
+    return {
+        id: item.id || ('tarkoli_' + index + '_' + (item.supporter || 'unknown') + '_' + Date.now()),  // ⭐ id مصنوعی
+        supporter: item.supporter || '',
+        expert: item.expert || '',
+        count_2_months_ago: Number(item.count_2_months_ago) || 0,
+        amount_2_months_ago: Number(item.amount_2_months_ago) || 0,
+        count_1_month_ago: Number(item.count_1_month_ago) || 0,
+        amount_1_month_ago: Number(item.amount_1_month_ago) || 0,
+        count_current_month: Number(item.count_current_month) || 0,
+        amount_current_month: Number(item.amount_current_month) || 0,
+        day: Number(item.day) || 30,
+        raw: item
+    };
+});
+        console.log('✅ tarkoli از ابر دریافت شد:', tarkoliData.length, 'رکورد');
         
+        // ذخیره در IndexedDB
+        if (typeof saveToIndexedDB === 'function') {
+            saveToIndexedDB('tarkoli', tarkoliData).catch(function(e) {
+                console.warn('⚠️ خطا در ذخیره tarkoli:', e);
+            });
+        }
+    } else {
+        console.warn('⚠️ هیچ داده‌ای در جدول tarkoli وجود ندارد');
+    }
+} catch(e) {
+    console.warn('⚠️ خطا در دریافت tarkoli:', e);
+}
         // ============================================================
         // 3. دریافت marketing
         // ============================================================
@@ -4798,6 +5098,7 @@ function processTerminalsData(data) {
             region: item.region || '',
             supporter: item.supporter || '',
             expert: item.expert || '',
+            bank: item.bank || '',  
             nationalCode: item.national_code || '',
             pmStatus: pmStatus,
             grade: item.grade || '',
@@ -4811,7 +5112,8 @@ function processTerminalsData(data) {
             trans2Amount: item.trans2_amount || 0,
             deviceType: item.device_type || '',
             raw: item.raw_data || {},
-            
+            rollCount: item.roll_count || 0,
+
             // ===== ارزشمند =====
             hasArvand: hasArvand,
             arvandStatus: arvandStatus,
@@ -4956,6 +5258,7 @@ function processMarketingData(data) {
             grade: item.grade || '',
             deviceType: item.device_type || '',
             nationalCode: item.national_code || '',
+           bank: item.bank || (item.raw_data && item.raw_data['بانک']) || '', 
             raw: item.raw_data || {}
         };
     });
@@ -4991,6 +5294,7 @@ function processNasbData(data) {
             grade: item.grade || '',
             deviceType: item.device_type || '',
             nationalCode: item.national_code || '',
+            bank: item.bank || (item.raw_data && item.raw_data['بانک']) || '', 
             raw: item.raw_data || {}
         };
     });
@@ -5069,6 +5373,7 @@ function processBazData(data) {
             region: item.region || '',
             expert: item.expert || '',
             marketingBy: item.marketing_by || '',
+             bank: item.bank || (item.raw_data && item.raw_data['بانک']) || '', 
             raw: item.raw_data || {}
         };
     });
@@ -5128,6 +5433,7 @@ function processInactiveTaxData(data) {
             expert: item.expert || '',
             mobile: item.mobile || '',
             marketingBy: marketingBy,
+            bank: item.bank || (item.raw_data && item.raw_data['بانک']) || '', 
             raw: item.raw_data || {}
         };
     });
@@ -6209,12 +6515,43 @@ function updateStats() {
     document.getElementById('filterPending').textContent = pending;
 }
 // ============================================================
-// RENDER VIRTUAL LIST (مشابه پروژه اول)
+// ⭐⭐⭐ Virtual Scrolling با تشخیص خودکار ارتفاع
+// ============================================================
+var ITEM_HEIGHT = 250;  // مقدار پیش‌فرض
+var ITEM_GAP = 8;
+var BUFFER_SIZE = 5;
+var heightMeasured = false;
+
+function measureItemHeight() {
+    if (heightMeasured) return;
+    
+    // یه کارت نمونه بساز
+    var sample = document.createElement('div');
+    sample.style.position = 'absolute';
+    sample.style.visibility = 'hidden';
+    sample.style.width = '100%';
+    sample.style.left = '-9999px';
+    
+    if (displayData.length > 0) {
+        sample.innerHTML = createCard(displayData[0]);
+        document.body.appendChild(sample);
+        
+        var height = sample.offsetHeight;
+        document.body.removeChild(sample);
+        
+        if (height > 50) {
+            ITEM_HEIGHT = height;
+            heightMeasured = true;
+            console.log('📊 ارتفاع کارت اندازه‌گیری شد:', ITEM_HEIGHT, 'px');
+        }
+    }
+}
+// ============================================================
+// RENDER VIRTUAL LIST - بدون Virtual Scrolling (ساده و درست)
 // ============================================================
 function renderVirtualList() {
-    var container = document.getElementById('terminalListContainer');
     var list = document.getElementById('terminalList');
-    if (!container || !list) return;
+    if (!list) return;
     
     var total = displayData.length;
     if (total === 0) {
@@ -6223,46 +6560,39 @@ function renderVirtualList() {
         return;
     }
     
-    if (selectedOperations.indexOf('codebaz') !== -1) {
+    // ⭐ حالت‌های خاص
+    if (selectedOperations && selectedOperations.indexOf('codebaz') !== -1) {
         renderCodeBazCards(displayData);
         return;
     }
-    if (selectedOperations.indexOf('marketing') !== -1) {
+    if (selectedOperations && selectedOperations.indexOf('marketing') !== -1) {
         renderMarketingCards(displayData);
         return;
     }
-    if (selectedOperations.indexOf('nasb') !== -1) {
+    if (selectedOperations && selectedOperations.indexOf('nasb') !== -1) {
         renderNasbCards(displayData);
         return;
     }
-    if (selectedOperations.indexOf('inactive03') !== -1) {
+    if (selectedOperations && selectedOperations.indexOf('inactive03') !== -1) {
         renderInactive03Cards(displayData);
         return;
     }
     
-    var containerHeight = container.clientHeight || 500;
-    var visibleCount = Math.ceil(containerHeight / ITEM_HEIGHT) + 3;
-    var start = Math.floor(scrollTop / ITEM_HEIGHT);
-    var end = Math.min(start + visibleCount, total);
-    
-    list.style.height = (total * ITEM_HEIGHT) + 'px';
-    list.style.position = 'relative';
+    // ⭐⭐ حذف Virtual Scrolling - همه کارت‌ها یکجا رندر میشن
+    list.style.height = 'auto';
+    list.style.position = 'static';
+    list.style.display = 'flex';
+    list.style.flexDirection = 'column';
+    list.style.gap = '8px';       // ← فاصله بین کارت‌ها
     
     var fragment = document.createDocumentFragment();
-    for (var i = start; i < end; i++) {
-        var item = displayData[i];
-        if (!item) continue;
-        var cardHtml = createCard(item);
+    for (var i = 0; i < total; i++) {
+        var cardHtml = createCard(displayData[i]);
         var div = document.createElement('div');
         div.innerHTML = cardHtml;
         var el = div.firstElementChild;
         if (el) {
-            el.style.position = 'absolute';
-            el.style.top = (i * ITEM_HEIGHT) + 'px';
-            el.style.left = '0';
-            el.style.right = '0';
-            el.style.width = '100%';
-            el.style.marginBottom = '0';
+            el.style.marginBottom = '0';   // ← بدون margin (چون gap استفاده میشه)
             fragment.appendChild(el);
         }
     }
@@ -6271,47 +6601,51 @@ function renderVirtualList() {
     list.appendChild(fragment);
     document.getElementById('terminalCount').textContent = total + ' پایانه';
 }
-
-var scrollTimeout = null;
-
-function handleScroll() {
-    var container = document.getElementById('terminalListContainer');
-    if (!container) return;
-    scrollTop = container.scrollTop;
-    
-    if (selectedOperations.indexOf('codebaz') === -1 &&
-        selectedOperations.indexOf('marketing') === -1 &&
-        selectedOperations.indexOf('nasb') === -1 &&
-        selectedOperations.indexOf('inactive03') === -1) {
-        if (scrollTimeout) {
-            cancelAnimationFrame(scrollTimeout);
-        }
-        scrollTimeout = requestAnimationFrame(function() {
-            renderVirtualList();
-            scrollTimeout = null;
-        });
-    }
-}
+// ============================================================
+// ⭐⭐⭐ متغیرهای scroll
+// ============================================================
+var scrollRAF = null;
 
 // ============================================================
-// CREATE CARD - نسخه کامل و اصلاح شده
+// HANDLE SCROLL - با requestAnimationFrame
+// ============================================================
+function handleScroll() {
+ 
+}
+// ============================================================
+// CREATE CARD - نسخه نهایی (با دکمه تاریخچه + ارتفاع اتوماتیک)
 // ============================================================
 function createCard(item) {
-    // ============================================================
-    // بررسی وجود item
-    // ============================================================
     if (!item) {
         console.warn('⚠️ item undefined در createCard');
         return '<div style="padding:10px;color:#ff6b6b;">خطا در نمایش کارت</div>';
     }
     
-    var terminalDisplay = String(item.terminal || '').padStart(8, '0');
-    var tags = '';
-    var isAdmin = (currentUser === 'مدیر سیستم');
+    // ============================================================
+    // ⭐⭐⭐ تشخیص نوع کارت
+    // ============================================================
+    var isSimpleCard = false;
+    
+    if (selectedOperations) {
+        if (selectedOperations.indexOf('codebaz') !== -1 || 
+            selectedOperations.indexOf('nasb') !== -1 ||
+            selectedOperations.indexOf('inactive03') !== -1 ||
+            selectedOperations.indexOf('marketing') !== -1) {
+            isSimpleCard = true;
+        }
+    }
+    
+    if (item._isSimpleCard === true) {
+        isSimpleCard = true;
+    }
     
     // ============================================================
-    // تعریف raw و متغیرها
+    // تعریف متغیرها
     // ============================================================
+    var terminalDisplay = String(item.terminal || '').padStart(8, '0');
+    var rollCount = item.rollCount || 0;
+    var tags = '';
+    
     var raw = item.raw || {};
     var deviceType = item.deviceType || raw['نوع دستگاه'] || raw['مدل دستگاه'] || '—';
     var marketingBy = raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
@@ -6324,17 +6658,23 @@ function createCard(item) {
     var grade = item.grade || '—';
     var transCount = item.transCount || 0;
     var transAmount = item.transAmount || 0;
+    var bank = item.bank || raw['بانک'] || '—';
     var mobile = raw['شماره موبایل'] || raw['شماره همراه'] || raw['موبایل'] || '';
     if (!mobile && item.mobile) mobile = item.mobile;
     if (!mobile) mobile = '—';
     
+    var cardId = 'card-' + item.terminal;
+    
     // ============================================================
-    // بررسی وجود اقدام
+    // ⭐⭐⭐ بررسی وجود تاریخچه (اقدامات ثبت شده)
     // ============================================================
-    var hasAction = actions && actions[item.terminal] && actions[item.terminal].length > 0;
-    var actionIndicator = '';
-    if (hasAction) {
-        var isPending = false;
+    var hasHistory = actions && actions[item.terminal] && actions[item.terminal].length > 0;
+    var actionCount = 0;
+    var isPending = false;
+    
+    if (hasHistory) {
+        actionCount = actions[item.terminal].length;
+        
         if (pendingActions && pendingActions.length > 0) {
             for (var p = 0; p < pendingActions.length; p++) {
                 if (pendingActions[p].terminal === item.terminal) {
@@ -6343,198 +6683,431 @@ function createCard(item) {
                 }
             }
         }
-        
-        if (isPending) {
-            actionIndicator = '<span class="action-indicator pending-sync" onclick="showActionHistory(\'' + item.terminal + '\')" style="cursor:pointer;">📤</span>';
-        } else {
-            actionIndicator = '<span class="action-indicator has-action" onclick="showActionHistory(\'' + item.terminal + '\')" style="cursor:pointer;">📝</span>';
-        }
+    }
+    
+    // ⭐⭐⭐ دکمه تاریخچه (فقط اگه تاریخچه وجود داشته باشه)
+    var historyButton = '';
+    if (hasHistory) {
+        historyButton = `
+            <button onclick="event.stopPropagation();showActionHistory('${item.terminal}')" style="
+                background:linear-gradient(135deg, #6DD5FA, #4DB8E8);
+                color:white;
+                border:none;
+                padding:3px 10px;
+                border-radius:8px;
+                font-size:10px;
+                font-family:inherit;
+                font-weight:600;
+                cursor:pointer;
+                transition:0.3s;
+                display:inline-flex;
+                align-items:center;
+                gap:3px;
+                box-shadow:0 2px 6px rgba(77, 184, 232, 0.3);
+                white-space:nowrap;
+            ">
+                <i class="fas fa-history" style="font-size:10px;"></i>
+                ${actionCount}
+                ${isPending ? '<span style="font-size:9px;">📤</span>' : ''}
+            </button>
+        `;
     }
     
     // ============================================================
-    // تگ‌های عملیات
+    // ⭐⭐⭐ تگ‌های عملیات (فقط برای کارت‌های غیر ساده)
     // ============================================================
-    if (item.hasCollect) {
-        tags += item.collectDone ? 
-            '<span class="tag tag-collect-done"style="font-size:8px;padding:2px 6px;">✅ جمع‌آوری (' + (item.collectStatus || 'انجام شده') + ')</span>' : 
-            '<span class="tag tag-collect"style="font-size:11px;padding:2px 6px;">📦 جمع‌آوری (فاقد اقدام)</span>';
-    }
-    if (item.hasCollectOut) {
-        tags += item.collectOutDone ? 
-            '<span class="tag tag-collect-done"style="font-size:8px;padding:2px 6px;">✅ خارج از دستور (' + (item.collectOutStatus || 'انجام شده') + ')</span>' : 
-            '<span class="tag tag-collect"style="font-size:11px;padding:2px 6px;">🚫 خارج از دستور (فاقد اقدام)</span>';
-    }
-    if (item.hasIneffective) {
-        tags += item.ineffectiveDone ? 
-            '<span class="tag tag-ineffective-done"style="font-size:8px;padding:2px 6px;">✅ ناکارآمد (' + (item.ineffectiveStatus || 'انجام شده') + ')</span>' : 
-            '<span class="tag tag-ineffective"style="font-size:11px;padding:2px 6px;">⚡ ناکارآمد (فاقد اقدام)</span>';
-    }
-    if (item.hasKahraba) {
-        tags += item.kahrabaDone ? 
-            '<span class="tag tag-kahraba-done"style="font-size:8px;padding:2px 6px;">✅ کهربا (' + (item.kahrabaStatus || 'انجام شده') + ')</span>' : 
-            '<span class="tag tag-kahraba"style="font-size:11px;padding:2px 6px;">🟡 کهربا (فاقد اقدام)</span>';
-    }
-    if (item.hasPriority) {
-        tags += item.priorityDone ? 
-            '<span class="tag tag-priority-done"style="font-size:8px;padding:2px 6px;">✅ اولویت اول (' + (item.priorityStatus || 'انجام شده') + ')</span>' : 
-            '<span class="tag tag-priority"style="font-size:11px;padding:2px 6px;">🔴 اولویت اول (فاقد اقدام)</span>';
-    }
-    if (item.hasMadarek) {
-        tags += (item.docsDone && item.docsStatus === 'تکمیل شده') ? 
-            '<span class="tag tag-docs-done"style="font-size:8px;padding:2px 6px;">✅ مدارک (تکمیل شده)</span>' : 
-            '<span class="tag tag-docs"style="font-size:11px;padding:2px 6px;">📄 مدارک (فاقد اقدام)</span>';
-    }
-    if (item.hasReplace) {
-        if (item.replaceStatus === 'فعال شده' || item.replaceStatus === 'تعویض شده') {
-            tags += '<span class="tag tag-replace-done"style="font-size:8px;padding:2px 6px;">✅ تعویض (' + item.replaceStatus + ')</span>';
-        } else if (item.replaceStatus === 'ابطال شده') {
-            tags += '<span class="tag tag-ebtal"style="font-size:8px;padding:2px 6px;">🔄 تعویض (ابطال شده)</span>';
+    if (!isSimpleCard) {
+        if (item.hasCollect) {
+            tags += item.collectDone ? 
+                '<span class="tag tag-collect-done">✅ جمع‌آوری (' + (item.collectStatus || 'انجام شده') + ')</span>' : 
+                '<span class="tag tag-collect">📦 جمع‌آوری (فاقد اقدام)</span>';
+        }
+        if (item.hasCollectOut) {
+            tags += item.collectOutDone ? 
+                '<span class="tag tag-collect-done">✅ خارج از دستور (' + (item.collectOutStatus || 'انجام شده') + ')</span>' : 
+                '<span class="tag tag-collect">🚫 خارج از دستور (فاقد اقدام)</span>';
+        }
+        if (item.hasIneffective) {
+            tags += item.ineffectiveDone ? 
+                '<span class="tag tag-ineffective-done">✅ ناکارآمد (' + (item.ineffectiveStatus || 'انجام شده') + ')</span>' : 
+                '<span class="tag tag-ineffective">⚡ ناکارآمد (فاقد اقدام)</span>';
+        }
+        if (item.hasKahraba) {
+            tags += item.kahrabaDone ? 
+                '<span class="tag tag-kahraba-done">✅ کهربا (' + (item.kahrabaStatus || 'انجام شده') + ')</span>' : 
+                '<span class="tag tag-kahraba">🟡 کهربا (فاقد اقدام)</span>';
+        }
+        if (item.hasPriority) {
+            tags += item.priorityDone ? 
+                '<span class="tag tag-priority-done">✅ اولویت اول (' + (item.priorityStatus || 'انجام شده') + ')</span>' : 
+                '<span class="tag tag-priority">🔴 اولویت اول (فاقد اقدام)</span>';
+        }
+        if (item.hasMadarek) {
+            tags += (item.docsDone && item.docsStatus === 'تکمیل شده') ? 
+                '<span class="tag tag-docs-done">✅ مدارک (تکمیل شده)</span>' : 
+                '<span class="tag tag-docs">📄 مدارک (فاقد اقدام)</span>';
+        }
+        if (item.hasReplace) {
+            if (item.replaceStatus === 'فعال شده' || item.replaceStatus === 'تعویض شده') {
+                tags += '<span class="tag tag-replace-done">✅ تعویض (' + item.replaceStatus + ')</span>';
+            } else if (item.replaceStatus === 'ابطال شده') {
+                tags += '<span class="tag tag-ebtal">🔄 تعویض (ابطال شده)</span>';
+            } else {
+                tags += '<span class="tag tag-replace">🔄 تعویض (فاقد اقدام)</span>';
+            }
+        }
+        if (item.hasArvand) {
+            tags += item.arvandDone ? 
+                '<span class="tag tag-arvand-done">⭐ ارزشمند (انجام شده)</span>' : 
+                '<span class="tag tag-arvand">⭐ ارزشمند (فاقد اقدام)</span>';
+        }
+        if (item.hasShaba) {
+            var shebaStatus = item.shebaStatus || 'فاقد اقدام';
+            var shebaDone = item.shebaDone || false;
+            
+            if (shebaDone || shebaStatus === 'ابطال شده') {
+                tags += shebaStatus === 'ابطال شده' ? 
+                    '<span class="tag tag-ebtal">🏦 شبای پشتیبان (ابطال شده)</span>' : 
+                    '<span class="tag tag-shaba-done">🏦 شبای پشتیبان (انجام شده)</span>';
+            } else {
+                tags += '<span class="tag tag-shaba">🏦 شبای پشتیبان (فاقد اقدام)</span>';
+            }
+        }
+        if (item.hasDrop) {
+            tags += item.dropStatus === 'احیا شده' ? 
+                '<span class="tag tag-drop-done">📉 افت (احیا شده)</span>' : 
+                '<span class="tag tag-drop">📉 افت (' + (item.dropPriority || 'نیاز به بررسی') + ')</span>';
+        }
+        if (item.isPM) {
+            tags += '<span class="tag tag-pm">✅ PM شده</span>';
         } else {
-            tags += '<span class="tag tag-replace"style="font-size:11px;padding:2px 6px;">🔄 تعویض (فاقد اقدام)</span>';
+            tags += '<span class="tag tag-pm-not">❌ PM نشده</span>';
         }
     }
-    if (item.hasArvand) {
-        tags += item.arvandDone ? 
-            '<span class="tag tag-arvand-done"style="font-size:8px;padding:2px 6px;">⭐ ارزشمند (انجام شده)</span>' : 
-            '<span class="tag tag-arvand"style="font-size:11px;padding:2px 6px;">⭐ ارزشمند (فاقد اقدام)</span>';
-    }
-   if (item.hasShaba) {
-        var shebaStatus = item.shebaStatus || 'فاقد اقدام';
-        var shebaDone = item.shebaDone || false;
-        
-        if (shebaDone || shebaStatus === 'ابطال شده') {
-            tags += shebaStatus === 'ابطال شده' ? 
-                '<span class="tag tag-ebtal"style="font-size:8px;padding:2px 6px;"> شبای پشتیبان (ابطال شده)</span>' : 
-                '<span class="tag tag-shaba-done"style="font-size:8px;padding:2px 6px;"> شبای پشتیبان (انجام شده)</span>';
-        } else {
-            tags += '<span class="tag tag-shaba"style="font-size:11px;padding:2px 6px;"> شبای پشتیبان (فاقد اقدام)</span>';
-        }
-    }
-    if (item.hasDrop) {
-        tags += item.dropStatus === 'احیا شده' ? 
-            '<span class="tag tag-drop-done"style="font-size:8px;padding:2px 6px;">📉 افت (احیا شده)</span>' : 
-            '<span class="tag tag-drop"style="font-size:11px;padding:2px 6px;">📉 افت (' + (item.dropPriority || 'نیاز به بررسی') + ')</span>';
-    }
-    if (item.isPM) {
-        tags += '<span class="tag tag-pm"style="font-size:8px;padding:2px 6px;">✅ PM شده</span>';
-    } else {
-        tags += '<span class="tag tag-pm-not"style="font-size:11px;padding:2px 6px;">❌ PM نشده</span>';
-    }
-    if (item.hasEbtal) {
-        tags += '<span class="tag tag-ebtal"style="font-size:8px;padding:2px 6px;">🚫 ابطال</span>';
-    }
-    if (typeof hasPendingOperation === 'function' && hasPendingOperation(item)) {
-        tags += '<span class="tag tag-pending">⏳ فاقد اقدام</span>';
-    }
+// ============================================================
+// ⭐⭐⭐ اطلاعات سمت چپ (بدون رول)
+// ============================================================
+var leftInfo = `
+    <div class="info-item"><i class="fas fa-university" style="color:#6c5ce7;"></i> <span class="value">${bank}</span></div>
+    <div class="info-item"><i class="fas fa-store"></i> <span class="value">${shop}</span></div>
+    <div class="info-item"><i class="fas fa-user"></i> <span class="value">${holder}</span></div>
+    <div class="info-item">
+        <i class="fas fa-phone" onclick="makeCall('${mobile}')" style="cursor:pointer;color:#6c5ce7;"></i>
+        <span class="value" style="direction:ltr;text-align:left;cursor:pointer;" onclick="makeCall('${mobile}')">${mobile}</span>
+    </div>
+    <div class="info-item"><i class="fas fa-server"></i> <span class="value">${deviceType}</span></div>
+    <div class="info-item"><i class="fas fa-map-marker-alt"></i> <span class="value">${region}</span></div>
+`;
+
+// ============================================================
+// ⭐⭐⭐ اطلاعات سمت راست (با رول بین گرید و بازاریابی)
+// ============================================================
+var rightInfo = `
+    <div class="info-item trans-item"><i class="fas fa-money-bill-wave" style="color:#00b894;"></i> <span class="trans-label">مبلغ:</span> <span class="trans-value">${transAmount.toLocaleString()}</span></div>
+    <div class="info-item trans-item"><i class="fas fa-exchange-alt" style="color:#6c5ce7;"></i> <span class="trans-label">تعداد:</span> <span class="trans-value">${transCount.toLocaleString()}</span></div>
+    ${grade && grade !== '—' ? `<div class="info-item grade-item"><i class="fas fa-star" style="color:#fdcb6e;"></i> <span class="grade-value">گرید: ${grade}</span></div>` : ''}
     
-    // ============================================================
-    // اطلاعات سمت چپ
-    // ============================================================
-    var leftInfo = `
-        <div class="info-item"><i class="fas fa-store"></i> <span class="value">${shop}</span></div>
-        <div class="info-item"><i class="fas fa-user"></i> <span class="value">${holder}</span></div>
+    ${!isSimpleCard ? `
         <div class="info-item">
-            <i class="fas fa-phone" onclick="makeCall('${mobile}')" style="cursor:pointer;color:#6c5ce7;"></i>
-            <span class="value" style="direction:ltr;text-align:left;cursor:pointer;" onclick="makeCall('${mobile}')">${mobile}</span>
+            <span style="font-size:14px;margin-left:2px;">🧾</span>
+            <span class="value" style="font-weight:700;color:#e17055;">${rollCount}</span>
         </div>
-        <div class="info-item"><i class="fas fa-server"></i> <span class="value">${deviceType}</span></div>
-        <div class="info-item"><i class="fas fa-map-marker-alt"></i> <span class="value">${region}</span></div>
-    `;
+    ` : ''}
     
+    ${marketingBy ? `<div class="info-item" style="border-top:1px solid #f0f0f0;padding-top:3px;margin-top:2px;font-size:11px;color:#636e72;">
+        <i class="fas fa-user-tie" style="color:#fdcb6e;font-size:11px;"></i>
+        <span>بازاریابی: </span>
+        <span style="color:#2d3436;font-weight:500;">${marketingBy}</span>
+    </div>` : ''}
+`;
     // ============================================================
-    // اطلاعات سمت راست (با بازاریابی توسط)
-    // ============================================================
-    var rightInfo = `
-        <div class="info-item trans-item"><i class="fas fa-money-bill-wave" style="color:#00b894;"></i> <span class="trans-label">مبلغ:</span> <span class="trans-value">${transAmount.toLocaleString()}</span></div>
-        <div class="info-item trans-item"><i class="fas fa-exchange-alt" style="color:#6c5ce7;"></i> <span class="trans-label">تعداد:</span> <span class="trans-value">${transCount.toLocaleString()}</span></div>
-        ${grade && grade !== '—' ? `<div class="info-item grade-item"><i class="fas fa-star" style="color:#fdcb6e;"></i> <span class="grade-value">گرید: ${grade}</span></div>` : ''}
-        ${marketingBy ? `<div class="info-item" style="border-top:1px solid #f0f0f0;padding-top:3px;margin-top:2px;font-size:11px;color:#636e72;">
-            <i class="fas fa-user-tie" style="color:#fdcb6e;font-size:11px;"></i>
-            <span>بازاریابی: </span>
-            <span style="color:#2d3436;font-weight:500;">${marketingBy}</span>
-        </div>` : ''}
-    `;
-    
-    // ============================================================
-    // کارت نهایی
+    // ⭐⭐⭐ کارت نهایی (ارتفاع اتوماتیک)
     // ============================================================
     return `
-        <div class="terminal-card">
-            <div class="terminal-header">
-                <span class="terminal-id">${terminalDisplay} ${actionIndicator}</span>
-                <button class="terminal-actions-btn" onclick="openModal('${item.terminal}')">
-                    <i class="fas fa-tools"></i> عملیات
-                </button>
+        <div class="terminal-card ${isSimpleCard ? 'simple-card' : ''}" id="${cardId}" data-terminal="${item.terminal}" style="
+            margin-bottom:0;
+            border-radius:12px;
+            overflow:hidden;
+            background:white;
+            height:250;
+            min-height:200;
+            padding:0;
+        
+        ">
+            
+            <div class="card-content" id="content-${cardId}" style="
+                padding:10px 12px;
+                background:white;
+                height:auto;
+            ">
+                
+                <!-- ============================================ -->
+                <!-- ردیف بالا: پایانه + تاریخچه (چپ) | ثبت عملیات (راست) -->
+                <!-- ============================================ -->
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    padding-bottom:8px;
+                    margin-bottom:8px;
+                    border-bottom:1px dashed #e8e8f0;
+                    flex-wrap:wrap;
+                    gap:6px;
+                ">
+                    <!-- سمت چپ: شماره پایانه + دکمه تاریخچه -->
+                    <div style="display:flex;align-items:center;gap:6px;">
+                        <span style="font-weight:700;font-size:15px;color:#1a1a2e;direction:ltr;">${terminalDisplay}</span>
+                        ${historyButton}
+                    </div>
+                    
+                    <!-- سمت راست: دکمه ثبت عملیات -->
+                    <div style="display:flex;align-items:center;gap:5px;">
+                        <button class="terminal-actions-btn" onclick="event.stopPropagation();openModal('${item.terminal}')" style="
+                            background:linear-gradient(135deg, #f1948a, #e74c3c);
+                            color:white;border:none;padding:5px 14px;border-radius:8px;
+                            font-size:11px;font-family:inherit;font-weight:600;cursor:pointer;
+                            transition:0.3s;display:flex;align-items:center;gap:4px;
+                        ">
+                            <i class="fas fa-tools"></i> ثبت عملیات
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- ============================================ -->
+                <!-- بدنه اصلی: دو ستون -->
+                <!-- ============================================ -->
+                <div class="terminal-body" style="
+                    display:grid;
+                    grid-template-columns:1fr 1fr;
+                    gap:2px 10px;
+
+                ">
+                    <div class="terminal-info-left">${leftInfo}</div>
+                    <div class="terminal-info-right">${rightInfo}</div>
+                </div>
+                
+                <!-- ============================================ -->
+                <!-- تگ‌ها (فقط برای کارت‌های غیر ساده) -->
+                <!-- ============================================ -->
+                ${!isSimpleCard ? `
+                    <div class="terminal-tags" style="
+                        display:flex;
+                        flex-wrap:wrap;
+                        gap:3px;
+                        padding:6px 0 0 0;
+                        margin-top:6px;
+                        border-top:1px dashed #e8e8f0;
+                    ">${tags}</div>
+                ` : ''}
             </div>
-            <div class="terminal-body">
-                <div class="terminal-info-left">${leftInfo}</div>
-                <div class="terminal-info-right">${rightInfo}</div>
-            </div>
-            <div class="terminal-tags">${tags}</div>
         </div>
     `;
 }
-
+function renderGradeChart(dataSource) {
+    console.log('📊 renderGradeChart اجرا شد');
+    
+    var ctx = document.getElementById('gradeChart');
+    if (!ctx) {
+        console.warn('⚠️ عنصر gradeChart پیدا نشد');
+        return;
+    }
+    var ctx2 = ctx.getContext('2d');
+    
+    // حذف نمودار قبلی
+    if (gradeChartInstance) {
+        try {
+            gradeChartInstance.destroy();
+        } catch(e) {}
+        gradeChartInstance = null;
+    }
+    
+    // ============================================================
+    // ⭐⭐⭐ استفاده از داده‌های ورودی یا allData
+    // ============================================================
+    var data = dataSource || allData || [];
+    
+    // اگر داده‌ای وجود ندارد
+    if (data.length === 0) {
+        ctx2.clearRect(0, 0, ctx.width, ctx.height);
+        ctx2.font = '14px Vazirmatn, Tahoma';
+        ctx2.fillStyle = '#b2bec3';
+        ctx2.textAlign = 'center';
+        ctx2.fillText('داده‌ای برای نمایش وجود ندارد', ctx.width/2, ctx.height/2);
+        return;
+    }
+    
+    // ============================================================
+    // ⭐⭐ محاسبه توزیع گرید
+    // ============================================================
+    var gradeCounts = {};
+    var totalWithGrade = 0;
+    
+    for (var i = 0; i < data.length; i++) {
+        var item = data[i];
+        var grade = item.grade || 'بدون گرید';
+        
+        // نرمال‌سازی گرید
+        if (grade === '—' || grade === '' || grade === null || grade === undefined) {
+            grade = 'بدون گرید';
+        }
+        
+        if (!gradeCounts[grade]) {
+            gradeCounts[grade] = 0;
+        }
+        gradeCounts[grade]++;
+        totalWithGrade++;
+    }
+    
+    // ============================================================
+    // ⭐⭐ مرتب‌سازی گریدها
+    // ============================================================
+    var gradeOrder = ['A+', 'A', 'B+', 'B', 'C+', 'C', 'D', 'E', 'بدون گرید'];
+    var sortedGrades = [];
+    
+    // اول گریدهای استاندارد
+    for (var g = 0; g < gradeOrder.length; g++) {
+        if (gradeCounts[gradeOrder[g]] !== undefined) {
+            sortedGrades.push(gradeOrder[g]);
+        }
+    }
+    
+    // سپس گریدهای غیراستاندارد
+    for (var grade in gradeCounts) {
+        if (sortedGrades.indexOf(grade) === -1) {
+            sortedGrades.push(grade);
+        }
+    }
+    
+    // ============================================================
+    // ⭐⭐ آماده‌سازی داده‌های نمودار
+    // ============================================================
+    var labels = [];
+    var values = [];
+    var colors = [];
+    var borderColors = [];
+    
+    var colorPalette = [
+        '#00b894', // سبز - A+
+        '#00cec9', // فیروزه‌ای - A
+        '#6c5ce7', // بنفش - B+
+        '#a29bfe', // بنفش روشن - B
+        '#fdcb6e', // زرد - C+
+        '#f39c12', // نارنجی - C
+        '#e17055', // قرمز روشن - D
+        '#ff6b6b', // قرمز - E
+        '#b2bec3'  // خاکستری - بدون گرید
+    ];
+    
+    for (var s = 0; s < sortedGrades.length; s++) {
+        var gradeName = sortedGrades[s];
+        labels.push(gradeName);
+        values.push(gradeCounts[gradeName]);
+        
+        // رنگ بر اساس ایندکس
+        var colorIndex = s % colorPalette.length;
+        colors.push(colorPalette[colorIndex] + 'CC'); // با شفافیت
+        borderColors.push(colorPalette[colorIndex]);
+    }
+    
+    // ============================================================
+    // ⭐⭐ رسم نمودار دایره‌ای (Doughnut)
+    // ============================================================
+    try {
+        gradeChartInstance = new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: values,
+                    backgroundColor: colors,
+                    borderColor: borderColors,
+                    borderWidth: 2,
+                    hoverOffset: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '55%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: { size: 10, family: 'Vazirmatn' },
+                            boxWidth: 12,
+                            padding: 8,
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                var label = context.label || '';
+                                var value = context.parsed || 0;
+                                var percent = totalWithGrade > 0 ? 
+                                    ((value / totalWithGrade) * 100).toFixed(1) : 0;
+                                return label + ': ' + value + ' (' + percent + '%)';
+                            }
+                        },
+                        titleFont: { family: 'Vazirmatn', size: 12 },
+                        bodyFont: { family: 'Vazirmatn', size: 11 }
+                    }
+                },
+                animation: {
+                    animateRotate: true,
+                    animateScale: true,
+                    duration: 800
+                }
+            }
+        });
+        console.log('✅ نمودار گرید رندر شد:', sortedGrades.length, 'گرید');
+    } catch (e) {
+        console.error('❌ خطا در رسم نمودار گرید:', e);
+    }
+}
+// ============================================================
+// RENDER MARKETING CARDS - استفاده از createCard
+// ============================================================
 function renderMarketingCards(data) {
     var list = document.getElementById('terminalList');
     if (!list) return;
+    
     if (data.length === 0) {
         list.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>هیچ پایانه‌ای در بازاریابی یافت نشد</p></div>';
         document.getElementById('terminalCount').textContent = '';
         return;
     }
     
+    // تبدیل داده بازاریابی به فرمت کارت
     var html = '';
     for (var i = 0; i < data.length; i++) {
         var item = data[i];
-        var terminalDisplay = String(item.terminal).padStart(8, '0');
-        var statusTag = item.status === 'کارآمد' ? 
-            '<span class="tag tag-marketing-done">✅ ' + item.status + '</span>' : 
-            '<span class="tag tag-marketing">⚡ ' + item.status + '</span>';
         
-        var raw = item.raw || {};
-        var mobile = raw['شماره موبایل'] || raw['شماره همراه'] || raw['موبایل'] || '';
-        if (!mobile && item.mobile) mobile = item.mobile;
-        if (!mobile) mobile = '—';
+        // ساخت شیء شبیه allData
+        var cardItem = {
+            terminal: item.terminal,
+            terminalWithZero: item.terminalWithZero,
+            shop: item.shop || '',
+            holder: item.holder || '',
+            region: item.region || '',
+            supporter: item.supporter || '',
+            expert: item.expert || '',
+            bank: item.bank || (item.raw && item.raw['بانک']) || '',
+            grade: item.grade || '',
+            deviceType: item.deviceType || '',
+            transCount: item.count || 0,
+            transAmount: item.amount || 0,
+            rollCount: item.rollCount || 0,
+            raw: item.raw || {},
+            hasMarketing: true,
+            marketingStatus: item.status || 'ناکارآمد',
+            marketingDone: (item.status === 'کارآمد' || item.status === 'ابطال شده')
+        };
         
-        // ============================================================
-        // ⭐⭐⭐ دریافت marketingBy
-        // ============================================================
-        var marketingBy = item.marketingBy || raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
-        
-        var infoHtml = `
-            <div class="terminal-body" style="grid-template-columns:1fr 1fr;gap:2px 12px;display:grid;font-size:13px;color:#636e72;margin-bottom:3px;">
-                <div class="info-item"><i class="fas fa-store"></i> <span class="value">${item.shop || '—'}</span></div>
-                <div class="info-item"><i class="fas fa-user"></i> <span class="value">${item.holder || '—'}</span></div>
-                <div class="info-item">
-                    <i class="fas fa-phone" style="cursor:pointer;color:#6c5ce7;" onclick="makeCall('${mobile}')"></i>
-                    <span class="value" style="direction:ltr;text-align:left;cursor:pointer;color:#6c5ce7;font-weight:600;" onclick="makeCall('${mobile}')">${mobile}</span>
-                </div>
-                <div class="info-item"><i class="fas fa-map-marker-alt"></i> <span class="value">${item.region || '—'}</span></div>
-                <div class="info-item trans-item"><i class="fas fa-money-bill-wave" style="color:#00b894;"></i> <span class="trans-label">مبلغ:</span> <span class="trans-value">${(item.amount || 0).toLocaleString()}</span></div>
-                <div class="info-item trans-item"><i class="fas fa-exchange-alt" style="color:#6c5ce7;"></i> <span class="trans-label">تعداد:</span> <span class="trans-value">${(item.count || 0).toLocaleString()}</span></div>
-                ${item.grade ? '<div class="info-item grade-item"><i class="fas fa-star" style="color:#fdcb6e;"></i> <span class="grade-value">گرید: ' + item.grade + '</span></div>' : ''}
-                ${marketingBy ? `<div class="info-item" style="border-top:1px solid #f0f0f0;padding-top:2px;margin-top:2px;grid-column:1/-1;">
-                    <i class="fas fa-bullhorn" style="color:#fdcb6e;font-size:11px;"></i>
-                    <span style="font-size:11px;color:#636e72;">بازاریابی توسط:</span>
-                    <span style="font-size:11px;color:#2d3436;font-weight:500;">${marketingBy}</span>
-                </div>` : ''}
-            </div>
-        `;
-        
-        html += `
-            <div class="terminal-card" style="margin-bottom:4px;height:auto;min-height:120px;">
-                <div class="terminal-header">
-                    <span class="terminal-id">${terminalDisplay}</span>
-                    <button class="terminal-actions-btn" onclick="openModal('${item.terminal}')">
-                        <i class="fas fa-tools"></i> عملیات
-                    </button>
-                </div>
-                ${infoHtml}
-                <div class="terminal-tags">${statusTag}</div>
-            </div>
-        `;
+        html += createCard(cardItem);
     }
+    
     list.innerHTML = html;
     list.style.height = 'auto';
     list.style.position = 'static';
@@ -6542,18 +7115,13 @@ function renderMarketingCards(data) {
 }
 
 // ============================================================
-// رندر کارت‌های نصب جدید (با بازاریابی توسط)
+// RENDER NASB CARDS - با کارت‌های اتوماتیک
 // ============================================================
 function renderNasbCards(data) {
-    console.log('📊 renderNasbCards فراخوانی شد، تعداد:', data ? data.length : 0);
-    
     var list = document.getElementById('terminalList');
-    if (!list) {
-        console.error('❌ terminalList پیدا نشد');
-        return;
-    }
+    if (!list) return;
     
-    if (!data || data.length === 0) {
+    if (data.length === 0) {
         list.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>هیچ پایانه‌ای در نصب جدید یافت نشد</p></div>';
         document.getElementById('terminalCount').textContent = '';
         return;
@@ -6562,66 +7130,41 @@ function renderNasbCards(data) {
     var html = '';
     for (var i = 0; i < data.length; i++) {
         var item = data[i];
-        var terminalDisplay = String(item.terminal).padStart(8, '0');
         
-        var statusTag = item.status === 'فعال' ? 
-            '<span class="tag tag-nasb">✅ ' + item.status + '</span>' : 
-            '<span class="tag tag-nasb-pending">⚡ ' + item.status + '</span>';
+        var cardItem = {
+            terminal: item.terminal,
+            terminalWithZero: item.terminalWithZero,
+            shop: item.shop || '',
+            holder: item.holder || '',
+            region: item.region || '',
+            supporter: item.supporter || '',
+            expert: item.expert || '',
+            bank: item.bank || (item.raw && item.raw['بانک']) || '',
+            grade: item.grade || '',
+            deviceType: item.deviceType || '',
+            transCount: item.count || 0,
+            transAmount: item.amount || 0,
+            rollCount: item.rollCount || 0,
+            raw: item.raw || {},
+            _isSimpleCard: true   // ⭐⭐⭐ این خط مهمه
+        };
         
-        var raw = item.raw || {};
-        var mobile = raw['شماره موبایل'] || raw['شماره همراه'] || raw['موبایل'] || '';
-        if (!mobile && item.mobile) mobile = item.mobile;
-        if (!mobile) mobile = '—';
-        
-        // ============================================================
-        // دریافت marketingBy
-        // ============================================================
-        var marketingBy = item.marketingBy || raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
-        
-        var infoHtml = `
-            <div class="terminal-body" style="grid-template-columns:1fr 1fr;gap:2px 12px;display:grid;font-size:13px;color:#636e72;margin-bottom:3px;">
-                <div class="info-item"><i class="fas fa-store"></i> <span class="value">${item.shop || '—'}</span></div>
-                <div class="info-item"><i class="fas fa-user"></i> <span class="value">${item.holder || '—'}</span></div>
-                <div class="info-item">
-                    <i class="fas fa-phone" style="cursor:pointer;color:#6c5ce7;" onclick="makeCall('${mobile}')"></i>
-                    <span class="value" style="direction:ltr;text-align:left;cursor:pointer;color:#6c5ce7;font-weight:600;" onclick="makeCall('${mobile}')">${mobile}</span>
-                </div>
-                <div class="info-item"><i class="fas fa-map-marker-alt"></i> <span class="value">${item.region || '—'}</span></div>
-                <div class="info-item trans-item"><i class="fas fa-money-bill-wave" style="color:#00b894;"></i> <span class="trans-label">مبلغ:</span> <span class="trans-value">${(item.amount || 0).toLocaleString()}</span></div>
-                <div class="info-item trans-item"><i class="fas fa-exchange-alt" style="color:#6c5ce7;"></i> <span class="trans-label">تعداد:</span> <span class="trans-value">${(item.count || 0).toLocaleString()}</span></div>
-                ${item.grade ? '<div class="info-item grade-item"><i class="fas fa-star" style="color:#fdcb6e;"></i> <span class="grade-value">گرید: ' + item.grade + '</span></div>' : ''}
-                ${marketingBy ? `<div class="info-item" style="border-top:1px solid #f0f0f0;padding-top:2px;margin-top:2px;grid-column:1/-1;">
-                    <i class="fas fa-bullhorn" style="color:#fdcb6e;font-size:11px;"></i>
-                    <span style="font-size:11px;color:#636e72;">بازاریابی توسط:</span>
-                    <span style="font-size:11px;color:#2d3436;font-weight:500;">${marketingBy}</span>
-                </div>` : ''}
-            </div>
-        `;
-        
-        html += `
-            <div class="terminal-card" style="margin-bottom:4px;height:auto;min-height:120px;">
-                <div class="terminal-header">
-                    <span class="terminal-id">${terminalDisplay}</span>
-                    <button class="terminal-actions-btn" onclick="openModal('${item.terminal}')">
-                        <i class="fas fa-tools"></i> عملیات
-                    </button>
-                </div>
-                ${infoHtml}
-                <div class="terminal-tags">${statusTag}</div>
-            </div>
-        `;
+        html += createCard(cardItem);
     }
+    
     list.innerHTML = html;
     list.style.height = 'auto';
     list.style.position = 'static';
     document.getElementById('terminalCount').textContent = data.length + ' پایانه (نصب جدید)';
 }
+
 // ============================================================
-// رندر کارت‌های غیرفعال مالیاتی (با بازاریابی توسط)
+// RENDER INACTIVE03 CARDS - استفاده از createCard
 // ============================================================
 function renderInactive03Cards(data) {
     var list = document.getElementById('terminalList');
     if (!list) return;
+    
     if (data.length === 0) {
         list.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>هیچ پایانه‌ای در غیرفعال مالیاتی یافت نشد</p></div>';
         document.getElementById('terminalCount').textContent = '';
@@ -6631,62 +7174,40 @@ function renderInactive03Cards(data) {
     var html = '';
     for (var i = 0; i < data.length; i++) {
         var item = data[i];
-        var terminalDisplay = String(item.terminal).padStart(8, '0');
-        var statusTag = item.status === 'انجام شده' ? 
-            '<span class="tag tag-03-done">✅ ' + item.status + '</span>' : 
-            '<span class="tag tag-03">⚡ ' + item.status + '</span>';
         
-        var raw = item.raw || {};
-        var mobile = raw['شماره موبایل'] || raw['شماره همراه'] || raw['موبایل'] || '';
-        if (!mobile && item.mobile) mobile = item.mobile;
-        if (!mobile) mobile = '—';
+        var cardItem = {
+            terminal: item.terminal,
+            terminalWithZero: item.terminalWithZero,
+            shop: item.shop || '',
+            holder: item.holder || '',
+            region: item.region || '',
+            supporter: item.supporter || '',
+            expert: item.expert || '',
+            bank: item.bank || (item.raw && item.raw['بانک']) || '',
+            grade: item.grade || '',
+            deviceType: item.deviceType || '',
+            transCount: item.count || 0,
+            transAmount: item.amount || 0,
+            rollCount: item.rollCount || 0,
+            raw: item.raw || {}
+        };
         
-        // ============================================================
-        // ⭐⭐⭐ دریافت marketingBy
-        // ============================================================
-        var marketingBy = item.marketingBy || raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
-        
-        var infoHtml = `
-            <div class="terminal-body" style="grid-template-columns:1fr 1fr;gap:2px 12px;display:grid;font-size:13px;color:#636e72;margin-bottom:3px;">
-                <div class="info-item"><i class="fas fa-store"></i> <span class="value">${item.shop || '—'}</span></div>
-                <div class="info-item"><i class="fas fa-user"></i> <span class="value">${item.holder || '—'}</span></div>
-                <div class="info-item">
-                    <i class="fas fa-phone" style="cursor:pointer;color:#6c5ce7;" onclick="makeCall('${mobile}')"></i>
-                    <span class="value" style="direction:ltr;text-align:left;cursor:pointer;color:#6c5ce7;font-weight:600;" onclick="makeCall('${mobile}')">${mobile}</span>
-                </div>
-                <div class="info-item"><i class="fas fa-map-marker-alt"></i> <span class="value">${item.region || '—'}</span></div>
-                ${marketingBy ? `<div class="info-item" style="border-top:1px solid #f0f0f0;padding-top:2px;margin-top:2px;grid-column:1/-1;">
-                    <i class="fas fa-bullhorn" style="color:#fdcb6e;font-size:11px;"></i>
-                    <span style="font-size:11px;color:#636e72;">بازاریابی توسط:</span>
-                    <span style="font-size:11px;color:#2d3436;font-weight:500;">${marketingBy}</span>
-                </div>` : ''}
-            </div>
-        `;
-        
-        html += `
-            <div class="terminal-card" style="margin-bottom:4px;height:auto;min-height:100px;">
-                <div class="terminal-header">
-                    <span class="terminal-id">${terminalDisplay}</span>
-                    <button class="terminal-actions-btn" onclick="openModal('${item.terminal}')">
-                        <i class="fas fa-tools"></i> عملیات
-                    </button>
-                </div>
-                ${infoHtml}
-                <div class="terminal-tags">${statusTag}</div>
-            </div>
-        `;
+        html += createCard(cardItem);
     }
+    
     list.innerHTML = html;
     list.style.height = 'auto';
     list.style.position = 'static';
     document.getElementById('terminalCount').textContent = data.length + ' پایانه (غیرفعال مالیاتی)';
 }
+
 // ============================================================
-// رندر کارت‌های کد باز (با بازاریابی توسط)
+// RENDER CODEBAZ CARDS - با کارت‌های اتوماتیک
 // ============================================================
 function renderCodeBazCards(data) {
     var list = document.getElementById('terminalList');
     if (!list) return;
+    
     if (data.length === 0) {
         list.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>هیچ پایانه‌ای در کد باز یافت نشد</p></div>';
         document.getElementById('terminalCount').textContent = '';
@@ -6696,53 +7217,28 @@ function renderCodeBazCards(data) {
     var html = '';
     for (var i = 0; i < data.length; i++) {
         var item = data[i];
-        var terminalDisplay = String(item.terminal).padStart(8, '0');
         
-        var raw = item.raw || {};
-        var mobile = raw['شماره موبایل'] || raw['شماره همراه'] || raw['موبایل'] || '';
-        if (!mobile && item.mobile) mobile = item.mobile;
-        if (!mobile) mobile = '—';
+        var cardItem = {
+            terminal: item.terminal,
+            terminalWithZero: item.terminalWithZero,
+            shop: item.shop || '',
+            holder: item.holder || '',
+            region: item.region || '',
+            supporter: item.supporter || '',
+            expert: item.expert || '',
+            bank: item.bank || (item.raw && item.raw['بانک']) || '',
+            grade: item.grade || '',
+            deviceType: item.deviceType || '',
+            transCount: 0,
+            transAmount: 0,
+            rollCount: item.rollCount || 0,
+            raw: item.raw || {},
+            _isSimpleCard: true   // ⭐⭐⭐ این خط مهمه
+        };
         
-        // ============================================================
-        // دریافت "بازاریابی توسط"
-        // ============================================================
-              var marketingBy = item.marketingBy || raw['بازاریابی توسط'] || raw['بازاریابی_توسط'] || raw['بازاریابی'] || '';
-        var deviceType = item.deviceType || raw['نوع دستگاه'] || raw['مدل دستگاه'] || '—';
-        var status = raw['وضعیت'] || raw['Status'] || 'در انتظار';
-        var address = raw['آدرس'] || raw['Address'] || raw['نشانی'] || '—';
-        
-        var infoHtml = `
-            <div class="terminal-body" style="grid-template-columns:1fr 1fr;gap:2px 12px;display:grid;font-size:13px;color:#636e72;margin-bottom:3px;">
-                <div class="info-item"><i class="fas fa-store"></i> <span class="value">${item.shop || '—'}</span></div>
-                <div class="info-item"><i class="fas fa-user"></i> <span class="value">${item.holder || '—'}</span></div>
-                <div class="info-item">
-                    <i class="fas fa-phone" style="cursor:pointer;color:#6c5ce7;" onclick="makeCall('${mobile}')"></i>
-                    <span class="value" style="direction:ltr;text-align:left;cursor:pointer;color:#6c5ce7;font-weight:600;" onclick="makeCall('${mobile}')">${mobile}</span>
-                </div>
-                <div class="info-item"><i class="fas fa-server"></i> <span class="value">${deviceType}</span></div>
-                <div class="info-item" style="grid-column:1/-1;"><i class="fas fa-flag"></i> <span class="value" style="font-weight:600;">وضعیت: ${status}</span></div>
-                ${marketingBy ? `<div class="info-item" style="border-top:1px solid #f0f0f0;padding-top:2px;margin-top:2px;grid-column:1/-1;">
-                    <i class="fas fa-bullhorn" style="color:#fdcb6e;font-size:11px;"></i>
-                    <span style="font-size:11px;color:#636e72;">بازاریابی:</span>
-                    <span style="font-size:11px;color:#2d3436;font-weight:500;">${marketingBy}</span>
-                </div>` : ''}
-                <div class="info-item" style="grid-column:1/-1;"><i class="fas fa-location-dot"></i> <span class="value">${address}</span></div>
-            </div>
-        `;
-        
-        html += `
-            <div class="terminal-card" style="margin-bottom:4px;height:auto;min-height:120px;">
-                <div class="terminal-header">
-                    <span class="terminal-id">${terminalDisplay}</span>
-                    <button class="terminal-actions-btn" onclick="openModal('${item.terminal}')">
-                        <i class="fas fa-tools"></i> عملیات
-                    </button>
-                </div>
-                ${infoHtml}
-                <div class="terminal-tags"><span class="tag tag-codebaz">🔓 کد باز</span></div>
-            </div>
-        `;
+        html += createCard(cardItem);
     }
+    
     list.innerHTML = html;
     list.style.height = 'auto';
     list.style.position = 'static';
@@ -7138,13 +7634,19 @@ function renderDashboardStats() {
         renderActionsList('');
     }
     // رندر نمودارها
-    renderTrendChart(userData);
-    renderCompareStats(userData);
+    renderTrendChart();
+   renderCompareStats();
+    renderCompareStats();
     renderGradeChart(userData);
     renderPerformance();
     updateDataStatus();
-    renderCompareStats(userData);
+     setTimeout(function() {
+        if (typeof renderCompareStats === 'function') {
+            renderCompareStats();
+        }
+    }, 300);
 }
+
 
 // ============================================================
 // UPDATE DATA STATUS
@@ -7203,209 +7705,479 @@ updatePendingReviewBadge();
 
 }
 // ============================================================
-// RENDER TREND CHART - اصلاح شده
+// RENDER TREND CHART - نمودار روند تراکنش (از TARKOLI)
 // ============================================================
-function renderTrendChart(dataSource) {
+function renderTrendChart() {
+    console.log('📊 renderTrendChart اجرا شد - کاربر:', currentUser);
+    console.log('📊 تعداد tarkoliData:', tarkoliData ? tarkoliData.length : 0);
+    
     var ctx = document.getElementById('trendChart');
     if (!ctx) {
         console.warn('⚠️ عنصر trendChart پیدا نشد');
         return;
     }
+    var ctx2 = ctx.getContext('2d');
     
-    try {
-        var ctx2 = ctx.getContext('2d');
-        if (!ctx2) {
-            console.warn('⚠️ Context برای trendChart پیدا نشد');
-            return;
-        }
-    } catch(e) {
-        console.warn('⚠️ خطا در دریافت Context:', e);
-        return;
-    }
-    
-    if (trendChartInstance) { 
+    // حذف نمودار قبلی
+    if (trendChartInstance) {
         try {
             trendChartInstance.destroy();
         } catch(e) {}
-        trendChartInstance = null; 
+        trendChartInstance = null;
     }
     
-    if (!dataSource || dataSource.length === 0) {
-        try {
-            var ctx2 = ctx.getContext('2d');
-            ctx2.clearRect(0, 0, ctx.width, ctx.height);
-            ctx2.font = '14px Vazirmatn';
-            ctx2.fillStyle = '#b2bec3';
-            ctx2.textAlign = 'center';
-            ctx2.fillText('داده‌ای برای نمایش وجود ندارد', ctx.width/2, ctx.height/2);
-        } catch(e) {}
+    // ============================================================
+    // ⭐⭐⭐ بررسی وجود tarkoliData
+    // ============================================================
+    if (!tarkoliData || tarkoliData.length === 0) {
+        console.warn('⚠️ tarkoliData خالی است - تلاش برای بارگذاری از IndexedDB');
+        
+        // تلاش برای بارگذاری از IndexedDB
+        if (typeof loadFromIndexedDB === 'function') {
+            loadFromIndexedDB('tarkoli').then(function(cachedData) {
+                if (cachedData && cachedData.length > 0) {
+                    tarkoliData = cachedData;
+                    console.log('✅ tarkoliData از IndexedDB بارگذاری شد:', tarkoliData.length);
+                    renderTrendChart(); // دوباره فراخوانی کن
+                } else {
+                    showTrendChartEmpty(ctx2);
+                }
+            }).catch(function(e) {
+                console.warn('⚠️ خطا در بارگذاری tarkoli از IndexedDB:', e);
+                showTrendChartEmpty(ctx2);
+            });
+            return;
+        } else {
+            showTrendChartEmpty(ctx2);
+            return;
+        }
+    }
+    
+    // ============================================================
+    // ⭐⭐⭐ فیلتر tarkoliData بر اساس کاربر
+    // ============================================================
+    var userTarkoli = [];
+    
+    if (currentUser === 'مدیر سیستم') {
+        // مدیر: همه رکوردها
+        userTarkoli = tarkoliData;
+    } else if (VALID_EXPERTS.indexOf(currentUser) !== -1) {
+        // کارشناس: رکورد پشتیبان‌های او
+        var mySupporters = supporterMap[currentUser] || [];
+        userTarkoli = tarkoliData.filter(function(d) {
+            return mySupporters.indexOf(d.supporter) !== -1;
+        });
+    } else {
+        // پشتیبان: فقط رکورد خودش
+        userTarkoli = tarkoliData.filter(function(d) {
+            return d.supporter === currentUser;
+        });
+    }
+    
+    console.log('📊 تعداد رکورد TARKOLI برای این کاربر:', userTarkoli.length);
+    
+    if (userTarkoli.length === 0) {
+        showTrendChartEmpty(ctx2, 'داده‌ای برای این کاربر وجود ندارد');
         return;
     }
     
-    // محاسبه مقادیر
-    var totalJari = 0, total1 = 0, total2 = 0;
-    var daysJari = 0;
+    // ============================================================
+    // جمع‌آوری داده‌ها
+    // ============================================================
+    var amount2 = 0, amount1 = 0, amountCurr = 0;
+    var count2 = 0, count1 = 0, countCurr = 0;
+    var daySum = 0;
+    var dayCount = 0;
     
-    for (var i = 0; i < dataSource.length; i++) {
-        var item = dataSource[i];
-        totalJari += item.transAmount || 0;
-        total1 += item.trans1Amount || 0;
-        total2 += item.trans2Amount || 0;
-        var day = item.transDay || 0;
-        if (day > daysJari) daysJari = day;
+    for (var i = 0; i < userTarkoli.length; i++) {
+        var item = userTarkoli[i];
+        
+        amount2 += Number(item.amount_2_months_ago) || 0;
+        amount1 += Number(item.amount_1_month_ago) || 0;
+        amountCurr += Number(item.amount_current_month) || 0;
+        
+        count2 += Number(item.count_2_months_ago) || 0;
+        count1 += Number(item.count_1_month_ago) || 0;
+        countCurr += Number(item.count_current_month) || 0;
+        
+        var itemDay = Number(item.day) || 30;
+        daySum += itemDay;
+        dayCount++;
     }
     
-    var avgDay = Math.max(daysJari, 30);
-    if (avgDay === 0) avgDay = 30;
+    var day = dayCount > 0 ? Math.round(daySum / dayCount) : 30;
     
-    var normJari = (totalJari / avgDay) * 30;
-    var norm1 = (total1 / avgDay) * 30;
-    var norm2 = (total2 / avgDay) * 30;
+    console.log('📊 روز:', day);
+    console.log('📊 ۲ ماه قبل - مبلغ:', amount2.toLocaleString(), '| تعداد:', count2);
+    console.log('📊 ۱ ماه قبل - مبلغ:', amount1.toLocaleString(), '| تعداد:', count1);
+    console.log('📊 جاری - مبلغ:', amountCurr.toLocaleString(), '| تعداد:', countCurr);
     
-    function formatMoney(n) {
-        var millions = Math.round(n / 1000000);
-        if (millions >= 1000) return (millions / 1000).toFixed(1) + 'B';
-        if (millions >= 1) return millions + 'M';
-        return n.toLocaleString();
+    // ============================================================
+    // نرمال‌سازی (همه بر اساس یک دوره مشترک)
+    // ============================================================
+    var normalizedAmount2 = day > 0 ? (amount2 / 30) * day : amount2;
+    var normalizedAmount1 = day > 0 ? (amount1 / 30) * day : amount1;
+    var normalizedCount2 = day > 0 ? (count2 / 30) * day : count2;
+    var normalizedCount1 = day > 0 ? (count1 / 30) * day : count1;
+    
+    function formatMoney(n) { 
+        if (n >= 1000000000) return (n / 1000000000).toFixed(1) + 'B'; 
+        if (n >= 1000000) return (n / 1000000).toFixed(0) + 'M'; 
+        if (n >= 1000) return (n / 1000).toFixed(0) + 'K';
+        return n.toLocaleString(); 
     }
     
+    // ============================================================
+    // ⭐⭐⭐ بررسی Chart.js
+    // ============================================================
+    if (typeof Chart === 'undefined') {
+        console.warn('⚠️ Chart.js بارگذاری نشده - نمایش به صورت متنی');
+        
+        // نمایش داده‌ها به صورت متنی
+        ctx2.clearRect(0, 0, ctx.width, ctx.height);
+        ctx2.font = '12px Vazirmatn, Tahoma';
+        ctx2.fillStyle = '#2d3436';
+        ctx2.textAlign = 'right';
+        ctx2.fillText('📊 ۲ ماه قبل:', ctx.width - 20, 30);
+        ctx2.fillText('مبلغ: ' + formatMoney(normalizedAmount2), ctx.width - 20, 50);
+        ctx2.fillText('تعداد: ' + normalizedCount2.toLocaleString(), ctx.width - 20, 70);
+        ctx2.fillText('📊 ۱ ماه قبل:', ctx.width - 20, 100);
+        ctx2.fillText('مبلغ: ' + formatMoney(normalizedAmount1), ctx.width - 20, 120);
+        ctx2.fillText('تعداد: ' + normalizedCount1.toLocaleString(), ctx.width - 20, 140);
+        ctx2.fillText('📊 ماه جاری:', ctx.width - 20, 170);
+        ctx2.fillText('مبلغ: ' + formatMoney(amountCurr), ctx.width - 20, 190);
+        ctx2.fillText('تعداد: ' + countCurr.toLocaleString(), ctx.width - 20, 210);
+        return;
+    }
+    
+    // ============================================================
+    // رسم نمودار
+    // ============================================================
     try {
         trendChartInstance = new Chart(ctx2, {
             type: 'bar',
             data: {
                 labels: ['۲ ماه قبل', '۱ ماه قبل', 'ماه جاری'],
-                datasets: [{
-                    label: 'مبلغ تراکنش (نرمال‌شده)',
-                    data: [norm2, norm1, normJari],
-                    backgroundColor: ['#6c5ce7', '#a29bfe', '#00b894'],
-                    borderRadius: 4
-                }]
+                datasets: [
+                    { 
+                        label: 'مبلغ تراکنش', 
+                        data: [normalizedAmount2, normalizedAmount1, amountCurr], 
+                        backgroundColor: ['#6c5ce7', '#a29bfe', '#00b894'], 
+                        borderRadius: 6, 
+                        order: 2,
+                        yAxisID: 'y'
+                    },
+                    { 
+                        label: 'تعداد تراکنش', 
+                        data: [normalizedCount2, normalizedCount1, countCurr], 
+                        type: 'line', 
+                        borderColor: '#ff6b6b', 
+                        backgroundColor: 'rgba(255,107,107,0.1)', 
+                        borderWidth: 3, 
+                        pointBackgroundColor: '#ff6b6b', 
+                        pointRadius: 6,
+                        pointHoverRadius: 8,
+                        tension: 0.3, 
+                        order: 1, 
+                        yAxisID: 'y1',
+                        fill: true
+                    }
+                ]
             },
             options: {
-                responsive: true,
-                maintainAspectRatio: true,
+                responsive: true, 
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
                 plugins: { 
                     legend: { 
                         position: 'bottom', 
-                        labels: { font: { size: 9 } } 
-                    } 
+                        labels: { 
+                            font: { size: 10, family: 'Vazirmatn' }, 
+                            boxWidth: 12,
+                            padding: 8,
+                            usePointStyle: true
+                        } 
+                    },
+                    tooltip: {
+                        titleFont: { family: 'Vazirmatn', size: 12 },
+                        bodyFont: { family: 'Vazirmatn', size: 11 },
+                        callbacks: {
+                            label: function(context) {
+                                var label = context.dataset.label || '';
+                                var value = context.parsed.y;
+                                if (context.dataset.yAxisID === 'y') {
+                                    return label + ': ' + value.toLocaleString() + ' ریال';
+                                } else {
+                                    return label + ': ' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
                 },
-                scales: { 
+                scales: {
                     y: { 
                         beginAtZero: true, 
+                        position: 'left',
                         ticks: { 
-                            font: { size: 8 }, 
+                            font: { size: 9, family: 'Vazirmatn' }, 
                             callback: function(value) { return formatMoney(value); } 
-                        } 
-                    } 
+                        },
+                        grid: { color: 'rgba(108, 92, 231, 0.08)' }
+                    },
+                    y1: { 
+                        position: 'right', 
+                        beginAtZero: true, 
+                        ticks: { 
+                            font: { size: 9, family: 'Vazirmatn' }, 
+                            callback: function(value) { return value.toLocaleString(); } 
+                        }, 
+                        grid: { drawOnChartArea: false } 
+                    },
+                    x: {
+                        ticks: {
+                            font: { size: 11, family: 'Vazirmatn' }
+                        }
+                    }
+                },
+                animation: {
+                    duration: 800
                 }
             }
         });
-        console.log('✅ نمودار روند تراکنش‌ها رندر شد');
+        console.log('✅ نمودار روند رندر شد');
     } catch (e) {
         console.error('❌ خطا در رسم نمودار:', e);
+        showTrendChartEmpty(ctx2, 'خطا در رسم نمودار');
     }
 }
 
 // ============================================================
-// RENDER COMPARE STATS - با نمایش امتیاز رشد
+// نمایش پیغام خالی برای نمودار روند
 // ============================================================
-function renderCompareStats(dataSource) {
-    if (!dataSource || dataSource.length === 0) {
-        document.getElementById('currentMonthAmount').textContent = '۰';
-        document.getElementById('prevMonthAmount').textContent = '۰';
-        document.getElementById('currentMonthCount').textContent = '۰';
-        document.getElementById('prevMonthCount').textContent = '۰';
-        document.getElementById('diffAmount').textContent = '— ۰';
-        document.getElementById('diffPercent').textContent = '۰%';
-        document.getElementById('diffCount').textContent = '— ۰';
-        document.getElementById('diffCountPercent').textContent = '۰%';
-        // ⭐ امتیاز رشد
-        document.getElementById('growthScoreDisplay').textContent = 'امتیاز رشد: ۰';
+function showTrendChartEmpty(ctx, message) {
+    if (!ctx) return;
+    var canvas = ctx.canvas;
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = '13px Vazirmatn, Tahoma';
+    ctx.fillStyle = '#b2bec3';
+    ctx.textAlign = 'center';
+    ctx.fillText(message || 'داده‌ای برای نمایش وجود ندارد', canvas.width/2, canvas.height/2);
+}
+// ============================================================
+// RENDER COMPARE STATS - از شیت TARKOLI (مقایسه ماه جاری و قبل)
+// ============================================================
+function renderCompareStats() {
+    console.log('📊 renderCompareStats - کاربر:', currentUser);
+    console.log('📊 تعداد tarkoliData:', tarkoliData ? tarkoliData.length : 0);
+    
+    // ============================================================
+    // ⭐⭐⭐ فیلتر tarkoliData بر اساس کاربر
+    // ============================================================
+    var userTarkoli = [];
+    
+    if (tarkoliData && tarkoliData.length > 0) {
+        if (currentUser === 'مدیر سیستم') {
+            // مدیر: همه رکوردها
+            userTarkoli = tarkoliData;
+        } else if (VALID_EXPERTS.indexOf(currentUser) !== -1) {
+            // کارشناس: رکورد پشتیبان‌های او
+            var mySupporters = supporterMap[currentUser] || [];
+            userTarkoli = tarkoliData.filter(function(d) {
+                return mySupporters.indexOf(d.supporter) !== -1;
+            });
+        } else {
+            // پشتیبان: فقط رکورد خودش
+            userTarkoli = tarkoliData.filter(function(d) {
+                return d.supporter === currentUser;
+            });
+        }
+    }
+    
+    console.log('📊 تعداد رکورد TARKOLI برای این کاربر:', userTarkoli.length);
+    
+    // ============================================================
+    // ⭐⭐⭐ اگر داده‌ای وجود ندارد
+    // ============================================================
+    if (userTarkoli.length === 0) {
+        setCompareEmptyState();
         return;
     }
     
-    var currentAmount = 0, prevAmount = 0;
-    var currentCount = 0, prevCount = 0;
-    var currentDays = 0;
+    // ============================================================
+    // ⭐⭐⭐ جمع‌آوری داده‌ها
+    // ============================================================
+    var totalAmountPrev = 0;      // مبلغ ماه قبل (خام - 30 روز)
+    var totalAmountCurr = 0;      // مبلغ ماه جاری
+    var totalCountPrev = 0;       // تعداد ماه قبل (خام - 30 روز)
+    var totalCountCurr = 0;       // تعداد ماه جاری
+    var daySum = 0;
+    var dayCount = 0;
     
-    for (var i = 0; i < dataSource.length; i++) {
-        var item = dataSource[i];
-        currentAmount += item.transAmount || 0;
-        currentCount += item.transCount || 0;
-        var day = item.transDay || 0;
-        if (day > currentDays) currentDays = day;
-        prevAmount += item.trans1Amount || 0;
-        prevCount += item.trans1Count || 0;
+    for (var i = 0; i < userTarkoli.length; i++) {
+        var item = userTarkoli[i];
+        
+        totalAmountPrev += Number(item.amount_1_month_ago) || 0;
+        totalAmountCurr += Number(item.amount_current_month) || 0;
+        
+        totalCountPrev += Number(item.count_1_month_ago) || 0;
+        totalCountCurr += Number(item.count_current_month) || 0;
+        
+        // ⭐ ستون day - تعداد روزهای سپری شده از ماه جاری
+        var itemDay = Number(item.day) || 30;
+        daySum += itemDay;
+        dayCount++;
     }
     
-    var day = currentDays || 30;
-    var expectedAmount = (prevAmount / 30) * day;
-    var diffAmount = currentAmount - expectedAmount;
-    var diffPercentAmount = expectedAmount !== 0 ? (diffAmount / expectedAmount) * 100 : 0;
-    var expectedCount = (prevCount / 30) * day;
-    var diffCount = currentCount - expectedCount;
-    var diffPercentCount = expectedCount !== 0 ? (diffCount / expectedCount) * 100 : 0;
+    // میانگین روز (اگه چندین ردیف باشه، معمولاً همه یکسانن)
+    var day = dayCount > 0 ? Math.round(daySum / dayCount) : 30;
+    if (day <= 0) day = 1;  // جلوگیری از تقسیم بر صفر
+    if (day > 30) day = 30;
+    
+    console.log('📊 روز (day):', day);
+    console.log('📊 ماه قبل (خام): مبلغ', totalAmountPrev.toLocaleString(), '| تعداد', totalCountPrev);
+    console.log('📊 ماه جاری: مبلغ', totalAmountCurr.toLocaleString(), '| تعداد', totalCountCurr);
     
     // ============================================================
-    // ⭐⭐ محاسبه امتیاز رشد
+    // ⭐⭐⭐ نرمال‌سازی ماه قبل بر اساس روز
+    // فرمول: (مبلغ ماه قبل / 30) × روز
     // ============================================================
-    var growthScore = Math.round((diffPercentAmount * 10) + (diffPercentCount * 10));
+    var expectedAmountPrev = (totalAmountPrev / 30) * day;
+    var expectedCountPrev = (totalCountPrev / 30) * day;
     
-    function formatMoney(value) {
-        var millions = Math.round(value / 1000000);
-        return millions.toLocaleString('fa-IR') + 'M';
+    console.log('📊 ماه قبل (نرمال‌شده برای', day, 'روز): مبلغ', expectedAmountPrev.toLocaleString(), '| تعداد', expectedCountPrev);
+    
+    // ============================================================
+    // ⭐⭐⭐ محاسبه اختلاف
+    // ============================================================
+    var diffAmount = totalAmountCurr - expectedAmountPrev;
+    var diffPercentAmount = expectedAmountPrev !== 0 ? (diffAmount / expectedAmountPrev) * 100 : 0;
+    
+    var diffCount = totalCountCurr - expectedCountPrev;
+    var diffPercentCount = expectedCountPrev !== 0 ? (diffCount / expectedCountPrev) * 100 : 0;
+    
+    console.log('📊 اختلاف مبلغ:', diffAmount.toLocaleString(), '| درصد:', diffPercentAmount.toFixed(1) + '%');
+    console.log('📊 اختلاف تعداد:', diffCount, '| درصد:', diffPercentCount.toFixed(1) + '%');
+    
+    // ============================================================
+    // ⭐⭐⭐ فرمت‌دهی اعداد
+    // ============================================================
+   function formatMoney(value) {
+    // ⭐⭐⭐ تقسیم بر 1,000,000 (حذف ۶ صفر آخر)
+    var millions = value / 1000000;
+    
+    // نمایش با ۱ رقم اعشار اگه لازم بود
+    if (Math.abs(millions) >= 100) {
+        return Math.round(millions).toLocaleString('fa-IR') + 'M';
+    } else if (Math.abs(millions) >= 10) {
+        return millions.toFixed(1).toLocaleString('fa-IR') + 'M';
+    } else {
+        return millions.toFixed(2).toLocaleString('fa-IR') + 'M';
     }
+}
     function formatCount(value) {
         return Math.round(value).toLocaleString('fa-IR');
     }
     
-    document.getElementById('currentMonthAmount').textContent = formatMoney(currentAmount);
-    document.getElementById('prevMonthAmount').textContent = formatMoney(prevAmount);
-    document.getElementById('currentMonthCount').textContent = formatCount(currentCount);
-    document.getElementById('prevMonthCount').textContent = formatCount(prevCount);
+    // ============================================================
+    // ⭐⭐⭐ نمایش مبلغ جاری
+    // ============================================================
+    var currentAmountEl = document.getElementById('currentMonthAmount');
+    if (currentAmountEl) {
+        currentAmountEl.textContent = formatMoney(totalAmountCurr);
+        currentAmountEl.style.direction = 'ltr';
+        currentAmountEl.style.textAlign = 'center';
+    }
     
+    // نمایش مبلغ ماه قبل (نرمال‌شده)
+    var prevAmountEl = document.getElementById('prevMonthAmount');
+    if (prevAmountEl) {
+        prevAmountEl.textContent = formatMoney(expectedAmountPrev);
+        prevAmountEl.style.direction = 'ltr';
+        prevAmountEl.style.textAlign = 'center';
+    }
+    
+    // ============================================================
+    // ⭐⭐⭐ نمایش اختلاف مبلغ
+    // ============================================================
     var diffAmountEl = document.getElementById('diffAmount');
     var diffPercentEl = document.getElementById('diffPercent');
-    if (diffAmount > 0) {
-        diffAmountEl.textContent = '▲ +' + formatMoney(diffAmount);
-        diffAmountEl.className = 'diff up';
-        diffPercentEl.textContent = '+' + diffPercentAmount.toFixed(1) + '%';
-        diffPercentEl.style.color = '#00b894';
-    } else if (diffAmount < 0) {
-        diffAmountEl.textContent = '▼ ' + formatMoney(diffAmount);
-        diffAmountEl.className = 'diff down';
-        diffPercentEl.textContent = diffPercentAmount.toFixed(1) + '%';
-        diffPercentEl.style.color = '#ff6b6b';
-    } else {
-        diffAmountEl.textContent = '— ۰M';
-        diffAmountEl.className = 'diff zero';
-        diffPercentEl.textContent = '۰%';
-        diffPercentEl.style.color = '#b2bec3';
+    
+    if (diffAmountEl && diffPercentEl) {
+        if (diffAmount > 0) {
+            diffAmountEl.textContent = '▲ +' + formatMoney(diffAmount);
+            diffAmountEl.className = 'diff up';
+            diffAmountEl.style.color = '#00b894';
+            diffPercentEl.textContent = '+' + diffPercentAmount.toFixed(1) + '%';
+            diffPercentEl.style.color = '#00b894';
+        } else if (diffAmount < 0) {
+            diffAmountEl.textContent = '▼ ' + formatMoney(diffAmount);
+            diffAmountEl.className = 'diff down';
+            diffAmountEl.style.color = '#ff6b6b';
+            diffPercentEl.textContent = diffPercentAmount.toFixed(1) + '%';
+            diffPercentEl.style.color = '#ff6b6b';
+        } else {
+            diffAmountEl.textContent = '— ۰';
+            diffAmountEl.className = 'diff zero';
+            diffAmountEl.style.color = '#b2bec3';
+            diffPercentEl.textContent = '۰%';
+            diffPercentEl.style.color = '#b2bec3';
+        }
     }
     
+    // ============================================================
+    // ⭐⭐⭐ نمایش تعداد جاری و قبل
+    // ============================================================
+    var currentCountEl = document.getElementById('currentMonthCount');
+    if (currentCountEl) {
+        currentCountEl.textContent = formatCount(totalCountCurr);
+        currentCountEl.style.direction = 'ltr';
+        currentCountEl.style.textAlign = 'center';
+    }
+    
+    var prevCountEl = document.getElementById('prevMonthCount');
+    if (prevCountEl) {
+        prevCountEl.textContent = formatCount(expectedCountPrev);
+        prevCountEl.style.direction = 'ltr';
+        prevCountEl.style.textAlign = 'center';
+    }
+    
+    // ============================================================
+    // ⭐⭐⭐ نمایش اختلاف تعداد
+    // ============================================================
     var diffCountEl = document.getElementById('diffCount');
     var diffCountPercentEl = document.getElementById('diffCountPercent');
-    if (diffCount > 0) {
-        diffCountEl.textContent = '▲ +' + formatCount(diffCount);
-        diffCountEl.className = 'diff up';
-        diffCountPercentEl.textContent = '+' + diffPercentCount.toFixed(1) + '%';
-        diffCountPercentEl.style.color = '#00b894';
-    } else if (diffCount < 0) {
-        diffCountEl.textContent = '▼ ' + formatCount(diffCount);
-        diffCountEl.className = 'diff down';
-        diffCountPercentEl.textContent = diffPercentCount.toFixed(1) + '%';
-        diffCountPercentEl.style.color = '#ff6b6b';
-    } else {
-        diffCountEl.textContent = '— ۰';
-        diffCountEl.className = 'diff zero';
-        diffCountPercentEl.textContent = '۰%';
-        diffCountPercentEl.style.color = '#b2bec3';
+    
+    if (diffCountEl && diffCountPercentEl) {
+        if (diffCount > 0) {
+            diffCountEl.textContent = '▲ +' + formatCount(diffCount);
+            diffCountEl.className = 'diff up';
+            diffCountEl.style.color = '#00b894';
+            diffCountPercentEl.textContent = '+' + diffPercentCount.toFixed(1) + '%';
+            diffCountPercentEl.style.color = '#00b894';
+        } else if (diffCount < 0) {
+            diffCountEl.textContent = '▼ ' + formatCount(diffCount);
+            diffCountEl.className = 'diff down';
+            diffCountEl.style.color = '#ff6b6b';
+            diffCountPercentEl.textContent = diffPercentCount.toFixed(1) + '%';
+            diffCountPercentEl.style.color = '#ff6b6b';
+        } else {
+            diffCountEl.textContent = '— ۰';
+            diffCountEl.className = 'diff zero';
+            diffCountEl.style.color = '#b2bec3';
+            diffCountPercentEl.textContent = '۰%';
+            diffCountPercentEl.style.color = '#b2bec3';
+        }
     }
     
     // ============================================================
-    // ⭐⭐ نمایش امتیاز رشد (در کارت مقایسه تراکنش)
+    // ⭐⭐⭐ محاسبه و نمایش امتیاز رشد
     // ============================================================
+    var growthScore = Math.round((diffPercentAmount * 10) + (diffPercentCount * 10));
+    
     var growthDisplay = document.getElementById('growthScoreDisplay');
     if (growthDisplay) {
         var growthText = growthScore >= 0 ? '+' + growthScore : '' + growthScore;
@@ -7415,133 +8187,185 @@ function renderCompareStats(dataSource) {
         growthDisplay.style.fontWeight = 'bold';
         growthDisplay.style.fontSize = '13px';
     }
+    
+    console.log('✅ renderCompareStats کامل شد');
+}
+
+// ============================================================
+// ⭐⭐⭐ حالت خالی برای کارت مقایسه
+// ============================================================
+function setCompareEmptyState() {
+    var ids = ['currentMonthAmount', 'prevMonthAmount', 'currentMonthCount', 'prevMonthCount'];
+    for (var i = 0; i < ids.length; i++) {
+        var el = document.getElementById(ids[i]);
+        if (el) el.textContent = '۰';
+    }
+    
+    var diffAmountEl = document.getElementById('diffAmount');
+    if (diffAmountEl) {
+        diffAmountEl.textContent = '— ۰';
+        diffAmountEl.className = 'diff zero';
+        diffAmountEl.style.color = '#b2bec3';
+    }
+    
+    var diffPercentEl = document.getElementById('diffPercent');
+    if (diffPercentEl) {
+        diffPercentEl.textContent = '۰%';
+        diffPercentEl.style.color = '#b2bec3';
+    }
+    
+    var diffCountEl = document.getElementById('diffCount');
+    if (diffCountEl) {
+        diffCountEl.textContent = '— ۰';
+        diffCountEl.className = 'diff zero';
+        diffCountEl.style.color = '#b2bec3';
+    }
+    
+    var diffCountPercentEl = document.getElementById('diffCountPercent');
+    if (diffCountPercentEl) {
+        diffCountPercentEl.textContent = '۰%';
+        diffCountPercentEl.style.color = '#b2bec3';
+    }
+    
+    var growthDisplay = document.getElementById('growthScoreDisplay');
+    if (growthDisplay) {
+        growthDisplay.textContent = '🏆 امتیاز رشد: ۰';
+        growthDisplay.style.color = '#b2bec3';
+    }
 }
 // ============================================================
-// RENDER GRADE CHART - اصلاح شده
+// RENDER GROWTH - از TARKOLI مربوط به کاربر
 // ============================================================
-function renderGradeChart(dataSource) {
-    var ctx = document.getElementById('gradeChart');
-    if (!ctx) {
-        console.warn('⚠️ عنصر gradeChart پیدا نشد');
-        return;
-    }
+function renderGrowth() {
+    console.log('📊 renderGrowth اجرا شد - کاربر:', currentUser);
     
-    try {
-        var ctx2 = ctx.getContext('2d');
-        if (!ctx2) {
-            console.warn('⚠️ Context برای gradeChart پیدا نشد');
-            return;
-        }
-    } catch(e) {
-        console.warn('⚠️ خطا در دریافت Context:', e);
-        return;
-    }
+    // ============================================================
+    // ⭐⭐⭐ دریافت TARKOLI مربوط به کاربر
+    // ============================================================
+    var userTarkoli = [];
     
-    if (gradeChartInstance) { 
-        try {
-            gradeChartInstance.destroy();
-        } catch(e) {}
-        gradeChartInstance = null; 
-    }
-    
-    if (!dataSource || dataSource.length === 0) {
-        try {
-            var ctx2 = ctx.getContext('2d');
-            ctx2.clearRect(0, 0, ctx.width, ctx.height);
-            ctx2.font = '14px Vazirmatn';
-            ctx2.fillStyle = '#b2bec3';
-            ctx2.textAlign = 'center';
-            ctx2.fillText('داده‌ای برای نمایش وجود ندارد', ctx.width/2, ctx.height/2);
-        } catch(e) {}
-        return;
-    }
-    
-    var gradeMap = {};
-    for (var i = 0; i < dataSource.length; i++) {
-        var grade = dataSource[i].grade;
-        if (grade) {
-            grade = grade.trim();
-            if (!gradeMap[grade]) gradeMap[grade] = 0;
-            gradeMap[grade]++;
+    if (tarkoliData && tarkoliData.length > 0) {
+        if (currentUser === 'مدیر سیستم') {
+            userTarkoli = tarkoliData;
+        } else if (VALID_EXPERTS.indexOf(currentUser) !== -1) {
+            var mySupporters = supporterMap[currentUser] || [];
+            userTarkoli = tarkoliData.filter(function(d) {
+                return mySupporters.indexOf(d.supporter) !== -1;
+            });
+        } else {
+            userTarkoli = tarkoliData.filter(function(d) {
+                return d.supporter === currentUser;
+            });
         }
     }
     
-    var sortedGrades = Object.keys(gradeMap).sort();
-    var labels = [];
-    var values = [];  // ⭐⭐ اینجا تعریف شده
+    console.log('  ├─ تعداد رکورد TARKOLI:', userTarkoli.length);
     
-    for (var i = 0; i < sortedGrades.length; i++) {
-        labels.push(sortedGrades[i]);
-        values.push(gradeMap[sortedGrades[i]]);
-    }
-    
-    if (values.length === 0) {
-        try {
-            var ctx2 = ctx.getContext('2d');
-            ctx2.clearRect(0, 0, ctx.width, ctx.height);
-            ctx2.font = '14px Vazirmatn';
-            ctx2.fillStyle = '#b2bec3';
-            ctx2.textAlign = 'center';
-            ctx2.fillText('داده‌ای برای نمایش وجود ندارد', ctx.width/2, ctx.height/2);
-        } catch(e) {}
+    if (userTarkoli.length === 0) {
+        setGrowthEmpty();
         return;
     }
     
-    var colors = [
-        '#00b894', '#00cec9', '#fdcb6e', '#6c5ce7', 
-        '#fd79a8', '#f39c12', '#e17055', '#0984e3',
-        '#55efc4', '#fab1a0', '#a29bfe', '#ff7675'
-    ];
+    // ============================================================
+    // جمع‌آوری داده‌ها
+    // ============================================================
+    var totalAmount1 = 0;
+    var totalAmountCurr = 0;
+    var totalCount1 = 0;
+    var totalCountCurr = 0;
+    var daySum = 0;
+    var dayCount = 0;
     
-    var total = values.reduce(function(a, b) { return a + b; }, 0);
-    
-    try {
-        gradeChartInstance = new Chart(ctx2, {
-            type: 'doughnut',
-            data: { 
-                labels: labels, 
-                datasets: [{ 
-                    data: values, 
-                    backgroundColor: colors.slice(0, labels.length), 
-                    borderWidth: 2,
-                    borderColor: '#fff'
-                }] 
-            },
-            options: { 
-                responsive: true, 
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: { 
-                        position: 'bottom', 
-                        labels: { 
-                            font: { size: 10 },
-                            padding: 10,
-                            usePointStyle: true,
-                            pointStyle: 'circle'
-                        } 
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(0,0,0,0.8)',
-                        titleFont: { size: 12, weight: 'bold' },
-                        bodyFont: { size: 12 },
-                        padding: 10,
-                        cornerRadius: 8,
-                        callbacks: {
-                            label: function(context) {
-                                var label = context.label || '';
-                                var value = context.parsed || 0;
-                                var percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
-                                return 'تعداد: ' + value.toLocaleString() + '  |  درصد: ' + percentage + '%';
-                            }
-                        }
-                    }
-                }
-            }
-        });
-        console.log('✅ نمودار توزیع گرید رندر شد');
-    } catch (e) {
-        console.error('❌ خطا در رسم نمودار گرید:', e);
+    for (var i = 0; i < userTarkoli.length; i++) {
+        var item = userTarkoli[i];
+        
+        totalAmount1 += Number(item.amount_1_month_ago) || 0;
+        totalAmountCurr += Number(item.amount_current_month) || 0;
+        
+        totalCount1 += Number(item.count_1_month_ago) || 0;
+        totalCountCurr += Number(item.count_current_month) || 0;
+        
+        daySum += Number(item.day) || 30;
+        dayCount++;
     }
+    
+    var day = dayCount > 0 ? Math.round(daySum / dayCount) : 30;
+    
+    // ============================================================
+    // نرمال‌سازی
+    // ============================================================
+    var normalizedAmount1 = (totalAmount1 / 30) * day;
+    var normalizedCount1 = (totalCount1 / 30) * day;
+    
+    var diffAmount = totalAmountCurr - normalizedAmount1;
+    var diffCount = totalCountCurr - normalizedCount1;
+    
+    var percentAmount = normalizedAmount1 > 0 ? (diffAmount / normalizedAmount1) * 100 : 0;
+    var percentCount = normalizedCount1 > 0 ? (diffCount / normalizedCount1) * 100 : 0;
+    
+    console.log('  ├─ مبلغ جاری:', totalAmountCurr.toLocaleString());
+    console.log('  ├─ مبلغ ماه قبل (نرمال):', Math.round(normalizedAmount1).toLocaleString());
+    console.log('  ├─ درصد مبلغ:', percentAmount.toFixed(1) + '%');
+    
+    function formatMoney(n) {
+        var billions = Math.round(n / 1000000000);
+        return billions.toLocaleString('fa-IR') + ' میلیارد';
+    }
+    
+    function formatCount(n) {
+        return Math.round(n).toLocaleString('fa-IR');
+    }
+    
+    // ============================================================
+    // نمایش مبلغ
+    // ============================================================
+    var amountEl = document.getElementById('growthAmount');
+    if (amountEl) amountEl.textContent = formatMoney(totalAmountCurr);
+    
+    var isUpAmount = diffAmount >= 0;
+    var amountChange = document.getElementById('growthAmountChange');
+    if (amountChange) {
+        amountChange.textContent = (isUpAmount ? '📈' : '📉') + ' ' + Math.abs(percentAmount).toFixed(1) + '%';
+        amountChange.className = 'change ' + (isUpAmount ? 'growth-up' : 'growth-down');
+    }
+    
+    var amountDetail = document.getElementById('growthAmountDetail');
+    if (amountDetail) {
+        amountDetail.textContent = 'جاری: ' + formatMoney(totalAmountCurr) + 
+                                   ' | ماه قبل (' + day + ' روزه): ' + formatMoney(normalizedAmount1);
+    }
+    
+    // ============================================================
+    // نمایش تعداد
+    // ============================================================
+    var countEl = document.getElementById('growthCount');
+    if (countEl) countEl.textContent = formatCount(totalCountCurr);
+    
+    var isUpCount = diffCount >= 0;
+    var countChange = document.getElementById('growthCountChange');
+    if (countChange) {
+        countChange.textContent = (isUpCount ? '📈' : '📉') + ' ' + Math.abs(percentCount).toFixed(1) + '%';
+        countChange.className = 'change ' + (isUpCount ? 'growth-up' : 'growth-down');
+    }
+    
+    var countDetail = document.getElementById('growthCountDetail');
+    if (countDetail) {
+        countDetail.textContent = 'جاری: ' + formatCount(totalCountCurr) + 
+                                  ' | ماه قبل (' + day + ' روزه): ' + formatCount(normalizedCount1);
+    }
+}
+
+// ============================================================
+// خالی کردن کارت مقایسه
+// ============================================================
+function setGrowthEmpty() {
+    var el;
+    el = document.getElementById('growthAmount'); if (el) el.textContent = '-';
+    el = document.getElementById('growthAmountChange'); if (el) el.textContent = '-';
+    el = document.getElementById('growthAmountDetail'); if (el) el.textContent = 'داده‌ای موجود نیست';
+    el = document.getElementById('growthCount'); if (el) el.textContent = '-';
+    el = document.getElementById('growthCountChange'); if (el) el.textContent = '-';
+    el = document.getElementById('growthCountDetail'); if (el) el.textContent = 'داده‌ای موجود نیست';
 }
 
 
@@ -9747,9 +10571,11 @@ function updateReasonOptions() {
     options = [
         'جمع آوری شد',
         'تعهد پذیرنده و پشتیبان جهت فعالسازی',
+        'خرابی دستگاه (نوع خرابی در توضیحات درج گردد)',
         'پذیرنده در وضعیت پیگیری می باشد (دلیل دقیق پیگیری در توضیحات درج گردد)',
         'عدم همکاری پذیرنده (فرم عدم همکاری از پذیرنده و بانک اخذ گردد)',
-        'خسارتی و مفقودی (شرح خسارت در توضیحات درج گردد)'
+        'خسارتی و مفقودی (شرح خسارت در توضیحات درج گردد)',
+        'سایر موارد (توضیحات دقیق درج گردد)'
     ];
 } else if (op === 'priority') {
     options = [
@@ -9862,6 +10688,46 @@ function updateReasonOptions() {
     select.innerHTML = '';
     for (var i = 0; i < options.length; i++) {
         select.innerHTML += '<option value="' + options[i] + '">' + options[i] + '</option>';
+    }
+}
+
+// ============================================================
+// ⭐⭐⭐ DEBOUNCE برای جستجو (جلوگیری از تاخیر)
+// ============================================================
+var searchDebounceTimer = null;
+
+function debouncedSearch() {
+    // نمایش نشانگر لودینگ کوچک
+    showSearchLoader(true);
+    
+    // پاک کردن تایمر قبلی
+    if (searchDebounceTimer) {
+        clearTimeout(searchDebounceTimer);
+    }
+    
+    // اجرای جستجو بعد از 300 میلی‌ثانیه سکون
+    searchDebounceTimer = setTimeout(function() {
+        applyFilters();
+        showSearchLoader(false);
+    }, 300);
+}
+
+// نمایش/مخفی کردن نشانگر لودینگ جستجو
+function showSearchLoader(show) {
+    var loader = document.getElementById('searchLoader');
+    if (!loader) {
+        // ایجاد نشانگر اگه وجود نداره
+        var searchBox = document.querySelector('.search-box') || document.querySelector('.actions-search');
+        if (searchBox && show) {
+            loader = document.createElement('span');
+            loader.id = 'searchLoader';
+            loader.style.cssText = 'display:inline-block;width:14px;height:14px;border:2px solid #e8e8f0;border-top:2px solid #6c5ce7;border-radius:50%;animation:spin 0.6s linear infinite;margin-right:6px;';
+            searchBox.appendChild(loader);
+        }
+    }
+    
+    if (loader) {
+        loader.style.display = show ? 'inline-block' : 'none';
     }
 }
 // ============================================================
@@ -10856,6 +11722,110 @@ async function loadActionsFromStorage() {
         actions = {};
     }
 }
+
+// ============================================================
+// ⭐⭐⭐ بارگذاری tarkoli از Supabase (مخصوص نمودار روند)
+// ============================================================
+async function loadTarkoliData() {
+    console.log('📥 شروع بارگذاری tarkoli از Supabase...');
+    
+    // اول چک کن IndexedDB داره یا نه
+    try {
+        if (typeof loadFromIndexedDB === 'function') {
+            var cachedData = await loadFromIndexedDB('tarkoli');
+            if (cachedData && cachedData.length > 0) {
+                tarkoliData = cachedData;
+                console.log('✅ tarkoli از IndexedDB بارگذاری شد:', tarkoliData.length, 'رکورد');
+                
+                // نمودار رو رندر کن
+              setTimeout(function() {
+    if (typeof renderTrendChart === 'function') {
+        renderTrendChart();
+    }
+    if (typeof renderCompareStats === 'function') {
+        renderCompareStats();
+    }
+}, 100);
+                return tarkoliData;
+            }
+        }
+    } catch(e) {
+        console.warn('⚠️ خطا در بارگذاری از IndexedDB:', e);
+    }
+    
+    // اگه IndexedDB خالی بود، از Supabase بگیر
+    if (!isOnline()) {
+        console.log('⚠️ آفلاین - نمی‌توان از Supabase دریافت کرد');
+        return [];
+    }
+    
+    if (!supabaseClient) {
+        if (!initSupabase()) {
+            console.warn('⚠️ Supabase متصل نشد');
+            return [];
+        }
+    }
+    
+    try {
+        console.log('📥 دریافت tarkoli از Supabase...');
+        
+        var { data: tarkoliCloudData, error: tarkoliError } = await supabaseClient
+            .from('tarkoli')
+            .select('*');
+        
+        if (tarkoliError) {
+            console.error('❌ خطا در دریافت tarkoli:', tarkoliError);
+            return [];
+        }
+        
+        if (!tarkoliCloudData || tarkoliCloudData.length === 0) {
+            console.log('📭 جدول tarkoli خالی است');
+            return [];
+        }
+        
+        // ⭐⭐⭐ نرمال‌سازی داده‌ها با id مصنوعی
+        tarkoliData = tarkoliCloudData.map(function(item, index) {
+            return {
+                id: item.id || ('tarkoli_' + index + '_' + (item.supporter || 'unknown') + '_' + Date.now()),  // ⭐ id مصنوعی
+                supporter: item.supporter || '',
+                expert: item.expert || '',
+                count_2_months_ago: Number(item.count_2_months_ago) || 0,
+                amount_2_months_ago: Number(item.amount_2_months_ago) || 0,
+                count_1_month_ago: Number(item.count_1_month_ago) || 0,
+                amount_1_month_ago: Number(item.amount_1_month_ago) || 0,
+                count_current_month: Number(item.count_current_month) || 0,
+                amount_current_month: Number(item.amount_current_month) || 0,
+                day: Number(item.day) || 30,
+                raw: item
+            };
+        });
+        
+        console.log('✅ tarkoli از Supabase دریافت شد:', tarkoliData.length, 'رکورد');
+        console.log('📋 نمونه اولین رکورد:', tarkoliData[0]);
+        
+        // ذخیره در IndexedDB
+        if (typeof saveToIndexedDB === 'function') {
+            try {
+                await saveToIndexedDB('tarkoli', tarkoliData);
+                console.log('💾 tarkoli در IndexedDB ذخیره شد');
+            } catch(e) {
+                console.warn('⚠️ خطا در ذخیره tarkoli در IndexedDB:', e);
+                // ⭐ اگه خطا داد، نادیده بگیر (داده در حافظه هست)
+            }
+        }
+        
+        // نمودار رو رندر کن
+        if (typeof renderTrendChart === 'function') {
+            setTimeout(function() { renderTrendChart(); }, 100);
+        }
+        
+        return tarkoliData;
+        
+    } catch(e) {
+        console.error('❌ خطای غیرمنتظره در loadTarkoliData:', e);
+        return [];
+    }
+}
 function updateHeaderForPage(pageId) {
     var userInfo = document.getElementById('headerUserInfo');
     var actionsInfo = document.getElementById('headerActionsInfo');
@@ -10948,6 +11918,17 @@ function switchPage(pageId) {
     if (pageId === 'page-terminals') {
         setTimeout(function() { scrollTop = 0; renderVirtualList(); }, 100);
     }
+if (pageId === 'page-dashboard') {
+    // ⭐⭐⭐ وقتی به داشبورد برگشتیم، کارت مقایسه رو دوباره رندر کن
+    setTimeout(function() {
+        if (typeof renderCompareStats === 'function') {
+            renderCompareStats();
+        }
+        if (typeof renderTrendChart === 'function') {
+            renderTrendChart();
+        }
+    }, 200);
+}
     if (pageId === 'page-performance') {
         renderPerformanceWithRank();
     }
@@ -12576,9 +13557,34 @@ async function login() {
     loadActionsFromStorage();
     loadPendingActions();
     loadIndependentSheetsFromStorage();
-
+loadTarkoliData().catch(function(e) {
+    console.warn('⚠️ خطا در بارگذاری tarkoli:', e);
+});
     console.log('📂 اقدامات محلی بارگذاری شد:', Object.keys(actions).length, 'پایانه');
-    
+    if (typeof loadFromIndexedDB === 'function') {
+    loadFromIndexedDB('tarkoli').then(function(tarkoliCached) {
+        if (tarkoliCached && tarkoliCached.length > 0) {
+            tarkoliData = tarkoliCached;
+            console.log('✅ tarkoliData از IndexedDB بارگذاری شد:', tarkoliData.length, 'رکورد');
+            
+            // بعد از بارگذاری، نمودار رو رندر کن
+            if (typeof renderTrendChart === 'function') {
+                setTimeout(function() {
+                    renderTrendChart();
+                }, 100);
+            }
+        } else {
+            console.log('📭 tarkoliData در IndexedDB خالی است');
+        }
+    }).catch(function(e) {
+        console.warn('⚠️ خطا در بارگذاری tarkoli از IndexedDB:', e);
+    });
+}
+setTimeout(function() {
+    if (typeof renderTrendChart === 'function') {
+        renderTrendChart();
+    }
+}, 200);
     // ============================================================
     // بارگذاری allData از کش (فقط از کش، بدون درخواست به ابر)
     // ============================================================
@@ -12718,7 +13724,7 @@ function logout() {
     document.getElementById('passwordInput').value = '';
 }
 // ============================================================
-// سیستم رتبه‌بندی - محاسبه امتیازات هر کاربر
+// سیستم رتبه‌بندی - محاسبه امتیازات هر کاربر (نسخه tarkoli)
 // ============================================================
 function calculateUserScores(allUsers, allData, bazaryabiData, nasbJadidData, actions) {
     var results = {};
@@ -12727,7 +13733,8 @@ function calculateUserScores(allUsers, allData, bazaryabiData, nasbJadidData, ac
         var username = allUsers[u];
         var userData = filterBySupporter(allData, username);
         
-        if (userData.length === 0) continue;
+        // ⭐ توجه: userData ممکنه خالی باشه (اگه کاربر در terminals نباشه)
+        // ولی برای بخش‌هایی مثل رشد و بازاریابی، از tarkoli و bazaryabi استفاده میشه
         
         var score = {
             pm: 0,
@@ -12763,7 +13770,7 @@ function calculateUserScores(allUsers, allData, bazaryabiData, nasbJadidData, ac
         var collectTotal = userData.filter(function(d) { return d.hasCollect; }).length;
         var collectDone = userData.filter(function(d) { return d.collectDone; }).length;
         var collectPercent = collectTotal > 0 ? (collectDone / collectTotal) * 100 : 0;
-        var collectCountScore = collectDone * 2; // هر پایانه انجام شده 2 امتیاز
+        var collectCountScore = collectDone * 2;
         score.collect = Math.round((collectPercent * 2) + collectCountScore);
         score.details.collect = { done: collectDone, total: collectTotal, percent: collectPercent, countScore: collectCountScore, score: score.collect };
         
@@ -12823,41 +13830,39 @@ function calculateUserScores(allUsers, allData, bazaryabiData, nasbJadidData, ac
         score.kahraba = Math.round(kahrabaPercent * 2);
         score.details.kahraba = { done: kahrabaDone, total: kahrabaTotal, percent: kahrabaPercent, score: score.kahraba };
         
- 
-     // ============================================================
-// اصلاح محاسبه امتیاز بازاریابی
-// ============================================================
-var marketingItems = bazaryabiData.filter(function(d) { 
-    return d.supporter === username; 
-});
-
-var marketingEfficient = 0;
-var marketingInefficient = 0;
-var marketingCanceled = 0;
-
-for (var i = 0; i < marketingItems.length; i++) {
-    if (marketingItems[i].status === 'کارآمد') {
-        marketingEfficient++;
-    } else if (marketingItems[i].status === 'ناکارآمد') {
-        marketingInefficient++;
-    } else if (marketingItems[i].status === 'ابطال شده') {
-        marketingCanceled++;
-    }
-}
-
-// ✅ اصلاح: مستقیماً از تعداد کارآمد و ناکارآمد محاسبه کن
-var marketingScore = (marketingEfficient * 10) - (marketingInefficient * 10);
-
-score.marketing = marketingScore;
-score.details.marketing = { 
-    efficient: marketingEfficient, 
-    inefficient: marketingInefficient,
-    canceled: marketingCanceled,
-    total: marketingEfficient + marketingInefficient,
-    score: marketingScore 
-};
         // ============================================================
-        // 10. نصب جدید: هر مشکوک = 7-
+        // 9. بازاریابی: هر کارآمد = +10، هر ناکارآمد = -10
+        // ============================================================
+        var marketingItems = bazaryabiData.filter(function(d) { 
+            return d.supporter === username; 
+        });
+        
+        var marketingEfficient = 0;
+        var marketingInefficient = 0;
+        var marketingCanceled = 0;
+        
+        for (var i = 0; i < marketingItems.length; i++) {
+            if (marketingItems[i].status === 'کارآمد') {
+                marketingEfficient++;
+            } else if (marketingItems[i].status === 'ناکارآمد') {
+                marketingInefficient++;
+            } else if (marketingItems[i].status === 'ابطال شده') {
+                marketingCanceled++;
+            }
+        }
+        
+        var marketingScore = (marketingEfficient * 10) - (marketingInefficient * 10);
+        score.marketing = marketingScore;
+        score.details.marketing = { 
+            efficient: marketingEfficient, 
+            inefficient: marketingInefficient,
+            canceled: marketingCanceled,
+            total: marketingEfficient + marketingInefficient,
+            score: marketingScore 
+        };
+        
+        // ============================================================
+        // 10. نصب جدید: هر مشکوک = -7
         // ============================================================
         var nasbItems = nasbJadidData.filter(function(d) { return d.supporter === username; });
         var nasbSuspicious = nasbItems.filter(function(d) { return d.status === 'مشکوک به صوری / ناکارآمد'; }).length;
@@ -12865,7 +13870,7 @@ score.details.marketing = {
         score.details.nasb = { suspicious: nasbSuspicious, score: score.nasb };
         
         // ============================================================
-        // 11. افت: هر احیا شده = 5+، هر افت شدید = 2-
+        // 11. افت: هر احیا شده = +5، هر افت شدید = -2
         // ============================================================
         var dropRecovered = userData.filter(function(d) { return d.dropStatus === 'احیا شده'; }).length;
         var dropSevere = userData.filter(function(d) { return d.dropStatus === 'افت شدید'; }).length;
@@ -12875,7 +13880,7 @@ score.details.marketing = {
         score.details.drop = { recovered: dropRecovered, severe: dropSevere, total: dropTotal, percent: dropPercent, score: score.drop };
         
         // ============================================================
-        // 12. ناکارآمد: هر درصد فعال شده = 7+
+        // 12. ناکارآمد: هر درصد فعال شده = +7
         // ============================================================
         var ineffectiveTotal = userData.filter(function(d) { return d.hasIneffective; }).length;
         var ineffectiveDone = userData.filter(function(d) { return d.ineffectiveDone; }).length;
@@ -12884,7 +13889,7 @@ score.details.marketing = {
         score.details.ineffective = { done: ineffectiveDone, total: ineffectiveTotal, percent: ineffectivePercent, score: score.ineffective };
         
         // ============================================================
-        // 13. تعویض: هر درصد = 2+، هر عدد تعویض شده = 5+
+        // 13. تعویض: هر درصد = +2، هر عدد تعویض شده = +5
         // ============================================================
         var replaceTotal = userData.filter(function(d) { return d.hasReplace; }).length;
         var replaceDone = userData.filter(function(d) { return d.replaceStatus === 'تعویض شده' || d.replaceStatus === 'فعال شده'; }).length;
@@ -12894,36 +13899,72 @@ score.details.marketing = {
         score.details.replace = { done: replaceDone, total: replaceTotal, percent: replacePercent, countScore: replaceCountScore, score: score.replace };
         
         // ============================================================
-        // 14. رشد: هر درصد رشد = 10+، هر درصد انحراف منفی = 10-
+        // ⭐⭐⭐ 14. رشد: از tarkoliData (نرمال‌شده بر اساس روز)
+        // فرمول: (مبلغ ماه قبل / 30) × روز → مقایسه با ماه جاری
         // ============================================================
-        var totalAmount = 0, totalAmount1 = 0;
-        var totalCount = 0, totalCount1 = 0;
-        var maxDay = 0;
+        var growthAmount = 0;
+        var growthCount = 0;
+        var totalAmountCurr = 0;
+        var totalAmountPrev = 0;
+        var totalCountCurr = 0;
+        var totalCountPrev = 0;
+        var avgDay = 30;
         
-        for (var i = 0; i < userData.length; i++) {
-            var d = userData[i];
-            totalAmount += d.transAmount || 0;
-            totalCount += d.transCount || 0;
-            totalAmount1 += d.trans1Amount || 0;
-            totalCount1 += d.trans1Count || 0;
-            if (d.transDay > maxDay) maxDay = d.transDay || 30;
+        if (typeof tarkoliData !== 'undefined' && tarkoliData && tarkoliData.length > 0) {
+            // فیلتر رکوردهای این کاربر
+            var userTarkoliForScore = [];
+            
+            if (username === 'مدیر سیستم') {
+                userTarkoliForScore = tarkoliData;
+            } else if (VALID_EXPERTS.indexOf(username) !== -1) {
+                var mySupporters = supporterMap[username] || [];
+                userTarkoliForScore = tarkoliData.filter(function(d) {
+                    return mySupporters.indexOf(d.supporter) !== -1;
+                });
+            } else {
+                userTarkoliForScore = tarkoliData.filter(function(d) {
+                    return d.supporter === username;
+                });
+            }
+            
+            var daySum = 0;
+            var dayCount = 0;
+            
+            for (var ti = 0; ti < userTarkoliForScore.length; ti++) {
+                var tItem = userTarkoliForScore[ti];
+                totalAmountPrev += Number(tItem.amount_1_month_ago) || 0;
+                totalAmountCurr += Number(tItem.amount_current_month) || 0;
+                totalCountPrev += Number(tItem.count_1_month_ago) || 0;
+                totalCountCurr += Number(tItem.count_current_month) || 0;
+                daySum += Number(tItem.day) || 30;
+                dayCount++;
+            }
+            
+            avgDay = dayCount > 0 ? Math.round(daySum / dayCount) : 30;
+            if (avgDay <= 0) avgDay = 1;
+            if (avgDay > 30) avgDay = 30;
+            
+            // نرمال‌سازی ماه قبل: (مبلغ ماه قبل / 30) × روز
+            var expectedPrevAmount = (totalAmountPrev / 30) * avgDay;
+            var expectedPrevCount = (totalCountPrev / 30) * avgDay;
+            
+            growthAmount = expectedPrevAmount > 0 ? 
+                ((totalAmountCurr - expectedPrevAmount) / expectedPrevAmount) * 100 : 0;
+            growthCount = expectedPrevCount > 0 ? 
+                ((totalCountCurr - expectedPrevCount) / expectedPrevCount) * 100 : 0;
         }
-        
-        if (maxDay === 0) maxDay = 30;
-        var prevAmount = (totalAmount1 / 30) * maxDay;
-        var prevCount = (totalCount1 / 30) * maxDay;
-        
-        var growthAmount = prevAmount > 0 ? ((totalAmount - prevAmount) / prevAmount) * 100 : 0;
-        var growthCount = prevCount > 0 ? ((totalCount - prevCount) / prevCount) * 100 : 0;
         
         score.growth = Math.round((growthAmount * 10) + (growthCount * 10));
         score.details.growth = { 
             growthAmount: growthAmount, 
             growthCount: growthCount, 
-            currentAmount: totalAmount, 
-            prevAmount: prevAmount,
-            currentCount: totalCount,
-            prevCount: prevCount,
+            currentAmount: totalAmountCurr, 
+            prevAmount: totalAmountPrev,
+            expectedPrevAmount: (totalAmountPrev / 30) * avgDay,
+            currentCount: totalCountCurr,
+            prevCount: totalCountPrev,
+            expectedPrevCount: (totalCountPrev / 30) * avgDay,
+            avgDay: avgDay,
             score: score.growth 
         };
         
@@ -14371,6 +15412,17 @@ async function loadDataFromCache() {
             // ⭐⭐⭐ اینجا هیچ درخواستی به ابر نده، فقط false برگردان
             return false;
         }
+try {
+    var tarkoliCachedData = await loadFromIndexedDB('tarkoli');
+    if (tarkoliCachedData && tarkoliCachedData.length > 0) {
+        tarkoliData = tarkoliCachedData;
+        console.log('✅ tarkoli از کش:', tarkoliData.length, 'رکورد');
+    } else {
+        console.log('📭 tarkoli در کش خالی است');
+    }
+} catch(e) {
+    console.warn('⚠️ خطا در بارگذاری tarkoli:', e);
+}
         
         // 2. بارگذاری marketing
         var marketingData = await loadFromIndexedDB('marketing');
@@ -15004,6 +16056,51 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log('📱 اپلیکیشن نسخه ۷.۱ - پروژه پشتیبان راه‌اندازی شد! (فقط از کش)');
 });
+
+// ============================================================
+// ⭐⭐⭐ مدیریت Back ساده (بدون history API)
+// ============================================================
+(function() {
+    console.log('🔧 راه‌اندازی مدیریت Back ساده...');
+    
+    // ⭐ فقط برای APK: جلوگیری از خروج با backbutton
+    document.addEventListener('backbutton', function(event) {
+        console.log('🔙 Back زده شد');
+        event.preventDefault();
+        
+        // اگه کاربر لاگین کرده، هیچ کاری نکن
+        if (currentUser && currentUser !== '') {
+            console.log('✅ کاربر لاگین کرده - Back بی‌اثر');
+            return;
+        }
+        
+        // اگه لاگین نکرده، بذار خارج بشه
+        console.log('👤 کاربر لاگین نکرده - خروج');
+        if (navigator.app && navigator.app.exitApp) {
+            navigator.app.exitApp();
+        }
+    }, false);
+    
+    // ⭐ برای مرورگر معمولی: مدیریت popstate
+    var initialUrl = window.location.href;
+    
+    window.addEventListener('popstate', function(event) {
+        if (currentUser && currentUser !== '') {
+            // Back بی‌اثر در مرورگر
+            console.log('🔙 Back در مرورگر - بی‌اثر');
+            try {
+                history.pushState({ app: 'pmd' }, '', '');
+            } catch(e) {}
+        }
+    });
+    
+    // راه‌اندازی
+    try {
+        history.pushState({ app: 'pmd' }, '', '');
+    } catch(e) {}
+    
+    console.log('✅ مدیریت Back ساده فعال شد');
+})();
 // ============================================================
 // END OF FILE
 // ============================================================
