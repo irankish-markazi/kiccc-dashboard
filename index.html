@@ -3861,7 +3861,7 @@ var supporters = [];
 var expertMap = {};
 var totalFilterActive = false;
 var pendingFilterActive = false;
-
+var selectedOperations = [];
 var bazaryabiData = [];
 var nasbJadidData = [];
 var bazSheet = [];
@@ -6515,43 +6515,15 @@ function updateStats() {
     document.getElementById('filterPending').textContent = pending;
 }
 // ============================================================
-// ⭐⭐⭐ Virtual Scrolling با تشخیص خودکار ارتفاع
+// ⭐⭐⭐ VIRTUAL SCROLLING - فقط کارت‌های قابل مشاهده
 // ============================================================
-var ITEM_HEIGHT = 250;  // مقدار پیش‌فرض
-var ITEM_GAP = 8;
-var BUFFER_SIZE = 5;
-var heightMeasured = false;
+var ITEM_HEIGHT = 250;      // ارتفاع تقریبی کارت
+var BUFFER_SIZE = 5;         // تعداد کارت اضافی
 
-function measureItemHeight() {
-    if (heightMeasured) return;
-    
-    // یه کارت نمونه بساز
-    var sample = document.createElement('div');
-    sample.style.position = 'absolute';
-    sample.style.visibility = 'hidden';
-    sample.style.width = '100%';
-    sample.style.left = '-9999px';
-    
-    if (displayData.length > 0) {
-        sample.innerHTML = createCard(displayData[0]);
-        document.body.appendChild(sample);
-        
-        var height = sample.offsetHeight;
-        document.body.removeChild(sample);
-        
-        if (height > 50) {
-            ITEM_HEIGHT = height;
-            heightMeasured = true;
-            console.log('📊 ارتفاع کارت اندازه‌گیری شد:', ITEM_HEIGHT, 'px');
-        }
-    }
-}
-// ============================================================
-// RENDER VIRTUAL LIST - بدون Virtual Scrolling (ساده و درست)
-// ============================================================
 function renderVirtualList() {
+    var container = document.getElementById('terminalListContainer');
     var list = document.getElementById('terminalList');
-    if (!list) return;
+    if (!container || !list) return;
     
     var total = displayData.length;
     if (total === 0) {
@@ -6560,58 +6532,97 @@ function renderVirtualList() {
         return;
     }
     
-    // ⭐ حالت‌های خاص
+    // حالت‌های خاص
     if (selectedOperations && selectedOperations.indexOf('codebaz') !== -1) {
         renderCodeBazCards(displayData);
         return;
     }
-    if (selectedOperations && selectedOperations.indexOf('marketing') !== -1) {
-        renderMarketingCards(displayData);
-        return;
-    }
-    if (selectedOperations && selectedOperations.indexOf('nasb') !== -1) {
-        renderNasbCards(displayData);
-        return;
-    }
-    if (selectedOperations && selectedOperations.indexOf('inactive03') !== -1) {
-        renderInactive03Cards(displayData);
+    // ... بقیه
+    
+    // ⭐ اگه تعداد کمه، همه رو رندر کن
+    if (total <= 50) {
+        list.style.height = 'auto';
+        list.style.position = 'static';
+        list.style.display = 'flex';
+        list.style.flexDirection = 'column';
+        list.style.gap = '8px';
+        
+        var fragment = document.createDocumentFragment();
+        for (var i = 0; i < total; i++) {
+            var cardHtml = createCard(displayData[i]);
+            var div = document.createElement('div');
+            div.innerHTML = cardHtml;
+            var el = div.firstElementChild;
+            if (el) {
+                el.style.marginBottom = '0';
+                fragment.appendChild(el);
+            }
+        }
+        
+        list.innerHTML = '';
+        list.appendChild(fragment);
+        document.getElementById('terminalCount').textContent = total + ' پایانه';
         return;
     }
     
-    // ⭐⭐ حذف Virtual Scrolling - همه کارت‌ها یکجا رندر میشن
-    list.style.height = 'auto';
-    list.style.position = 'static';
-    list.style.display = 'flex';
-    list.style.flexDirection = 'column';
-    list.style.gap = '8px';       // ← فاصله بین کارت‌ها
+    // ⭐ Virtual Scrolling
+    var scrollTop = container.scrollTop;
+    var containerHeight = container.clientHeight;
+    
+    var startIndex = Math.max(0, Math.floor(scrollTop / ITEM_HEIGHT) - BUFFER_SIZE);
+    var endIndex = Math.min(total, Math.ceil((scrollTop + containerHeight) / ITEM_HEIGHT) + BUFFER_SIZE);
+    
+    var visibleItems = displayData.slice(startIndex, endIndex);
+    
+    list.style.height = (total * ITEM_HEIGHT) + 'px';
+    list.style.position = 'relative';
+    list.style.display = 'block';
+    list.style.gap = '0';
     
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < total; i++) {
-        var cardHtml = createCard(displayData[i]);
+    for (var j = 0; j < visibleItems.length; j++) {
+        var actualIndex = startIndex + j;
+        var cardHtml = createCard(visibleItems[j]);
         var div = document.createElement('div');
         div.innerHTML = cardHtml;
         var el = div.firstElementChild;
         if (el) {
-            el.style.marginBottom = '0';   // ← بدون margin (چون gap استفاده میشه)
+            el.style.position = 'absolute';
+            el.style.top = (actualIndex * ITEM_HEIGHT) + 'px';
+            el.style.left = '0';
+            el.style.right = '0';
+            el.style.width = '100%';
             fragment.appendChild(el);
         }
     }
     
     list.innerHTML = '';
     list.appendChild(fragment);
-    document.getElementById('terminalCount').textContent = total + ' پایانه';
+    document.getElementById('terminalCount').textContent = total + ' پایانه (نمایش ' + visibleItems.length + ')';
 }
-// ============================================================
-// ⭐⭐⭐ متغیرهای scroll
-// ============================================================
-var scrollRAF = null;
 
 // ============================================================
-// HANDLE SCROLL - با requestAnimationFrame
+// ⭐⭐⭐ HANDLE SCROLL - نسخه بدون متغیر اضافی
 // ============================================================
 function handleScroll() {
- 
+    var container = document.getElementById('terminalListContainer');
+    if (!container) return;
+    
+    scrollTop = container.scrollTop;
+    
+    // اگه فیلتر خاصی فعاله، Virtual Scrolling نداشته باش
+    if (selectedOperations && 
+        (selectedOperations.indexOf('codebaz') !== -1 ||
+         selectedOperations.indexOf('marketing') !== -1 ||
+         selectedOperations.indexOf('nasb') !== -1 ||
+         selectedOperations.indexOf('inactive03') !== -1)) {
+        return;
+    }
+    
+    // ⭐ فقط Virtual Scrolling رو صدا بزن (بدون RAF)
+    renderVirtualList();
 }
+
 // ============================================================
 // CREATE CARD - نسخه نهایی (با دکمه تاریخچه + ارتفاع اتوماتیک)
 // ============================================================
@@ -11907,37 +11918,72 @@ function updateLastUpdateDisplay() {
 function displayLastUpdateTime() {
     updateLastUpdateDisplay();
 }
+// ============================================================
+// ⭐⭐⭐ SWITCH PAGE - نسخه بهینه
+// ============================================================
+var currentPageId = 'page-dashboard';
+
 function switchPage(pageId) {
-    document.querySelectorAll('.page').forEach(function(el) { el.classList.remove('active'); });
-    document.getElementById(pageId).classList.add('active');
-    document.querySelectorAll('.nav-item').forEach(function(el) { el.classList.remove('active'); });
-    document.querySelector('.nav-item[data-page="' + pageId + '"]').classList.add('active');
+    if (pageId === currentPageId) {
+        console.log('ℹ️ همان صفحه - نیازی به تغییر نیست');
+        return;
+    }
     
-    updateHeaderForPage(pageId);  // ⭐ این خط باید باشه
+    console.log('📄 تغییر صفحه:', currentPageId, '→', pageId);
     
+    // ⭐ تغییر کلاس pages
+    document.querySelectorAll('.page').forEach(function(el) { 
+        el.classList.remove('active'); 
+    });
+    var targetPage = document.getElementById(pageId);
+    if (targetPage) targetPage.classList.add('active');
+    
+    // ⭐ تغییر کلاس nav items
+    document.querySelectorAll('.nav-item').forEach(function(el) { 
+        el.classList.remove('active'); 
+    });
+    var navItem = document.querySelector('.nav-item[data-page="' + pageId + '"]');
+    if (navItem) navItem.classList.add('active');
+    
+    // ⭐ هدر
+    updateHeaderForPage(pageId);
+    
+    // ⭐ عملیات مخصوص هر صفحه
     if (pageId === 'page-terminals') {
-        setTimeout(function() { scrollTop = 0; renderVirtualList(); }, 100);
+        // فقط اگه لیست خالی است، رندر کن
+        var list = document.getElementById('terminalList');
+        if (list && list.children.length === 0) {
+            setTimeout(function() { 
+                renderVirtualList(); 
+            }, 50);
+        }
     }
-if (pageId === 'page-dashboard') {
-    // ⭐⭐⭐ وقتی به داشبورد برگشتیم، کارت مقایسه رو دوباره رندر کن
-    setTimeout(function() {
-        if (typeof renderCompareStats === 'function') {
-            renderCompareStats();
-        }
-        if (typeof renderTrendChart === 'function') {
-            renderTrendChart();
-        }
-    }, 200);
-}
+    
     if (pageId === 'page-performance') {
-        renderPerformanceWithRank();
-    }
-    if (pageId === 'page-actions') {
-        filterActions();
         setTimeout(function() {
-            updatePendingBadgeHeader();
-        }, 3000);
+            if (typeof renderPerformanceWithRank === 'function') {
+                renderPerformanceWithRank();
+            }
+        }, 50);
     }
+    
+    if (pageId === 'page-actions') {
+        setTimeout(function() {
+            filterActions();
+            updatePendingBadgeHeader();
+        }, 50);
+    }
+    
+    if (pageId === 'page-dashboard') {
+        // داشبورد: رندر نمودارها با تاخیر
+        setTimeout(function() {
+            if (typeof renderTrendChart === 'function') renderTrendChart();
+            if (typeof renderCompareStats === 'function') renderCompareStats();
+            if (typeof renderGrowth === 'function') renderGrowth();
+        }, 100);
+    }
+    
+    currentPageId = pageId;
 }
 function adminChangePassword(username, source) {
     if (currentUser !== 'مدیر سیستم') {
@@ -16058,12 +16104,12 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ============================================================
-// ⭐⭐⭐ مدیریت Back ساده (بدون history API)
+// ⭐️⭐️⭐️ مدیریت Back ساده (بدون history API)
 // ============================================================
 (function() {
     console.log('🔧 راه‌اندازی مدیریت Back ساده...');
     
-    // ⭐ فقط برای APK: جلوگیری از خروج با backbutton
+    // ⭐️ فقط برای APK: جلوگیری از خروج با backbutton
     document.addEventListener('backbutton', function(event) {
         console.log('🔙 Back زده شد');
         event.preventDefault();
@@ -16081,7 +16127,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, false);
     
-    // ⭐ برای مرورگر معمولی: مدیریت popstate
+    // ⭐️ برای مرورگر معمولی: مدیریت popstate
     var initialUrl = window.location.href;
     
     window.addEventListener('popstate', function(event) {
